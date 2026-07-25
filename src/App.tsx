@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // import ScrollRibbon from "./components/Ribbon";
 import resume_builder from "../public/images/resume_builder.png"
 import scatch from "../public/images/scatch.png";
+import task_management from "../public/images/task_management.png"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,15 +20,15 @@ const links = {
 const projects = [
   {
     number: "01",
-    title: "StarSync",
-    eyebrow: "Astrology SaaS platform",
+    title: "Taskflow",
+    eyebrow: "Taskflow SaaS platform",
     description:
-      "A full-stack consultation platform with real-time video sessions, secure authentication, and a Stripe-powered digital wallet.",
-    tags: ["React", "Node.js", "MongoDB", "LiveKit", "Stripe"],
-    href: "https://astro-lilac-chi.vercel.app",
+      "TaskFlow helps organizations manage projects, tasks, departments, teams, attendance and leave from an isolated workspace. It features Stripe and Razorpay subscriptions, automated tenant provisioning, RBAC, TOTP 2FA, Redis caching, API rate limiting and real-time Socket.IO notifications.",
+    tags: ["Next.js", "Node.js", "Mysql", "Razorpay", "Stripe", "2FA", "Task management", "Multi-tenant", "Socket.io", "Taiwind css", "Redux toolkit"],
+    href: "https://github.com/mannrandhawa004/task_management_system",
     className: "project-starsync",
-    image: "",
-    metric: "Realtime consultations",
+    image: task_management,
+    metric: "Task management",
   },
   {
     number: "02",
@@ -35,7 +36,7 @@ const projects = [
     eyebrow: "AI-powered document editor",
     description:
       "A dynamic resume workspace with live preview, flexible templates, cloud image delivery, and instant client-side PDF exports.",
-    tags: ["React", "GenAI", "ImageKit", "Tailwind", "PDF"],
+    tags: ["React", "Ai - Integration", "Node.js", "Tailwind", "PDF", "Redux Toolkit"],
     href: "https://ai-resume-builder-beta-pink.vercel.app",
     className: "project-resume",
     image: resume_builder,
@@ -46,8 +47,8 @@ const projects = [
     title: "Scatch",
     eyebrow: "Full-stack commerce",
     description:
-      "An end-to-end shopping experience with Google OAuth, JWT security, Stripe webhooks, inventory sync, and an admin dashboard.",
-    tags: ["MERN", "OAuth", "JWT", "Stripe", "Webhooks"],
+      "Scatch is a full-stack e-commerce platform that provides users with a seamless shopping experience, from exploring products and managing their cart to completing secure online payments. The application includes Google OAuth and JWT-based authentication for secure account access, along with Stripe integration for payment processing and webhook-based order updates",
+    tags: ["MERN", "OAuth", "JWT", "Stripe", "Webhooks", "Tailwind css"],
     href: "https://scatch-bice.vercel.app",
     className: "project-scatch",
     image: scatch,
@@ -60,7 +61,7 @@ const services = [
     number: "01",
     title: "Full-stack products",
     body: "Scalable React interfaces connected to clean Node.js APIs and thoughtfully modeled databases.",
-    tech: "React · Express · MongoDB",
+    tech: "React · Express · MongoDB · Mysql · Next.js",
   },
   {
     number: "02",
@@ -78,21 +79,21 @@ const services = [
     number: "04",
     title: "Secure integrations",
     body: "Authentication and payment flows built with production-minded security and clear failure states.",
-    tech: "OAuth · JWT · Stripe",
+    tech: "OAuth · JWT · Stripe · Razorpay",
   },
 ];
 
 const experience = [
   {
-    date: "Dec 2025 — Feb 2026",
-    role: "Full-Stack Developer Intern",
-    company: "Clepr Technologies",
+    date: "March 2026 — Present",
+    role: "Full-Stack Developer",
+    company: "Fresco web services",
     location: "Mohali, India",
     body: "Contributed to a full-stack MERN application, coordinated feature delivery, and developed scalable Express APIs backed by MongoDB.",
   },
   {
     date: "Jul 2025 — Jan 2026",
-    role: "Full-Stack Web Development",
+    role: "Full-Stack Web Development Trainee",
     company: "Antier School of Blocktech",
     location: "Mohali, India",
     body: "Built scalable MERN modules, secure authentication flows, predictable state management, and optimized database schemas.",
@@ -100,8 +101,8 @@ const experience = [
 ];
 
 const stackGroups = [
-  { label: "Frontend", note: "Interfaces that feel fast, clear, and alive.", items: ["React.js", "Redux Toolkit", "Tailwind CSS", "GSAP", "HTML5 / CSS3"] },
-  { label: "Backend", note: "APIs and services designed to scale cleanly.", items: ["Node.js", "Express.js", "REST APIs", "Authentication", "Webhooks"] },
+  { label: "Frontend", note: "Interfaces that feel fast, clear, and alive.", items: ["React.js", "Redux Toolkit", "Tailwind CSS", "GSAP", "HTML5 / CSS3", "Next.js"] },
+  { label: "Backend", note: "APIs and services designed to scale cleanly.", items: ["Node.js", "Express.js", "REST APIs", "Authentication", "Webhooks", "Redis"] },
   { label: "AI & Data", note: "Intelligence grounded in useful product flows.", items: ["LangChain", "Python", "MongoDB", "MySQL", "LLM APIs"] },
   { label: "Workflow", note: "From local build to reliable deployment.", items: ["Git", "Postman", "Vercel", "Render", "Azure"] },
 ];
@@ -257,7 +258,7 @@ export default function App() {
               <div className="hero-role"><span>Full-stack engineer</span><i>×</i><span>GenAI builder</span></div>
               <p>I turn ambitious ideas into <strong>fast, secure products</strong>—from polished React interfaces to intelligent LangChain workflows.</p>
               <div className="hero-proof">
-                <div><strong>03</strong><span>Live products</span></div>
+                <div><strong>05</strong><span>Live products</span></div>
                 <div><strong>MERN</strong><span>End-to-end</span></div>
                 <div><strong>AI</strong><span>Product-minded</span></div>
               </div>
@@ -310,7 +311,7 @@ export default function App() {
                     <span>↗</span>
                   </div>
                   <div className="project-art">
-                    <span className="project-ghost" style={{ position: "absolute", color:"red" }}>{project.number}</span>
+                    <span className="project-ghost" style={{ position: "absolute", color: "red" }}>{project.number}</span>
                     <div className="project-screen">
                       <small>{project.eyebrow}</small>
                       <strong>{project.title}</strong>
