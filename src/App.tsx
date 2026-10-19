@@ -22,13 +22,7 @@ type IconName =
   | "check"
   | "external"
   | "sun"
-  | "moon"
-  | "layers"
-  | "sparkle"
-  | "bolt"
-  | "shield"
-  | "terminal"
-  | "lock";
+  | "moon";
 
 const links = {
   github: "https://github.com/mannrandhawa004",
@@ -116,35 +110,27 @@ const projects = [
 const services = [
   {
     number: "01",
-    icon: "layers" as IconName,
     title: "Full-stack products",
     body: "Scalable React and Next.js interfaces connected to high-throughput Node.js APIs and thoughtfully modeled relational and document databases.",
     tech: "React · Next.js · Node.js · Express · MongoDB · MySQL",
-    metric: "High-Throughput APIs",
   },
   {
     number: "02",
-    icon: "sparkle" as IconName,
     title: "GenAI experiences",
     body: "Useful AI capabilities grounded in user workflows—from structured prompt pipelines to LLM document generation and intelligent agents.",
     tech: "LangChain · OpenAI / Claude APIs · Python · Vector Search",
-    metric: "RAG & LLM Agents",
   },
   {
     number: "03",
-    icon: "bolt" as IconName,
     title: "Real-time systems",
     body: "Responsive architectures for live collaboration, instantaneous notifications, and events that feel immediate to the end user.",
     tech: "Socket.IO · WebSockets · Webhooks · Redis Pub/Sub",
-    metric: "Sub-50ms Latency",
   },
   {
     number: "04",
-    icon: "shield" as IconName,
     title: "Secure integrations",
     body: "Authentication and payment gateways implemented with production-grade defense, rate limiting, and reliable webhook verification.",
     tech: "OAuth 2.0 · JWT · TOTP 2FA · Stripe · Razorpay",
-    metric: "Zero-Trust Architecture",
   },
 ];
 
@@ -183,12 +169,6 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
   if (name === "copy") return <svg {...common} aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
   if (name === "check") return <svg {...common} aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
   if (name === "external") return <svg {...common} aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" /></svg>;
-  if (name === "layers") return <svg {...common} aria-hidden="true"><path d="m12 2 10 5-10 5-10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>;
-  if (name === "sparkle") return <svg {...common} aria-hidden="true"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>;
-  if (name === "bolt") return <svg {...common} aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>;
-  if (name === "shield") return <svg {...common} aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
-  if (name === "terminal") return <svg {...common} aria-hidden="true"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>;
-  if (name === "lock") return <svg {...common} aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>;
   if (name === "sun")
     return (
       <svg {...common} aria-hidden="true">
@@ -235,36 +215,26 @@ function ProjectInteractiveMedia({ project }: { project: typeof projects[0] }) {
   };
 
   return (
-    <div className="project-media-wrapper">
-      <div className={`project-ambient-glow ${project.className}-glow`} aria-hidden="true" />
-      <div
-        ref={mediaRef}
-        className={`project-media ${project.className}`}
-        data-project-media
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        style={{
-          transform: tiltStyle || undefined,
-          transition: tiltStyle ? "transform 0.15s ease-out" : "transform 0.5s ease",
-        }}
-      >
-        <div className="browser-chrome">
-          <span className="browser-dots"><i /><i /><i /></span>
-          <div className="browser-url-pill">
-            <span className="browser-lock"><Icon name="lock" /> https://</span>
-            <b>{project.displayUrl}</b>
-          </div>
-          <span className="project-chrome-badge">
-            <span className="status-dot mini" />
-            {project.metric}
-          </span>
-        </div>
-        <div className="project-viewport">
-          {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
-          <div className="project-sheen" />
-          <div className="project-ghost-overlay">
-            <span className="project-ghost">{project.number}</span>
-          </div>
+    <div
+      ref={mediaRef}
+      className={`project-media ${project.className}`}
+      data-project-media
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: tiltStyle || undefined,
+        transition: tiltStyle ? "transform 0.15s ease-out" : "transform 0.5s ease",
+      }}
+    >
+      <div className="browser-chrome">
+        <span><i /><i /><i /></span>
+        <b>{project.displayUrl}</b>
+        <span className="project-chrome-badge">{project.metric}</span>
+      </div>
+      <div className="project-viewport">
+        {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
+        <div className="project-ghost-overlay">
+          <span className="project-ghost">{project.number}</span>
         </div>
       </div>
     </div>
@@ -278,7 +248,6 @@ export default function App() {
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [terminalCopied, setTerminalCopied] = useState(false);
-  const [terminalTab, setTerminalTab] = useState<"engineer" | "telemetry">("engineer");
   const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
 
   const [theme, setTheme] = useState<"dark" | "light">(() => {
@@ -448,15 +417,6 @@ export default function App() {
       />
 
       <main ref={rootRef} className="site-shell">
-        {/* Subtle authentic print film grain matching Halftone Wordmark's texture */}
-        <svg className="film-grain-overlay" aria-hidden="true">
-          <filter id="filmGrainFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
-            <feColorMatrix type="saturate" values="0" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#filmGrainFilter)" />
-        </svg>
-
         <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
         <header className="nav-header" data-nav>
@@ -538,30 +498,16 @@ export default function App() {
           </div>
           <h1 className="hero-title" aria-label="Manpreet Singh">
             <span className="hero-line"><span data-hero-word>Manpreet</span></span>
-            <span className="hero-line hero-line-bottom">
-              <span data-hero-word className="hero-title-accent">Singh<span className="title-dot">.</span></span>
-            </span>
+            <span className="hero-line hero-line-bottom"><span data-hero-word>Singh<span className="title-dot">.</span></span></span>
           </h1>
           <div className="hero-bottom">
             <div className="hero-copy" data-hero-copy>
               <div className="hero-role"><span>Full-stack engineer</span><i>×</i><span>GenAI builder</span></div>
               <p>I architect and ship <strong>fast, scalable, and secure products</strong>—from high-performance React & Next.js web applications to production-grade LangChain intelligence workflows.</p>
               <div className="hero-proof">
-                <div>
-                  <span className="proof-accent-dot dot-cyan" />
-                  <strong>03</strong>
-                  <span>Shipped apps</span>
-                </div>
-                <div>
-                  <span className="proof-accent-dot dot-gold" />
-                  <strong>MERN</strong>
-                  <span>End-to-end</span>
-                </div>
-                <div>
-                  <span className="proof-accent-dot dot-orange" />
-                  <strong>GenAI</strong>
-                  <span>Production-ready</span>
-                </div>
+                <div><strong>03</strong><span>Shipped apps</span></div>
+                <div><strong>MERN</strong><span>End-to-end</span></div>
+                <div><strong>GenAI</strong><span>Production-ready</span></div>
               </div>
               <div className="hero-actions">
                 <a className="pill pill-accent" href="#work">Explore my work <Icon name="arrow" /></a>
@@ -572,23 +518,8 @@ export default function App() {
             </div>
             <div className="terminal" data-terminal>
               <div className="terminal-bar">
-                <div className="terminal-dots"><i /><i /><i /></div>
-                <div className="terminal-tabs">
-                  <button
-                    type="button"
-                    className={`terminal-tab ${terminalTab === "engineer" ? "active" : ""}`}
-                    onClick={() => setTerminalTab("engineer")}
-                  >
-                    <Icon name="terminal" /> engineer.ts
-                  </button>
-                  <button
-                    type="button"
-                    className={`terminal-tab ${terminalTab === "telemetry" ? "active" : ""}`}
-                    onClick={() => setTerminalTab("telemetry")}
-                  >
-                    <span className="status-dot mini" /> telemetry.sh
-                  </button>
-                </div>
+                <div><i /><i /><i /></div>
+                <span>manpreet.dev</span>
                 <button
                   type="button"
                   className="terminal-copy-btn"
@@ -600,40 +531,15 @@ export default function App() {
                   <span>{terminalCopied ? "Copied" : "Copy"}</span>
                 </button>
               </div>
-
-              {terminalTab === "engineer" ? (
-                <div className="terminal-body">
-                  <p><span className="code-muted">01</span><span className="code-accent">const</span> engineer = {'{'}</p>
-                  <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-secondary">"Manpreet Singh"</span>,</p>
-                  <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-secondary">"Full-Stack & GenAI Engineer"</span>,</p>
-                  <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-secondary">"React"</span>, <span className="code-secondary">"Next.js"</span>, <span className="code-secondary">"Node.js"</span>, <span className="code-secondary">"LangChain"</span>],</p>
-                  <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-accent">true</span>,</p>
-                  <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-secondary">"Mohali, India"</span></p>
-                  <p><span className="code-muted">07</span>{'}'};</p>
-                  <p className="terminal-output"><span>→</span> Ready to build high-impact products<span className="terminal-cursor">_</span></p>
-                </div>
-              ) : (
-                <div className="terminal-body">
-                  <p><span className="code-muted">01</span><span className="code-accent">$</span> agy telemetry --verify-production</p>
-                  <p><span className="code-muted">02</span>&nbsp;&nbsp;<span className="terminal-status-ok">✔</span> System status: <span className="code-accent">Operational</span></p>
-                  <p><span className="code-muted">03</span>&nbsp;&nbsp;<span className="terminal-status-ok">✔</span> Code velocity: <span className="code-secondary">Continuous shipping (365d)</span></p>
-                  <p><span className="code-muted">04</span>&nbsp;&nbsp;<span className="terminal-status-ok">✔</span> Database: <span className="code-secondary">MongoDB &amp; MySQL (Indexed)</span></p>
-                  <p><span className="code-muted">05</span>&nbsp;&nbsp;<span className="terminal-status-ok">✔</span> Availability: <span className="code-accent">Immediate / Full-time</span></p>
-                  <p><span className="code-muted">06</span>&nbsp;&nbsp;<span className="terminal-status-ok">✔</span> Security: <span className="code-secondary">RBAC, JWT, TOTP 2FA Verified</span></p>
-                  <p className="terminal-output"><span>⚡</span> All production benchmarks passed<span className="terminal-cursor">_</span></p>
-                </div>
-              )}
-
-              <div className="terminal-footer">
-                <div className="terminal-footer-left">
-                  <span className="terminal-branch">main*</span>
-                  <span>TypeScript 5.7</span>
-                </div>
-                <div className="terminal-footer-right">
-                  <span>UTF-8</span>
-                  <span>LF</span>
-                  <span>Ln 7, Col 2</span>
-                </div>
+              <div className="terminal-body">
+                <p><span className="code-muted">01</span><span className="code-accent">const</span> engineer = {'{'}</p>
+                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-secondary">"Manpreet Singh"</span>,</p>
+                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-secondary">"Full-Stack & GenAI Engineer"</span>,</p>
+                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-secondary">"React"</span>, <span className="code-secondary">"Next.js"</span>, <span className="code-secondary">"Node.js"</span>, <span className="code-secondary">"LangChain"</span>],</p>
+                <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-accent">true</span>,</p>
+                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-secondary">"Mohali, India"</span></p>
+                <p><span className="code-muted">07</span>{'}'};</p>
+                <p className="terminal-output"><span>→</span> Ready to build high-impact products_</p>
               </div>
             </div>
           </div>
@@ -781,16 +687,10 @@ export default function App() {
             <div className="service-grid">
               {services.map((service) => (
                 <article className="service-card" key={service.number} data-reveal>
-                  <div className="service-card-top">
-                    <span className="service-number">{service.number}</span>
-                    <span className="service-icon-box"><Icon name={service.icon} /></span>
-                  </div>
+                  <div><span>{service.number}</span><i>✦</i></div>
                   <h3>{service.title}</h3>
                   <p>{service.body}</p>
-                  <div className="service-card-bottom">
-                    <small>{service.tech}</small>
-                    <span className="service-metric-tag">{service.metric}</span>
-                  </div>
+                  <small>{service.tech}</small>
                 </article>
               ))}
             </div>
@@ -884,18 +784,9 @@ export default function App() {
 
           <div className="experience-layout">
             <aside className="about-card" data-reveal>
-              <div className="about-verified-pill">
-                <span className="status-dot" />
-                Verified Full-Stack Engineer
-              </div>
               <div className="avatar-mark"><span>MS</span><i>✦</i></div>
               <blockquote>“I care about the tiny details users feel—and the robust systems they never have to think about.”</blockquote>
               <p>Based in Mohali, Punjab.<br />Open to engineering teams building ambitious digital products.</p>
-              <div className="about-stats-row">
-                <div><strong>3+</strong><span>Years Dev</span></div>
-                <div><strong>100%</strong><span>Commitment</span></div>
-                <div><strong>24h</strong><span>Reply SLA</span></div>
-              </div>
               <div className="social-row">
                 <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Icon name="github" /></a>
                 <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a>
@@ -934,9 +825,6 @@ export default function App() {
                 <div className="contact-kicker"><span className="status-dot" />Have a role, project, or bold idea?</div>
                 <h2>Let's build<br /><em>what's next.</em></h2>
                 <p>Looking for a dedicated Full-Stack & GenAI Engineer? Let's connect. I reply promptly within 24 hours.</p>
-                <div className="contact-guarantee-badge">
-                  <Icon name="check" /> Guaranteed reply within 24 hours · IST & Global Timezones
-                </div>
                 <div className="contact-email-row">
                   <a href={links.email} className="contact-email">
                     randhawamanpreet37@gmail.com <Icon name="arrow" />
