@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ContributionSkyline from "@/components/ui/contribution-skyline";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
@@ -398,6 +399,7 @@ export default function App() {
           <div className="nav-links">
             <a href="#work">Work</a>
             <a href="#expertise">Expertise</a>
+            <a href="#activity">Activity</a>
             <a href="#about">About</a>
           </div>
           <div className="nav-actions">
@@ -443,8 +445,9 @@ export default function App() {
             <div className="mobile-menu-links">
               <a href="#work" onClick={closeMenu}>Work <span>01</span></a>
               <a href="#expertise" onClick={closeMenu}>Expertise <span>02</span></a>
-              <a href="#about" onClick={closeMenu}>About <span>03</span></a>
-              <a href="#contact" onClick={closeMenu}>Contact <span>04</span></a>
+              <a href="#activity" onClick={closeMenu}>Activity <span>03</span></a>
+              <a href="#about" onClick={closeMenu}>About <span>04</span></a>
+              <a href="#contact" onClick={closeMenu}>Contact <span>05</span></a>
             </div>
             <p>Mohali, Punjab · Available for Full-Time & Select Contracts</p>
           </div>
@@ -611,9 +614,46 @@ export default function App() {
           </div>
         </section>
 
+        <section id="activity" className="section section-activity wrap">
+          <div className="section-heading" data-reveal>
+            <div><span className="section-no">03</span><p>Commitment</p></div>
+            <h2>Continuous shipping.<br /><em>Engineering skyline.</em></h2>
+            <p className="section-intro">An interactive 3D activity skyline tracking daily code velocity, continuous releases, and open-source contributions.</p>
+          </div>
+
+          <div className="activity-card-wrap" data-reveal>
+            <div className="activity-toolbar">
+              <div className="activity-badge">
+                <span className="status-dot" />
+                Live Engineering Velocity
+              </div>
+              <a
+                href={links.github}
+                target="_blank"
+                rel="noreferrer"
+                className="activity-github-link"
+              >
+                <Icon name="github" /> @mannrandhawa004 on GitHub <Icon name="arrow" />
+              </a>
+            </div>
+
+            <ContributionSkyline
+              palette={{
+                light: ["#93c5fd", "#60a5fa", "#2563eb", "#1d4ed8"],
+                dark: ["#4c0519", "#9f1239", "#e11d48", "#f43f5e"],
+              }}
+              defaultView="3d"
+              orbit={true}
+              showStats={true}
+              showLegend={true}
+              showToggle={true}
+            />
+          </div>
+        </section>
+
         <section id="about" className="section about-section wrap">
           <div className="section-heading" data-reveal>
-            <div><span className="section-no">03</span><p>Experience</p></div>
+            <div><span className="section-no">04</span><p>Experience</p></div>
             <h2>Learning fast.<br /><em>Shipping faster.</em></h2>
             <p className="section-intro">A BCA graduate with proven production experience building resilient MERN stack products.</p>
           </div>
