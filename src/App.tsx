@@ -7,7 +7,19 @@ import task_management from "../public/images/task_management.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type IconName = "arrow" | "github" | "linkedin" | "mail" | "download" | "menu" | "close" | "copy" | "check" | "external";
+type IconName =
+  | "arrow"
+  | "github"
+  | "linkedin"
+  | "mail"
+  | "download"
+  | "menu"
+  | "close"
+  | "copy"
+  | "check"
+  | "external"
+  | "sun"
+  | "moon";
 
 const links = {
   github: "https://github.com/mannrandhawa004",
@@ -125,6 +137,19 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
   if (name === "copy") return <svg {...common} aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
   if (name === "check") return <svg {...common} aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
   if (name === "external") return <svg {...common} aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" /></svg>;
+  if (name === "sun")
+    return (
+      <svg {...common} aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </svg>
+    );
+  if (name === "moon")
+    return (
+      <svg {...common} aria-hidden="true">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+      </svg>
+    );
   return <svg {...common} aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.2.5S18 0 15 1.9a13.4 13.4 0 0 0-7 0C5 .1 3.8.5 3.8.5A5 5 0 0 0 3.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 8 18v4" /></svg>;
 }
 
@@ -141,12 +166,83 @@ function Marquee() {
   );
 }
 
+function ProjectInteractiveMedia({ project }: { project: typeof projects[0] }) {
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const [tiltStyle, setTiltStyle] = useState("");
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!mediaRef.current) return;
+    const rect = mediaRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setTiltStyle(`perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale3d(1.02, 1.02, 1.02)`);
+  };
+
+  const handleMouseLeave = () => {
+    setTiltStyle("perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)");
+  };
+
+  return (
+    <div
+      ref={mediaRef}
+      className={`project-media ${project.className}`}
+      data-project-media
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: tiltStyle || undefined,
+        transition: tiltStyle ? "transform 0.15s ease-out" : "transform 0.5s ease",
+      }}
+    >
+      <div className="browser-chrome">
+        <span><i /><i /><i /></span>
+        <b>{project.displayUrl}</b>
+        <span className="project-chrome-badge">{project.metric}</span>
+      </div>
+      <div className="project-viewport">
+        {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
+        <div className="project-ghost-overlay">
+          <span className="project-ghost">{project.number}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const rootRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [terminalCopied, setTerminalCopied] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
+
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("portfolio-theme");
+      if (saved === "light" || saved === "dark") return saved;
+      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
+  useEffect(() => {
+    const handlePointerMove = (e: PointerEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", handlePointerMove);
+  }, []);
 
   useEffect(() => {
     const update = () => {
@@ -165,7 +261,6 @@ export default function App() {
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const ctx = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
@@ -177,21 +272,11 @@ export default function App() {
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
-          y: 54,
+          y: 50,
           opacity: 0,
-          duration: 0.9,
+          duration: 0.85,
           ease: "power3.out",
           scrollTrigger: { trigger: element, start: "top 88%" },
-        });
-      });
-
-      gsap.utils.toArray<HTMLElement>("[data-project]").forEach((card) => {
-        const media = card.querySelector("[data-project-media]");
-        if (!media || reduced) return;
-        gsap.fromTo(media, { scale: 1.05 }, {
-          scale: 1,
-          ease: "none",
-          scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true },
         });
       });
     }, rootRef);
@@ -205,6 +290,23 @@ export default function App() {
       await navigator.clipboard.writeText("randhawamanpreet37@gmail.com");
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2400);
+    } catch {
+      // fallback
+    }
+  };
+
+  const copyTerminalSnippet = async () => {
+    const snippet = `const engineer = {
+  name: "Manpreet Singh",
+  role: "Full-Stack & GenAI Engineer",
+  stack: ["React", "Next.js", "Node.js", "LangChain"],
+  shipsProduction: true,
+  location: "Mohali, India"
+};`;
+    try {
+      await navigator.clipboard.writeText(snippet);
+      setTerminalCopied(true);
+      setTimeout(() => setTerminalCopied(false), 2000);
     } catch {
       // fallback
     }
@@ -231,6 +333,14 @@ export default function App() {
 
   return (
     <>
+      <div
+        className="ambient-spotlight"
+        style={{
+          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
+        }}
+        aria-hidden="true"
+      />
+
       <main ref={rootRef} className="site-shell">
         <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
@@ -247,13 +357,46 @@ export default function App() {
             <a href="#expertise">Expertise</a>
             <a href="#about">About</a>
           </div>
-          <a href="#contact" className="pill pill-dark nav-cta">Let's talk <Icon name="arrow" /></a>
-          <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu"><Icon name="menu" /></button>
+          <div className="nav-actions">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="theme-toggle-btn"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              <span className="theme-icon-slot">
+                <Icon name={theme === "dark" ? "moon" : "sun"} />
+              </span>
+              <span className="theme-toggle-text">{theme === "dark" ? "Dark" : "Light"}</span>
+            </button>
+            <a href="#contact" className="pill pill-primary nav-cta">
+              Let's talk <Icon name="arrow" />
+            </a>
+            <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+              <Icon name="menu" />
+            </button>
+          </div>
         </nav>
 
         {menuOpen && (
           <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
-            <button className="menu-close" type="button" onClick={closeMenu} aria-label="Close menu"><Icon name="close" /></button>
+            <div className="mobile-menu-header">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="theme-toggle-btn"
+                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              >
+                <span className="theme-icon-slot">
+                  <Icon name={theme === "dark" ? "moon" : "sun"} />
+                </span>
+                <span>{theme === "dark" ? "Dark Mode" : "Light Mode"}</span>
+              </button>
+              <button className="menu-close" type="button" onClick={closeMenu} aria-label="Close menu">
+                <Icon name="close" />
+              </button>
+            </div>
             <div className="mobile-menu-links">
               <a href="#work" onClick={closeMenu}>Work <span>01</span></a>
               <a href="#expertise" onClick={closeMenu}>Expertise <span>02</span></a>
@@ -270,7 +413,7 @@ export default function App() {
 
           <div className="hero-kicker" data-hero-kicker>
             <span className="status-dot" />
-            Manpreet Singh · Available for full-time roles & engineering teams
+            Manpreet Singh · Available for full-time engineering teams
           </div>
           <h1 className="hero-title" aria-label="Manpreet Singh">
             <span className="hero-line"><span data-hero-word>Manpreet</span></span>
@@ -286,7 +429,7 @@ export default function App() {
                 <div><strong>GenAI</strong><span>Production-ready</span></div>
               </div>
               <div className="hero-actions">
-                <a className="pill pill-acid" href="#work">Explore my work <Icon name="arrow" /></a>
+                <a className="pill pill-accent" href="#work">Explore my work <Icon name="arrow" /></a>
                 <a className="text-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">
                   Download résumé <Icon name="download" />
                 </a>
@@ -296,15 +439,24 @@ export default function App() {
               <div className="terminal-bar">
                 <div><i /><i /><i /></div>
                 <span>manpreet.dev</span>
-                <span>⌘</span>
+                <button
+                  type="button"
+                  className="terminal-copy-btn"
+                  onClick={copyTerminalSnippet}
+                  aria-label="Copy terminal snippet"
+                  title="Copy terminal snippet"
+                >
+                  <Icon name={terminalCopied ? "check" : "copy"} />
+                  <span>{terminalCopied ? "Copied" : "Copy"}</span>
+                </button>
               </div>
               <div className="terminal-body">
-                <p><span className="code-muted">01</span><span className="code-pink">const</span> engineer = {'{'}</p>
-                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-green">"Manpreet Singh"</span>,</p>
-                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-green">"Full-Stack & GenAI Engineer"</span>,</p>
-                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-green">"React"</span>, <span className="code-green">"Next.js"</span>, <span className="code-green">"Node.js"</span>, <span className="code-green">"LangChain"</span>],</p>
-                <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-pink">true</span>,</p>
-                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-green">"Mohali, India"</span></p>
+                <p><span className="code-muted">01</span><span className="code-accent">const</span> engineer = {'{'}</p>
+                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-amber">"Manpreet Singh"</span>,</p>
+                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-amber">"Full-Stack & GenAI Engineer"</span>,</p>
+                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-amber">"React"</span>, <span className="code-amber">"Next.js"</span>, <span className="code-amber">"Node.js"</span>, <span className="code-amber">"LangChain"</span>],</p>
+                <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-accent">true</span>,</p>
+                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-amber">"Mohali, India"</span></p>
                 <p><span className="code-muted">07</span>{'}'};</p>
                 <p className="terminal-output"><span>→</span> Ready to build high-impact products_</p>
               </div>
@@ -329,19 +481,7 @@ export default function App() {
           <div className="projects">
             {projects.map((project) => (
               <article className="project" key={project.title} data-project data-reveal>
-                <div className={`project-media ${project.className}`} data-project-media>
-                  <div className="browser-chrome">
-                    <span><i /><i /><i /></span>
-                    <b>{project.displayUrl}</b>
-                    <span className="project-chrome-badge">{project.metric}</span>
-                  </div>
-                  <div className="project-viewport">
-                    {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
-                    <div className="project-ghost-overlay">
-                      <span className="project-ghost">{project.number}</span>
-                    </div>
-                  </div>
-                </div>
+                <ProjectInteractiveMedia project={project} />
                 <div className="project-info">
                   <div className="project-title-row">
                     <span>{project.number}</span>
@@ -356,11 +496,11 @@ export default function App() {
                   </div>
                   <div className="project-actions">
                     {project.isLiveDemo ? (
-                      <a href={project.live} target="_blank" rel="noreferrer" className="pill pill-acid">
+                      <a href={project.live} target="_blank" rel="noreferrer" className="pill pill-accent">
                         Live Demo <Icon name="arrow" />
                       </a>
                     ) : (
-                      <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-acid">
+                      <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-accent">
                         Explore Architecture <Icon name="arrow" />
                       </a>
                     )}
@@ -472,7 +612,6 @@ export default function App() {
         </section>
 
         <section id="contact" className="contact-section">
-          <div className="contact-orb" />
           <div className="wrap contact-inner" data-reveal>
             <div className="contact-grid">
               <div className="contact-copy">
@@ -526,7 +665,7 @@ export default function App() {
                     {formStatus === "error" && "Something went wrong. Please email directly."}
                     {(formStatus === "idle" || formStatus === "sending") && "Your details stay private. No spam, ever."}
                   </p>
-                  <button className="pill pill-acid" type="submit" disabled={formStatus === "sending"}>
+                  <button className="pill pill-accent" type="submit" disabled={formStatus === "sending"}>
                     {formStatus === "sending" ? "Sending..." : "Send message"}<Icon name="arrow" />
                   </button>
                 </div>

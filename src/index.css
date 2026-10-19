@@ -1,18 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --ink: #11110f;
-  --paper: #f2f0e8;
-  --acid: #dfff00;
-  --coral: #ff6b57;
-  --violet: #8b5cf6;
-  --line: rgba(17, 17, 15, 0.16);
-  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
-  color: var(--ink);
-  background: var(--paper);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+:root,
+[data-theme="dark"] {
+  --bg: #0b0c0e;
+  --bg-subtle: #121518;
+  --surface: #14171a;
+  --surface-elevated: #1a1e22;
+  --surface-glass: rgba(20, 23, 26, 0.85);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f3f4f6;
+  --text-muted: #86909a;
+  --text-subtle: #565e66;
+  --accent: #ff3e1d; /* Electric Japanese Vermilion */
+  --accent-hover: #ff5a3d;
+  --accent-glow: rgba(255, 62, 29, 0.25);
+  --amber: #ffb020; /* Warm Ochre */
+  --card-shadow: 10px 10px 0 #000000;
+  --card-shadow-hover: 14px 14px 0 #ff3e1d;
+  --pill-primary-bg: #f3f4f6;
+  --pill-primary-text: #0b0c0e;
+  --marquee-bg: #14171a;
+  --marquee-text: #f3f4f6;
+  --terminal-bg: rgba(14, 16, 18, 0.96);
+  --contact-bg: #101215;
+  --contact-card: #14171a;
+  --browser-bg: #181c20;
+  --browser-text: #f3f4f6;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f5f3ef;
+  --bg-subtle: #ebe7e0;
+  --surface: #ffffff;
+  --surface-elevated: #faf8f5;
+  --surface-glass: rgba(255, 255, 255, 0.88);
+  --border: rgba(17, 19, 23, 0.12);
+  --border-strong: rgba(17, 19, 23, 0.24);
+  --text: #111317;
+  --text-muted: #5a626a;
+  --text-subtle: #969da5;
+  --accent: #e63212; /* Deep Vermilion */
+  --accent-hover: #ff3e1d;
+  --accent-glow: rgba(230, 50, 18, 0.2);
+  --amber: #c67d0a;
+  --card-shadow: 10px 10px 0 #111317;
+  --card-shadow-hover: 14px 14px 0 #e63212;
+  --pill-primary-bg: #111317;
+  --pill-primary-text: #ffffff;
+  --marquee-bg: #111317;
+  --marquee-text: #f5f3ef;
+  --terminal-bg: rgba(18, 20, 24, 0.96);
+  --contact-bg: #eae6dd;
+  --contact-card: #ffffff;
+  --browser-bg: #eceae3;
+  --browser-text: #111317;
+  color-scheme: light;
 }
 
 * {
@@ -26,8 +70,14 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  background: var(--paper);
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -45,20 +95,38 @@ button {
 }
 
 ::selection {
-  color: var(--ink);
-  background: var(--acid);
+  color: #fff;
+  background: var(--accent);
 }
 
 .site-shell {
   position: relative;
   overflow: hidden;
-  background: var(--paper);
+  background: var(--bg);
   isolation: isolate;
+  transition: background-color 0.35s ease;
 }
 
 .wrap {
   width: min(100% - 40px, 1440px);
   margin-inline: auto;
+}
+
+/* Ambient Spotlight Follower */
+.ambient-spotlight {
+  position: fixed;
+  top: -240px;
+  left: -240px;
+  width: 480px;
+  height: 480px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 68%);
+  filter: blur(45px);
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+  will-change: transform;
 }
 
 .scroll-progress {
@@ -69,7 +137,7 @@ button {
   width: 100%;
   height: 4px;
   transform-origin: left;
-  background: var(--acid);
+  background: var(--accent);
 }
 
 /* Navigation */
@@ -80,7 +148,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
+  transition: border-color 0.35s ease;
 }
 
 .brand {
@@ -95,11 +164,17 @@ button {
   height: 44px;
   place-items: center;
   border-radius: 50%;
-  color: white;
-  background: var(--ink);
-  font-size: 14px;
+  color: #fff;
+  background: var(--text);
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: -0.04em;
+  transition: background-color 0.35s ease;
+}
+
+[data-theme="light"] .brand-mark {
+  background: var(--text);
+  color: var(--bg);
 }
 
 .brand-copy {
@@ -113,7 +188,7 @@ button {
 
 .brand-copy small {
   margin-top: 4px;
-  color: rgba(17, 17, 15, 0.65);
+  color: var(--text-muted);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -123,9 +198,9 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 38px;
   margin-left: auto;
-  margin-right: 48px;
+  margin-right: 36px;
 }
 
 .nav-links a {
@@ -134,6 +209,7 @@ button {
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
+  color: var(--text);
 }
 
 .nav-links a::after {
@@ -143,7 +219,7 @@ button {
   right: 0;
   bottom: -6px;
   height: 1.5px;
-  background: var(--ink);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.35s ease;
@@ -154,6 +230,52 @@ button {
   transform-origin: left;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface-glass);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.theme-icon-slot {
+  display: grid;
+  place-items: center;
+}
+
+.theme-icon-slot svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.35s ease;
+}
+
+.theme-toggle-btn:hover .theme-icon-slot svg {
+  transform: rotate(20deg);
+}
+
 /* Pills & Buttons */
 .pill {
   display: inline-flex;
@@ -162,13 +284,13 @@ button {
   gap: 10px;
   min-height: 46px;
   padding: 0 22px;
-  border: 1.5px solid var(--ink);
   border-radius: 999px;
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease;
   cursor: pointer;
 }
 
@@ -187,35 +309,40 @@ button {
   transform: translate(2px, -2px);
 }
 
-.pill-dark {
+.pill-primary {
+  color: var(--pill-primary-text);
+  background: var(--pill-primary-bg);
+  border: 1.5px solid var(--pill-primary-bg);
+}
+
+.pill-primary:hover {
   color: #fff;
-  background: var(--ink);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-.pill-dark:hover {
-  color: var(--ink);
-  background: var(--acid);
+.pill-accent {
+  color: #fff;
+  background: var(--accent);
+  border: 1.5px solid var(--accent);
 }
 
-.pill-acid {
-  color: var(--ink);
-  background: var(--acid);
-}
-
-.pill-acid:hover {
-  color: var(--acid);
-  background: var(--ink);
+.pill-accent:hover {
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
 }
 
 .pill-outline {
-  color: var(--ink);
+  color: var(--text);
   background: transparent;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--border-strong);
 }
 
 .pill-outline:hover {
-  color: #fff;
-  background: var(--ink);
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
 }
 
 .menu-button {
@@ -223,9 +350,10 @@ button {
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--border-strong);
   border-radius: 50%;
   background: transparent;
+  color: var(--text);
 }
 
 .menu-button svg,
@@ -243,20 +371,27 @@ button {
   justify-content: center;
   padding: clamp(28px, 6vw, 48px);
   color: #fff;
-  background: var(--ink);
+  background: #0b0c0e;
   overflow-y: auto;
   max-height: 100vh;
 }
 
-.menu-close {
+.mobile-menu-header {
   position: absolute;
   top: 24px;
+  left: 24px;
   right: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-close {
   display: grid;
   width: 48px;
   height: 48px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   color: white;
   background: transparent;
@@ -273,7 +408,7 @@ button {
   justify-content: space-between;
   align-items: center;
   padding: 14px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   font-family: "Anton", Impact, sans-serif;
   font-size: clamp(2.8rem, 9vw, 5rem);
   line-height: 1;
@@ -281,7 +416,7 @@ button {
 }
 
 .mobile-menu-links a span {
-  color: var(--acid);
+  color: var(--accent);
   font-family: "Archivo", sans-serif;
   font-size: 13px;
   font-weight: 800;
@@ -289,7 +424,7 @@ button {
 
 .mobile-menu > p {
   margin: 32px 0 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -309,36 +444,38 @@ button {
   position: absolute;
   z-index: -3;
   inset: 0;
-  background-image: linear-gradient(rgba(17, 17, 15, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 17, 15, 0.035) 1px, transparent 1px);
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 58px 58px;
-  mask-image: linear-gradient(to bottom, black, transparent 78%);
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
 }
 
 .hero-orb {
   position: absolute;
   z-index: -2;
   border-radius: 50%;
-  filter: blur(35px);
-  opacity: 0.7;
+  filter: blur(60px);
+  opacity: 0.5;
   pointer-events: none;
   animation: float 10s ease-in-out infinite;
 }
 
 .hero-orb-one {
-  width: min(40vw, 580px);
+  width: min(40vw, 560px);
   aspect-ratio: 1;
   left: -10%;
   top: 5%;
-  background: #ffb35c;
+  background: var(--amber);
+  opacity: 0.35;
 }
 
 .hero-orb-two {
   width: min(24vw, 330px);
   aspect-ratio: 1;
   right: 5%;
-  top: 28%;
-  background: var(--coral);
+  top: 25%;
+  background: var(--accent);
+  opacity: 0.45;
   animation-delay: -4s;
 }
 
@@ -354,10 +491,10 @@ button {
   align-items: center;
   gap: 10px;
   padding: 10px 18px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border-strong);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  box-shadow: 0 8px 24px -22px rgba(17, 17, 15, 0.7);
+  background: var(--surface-glass);
+  box-shadow: 0 8px 24px -22px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   font-size: 11px;
   font-weight: 800;
@@ -399,11 +536,11 @@ button {
 }
 
 .hero-line-bottom > span {
-  color: var(--coral);
+  color: var(--accent);
 }
 
 .title-dot {
-  color: var(--ink);
+  color: var(--amber);
 }
 
 .hero-bottom {
@@ -424,7 +561,7 @@ button {
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
-  color: var(--coral);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.14em;
@@ -432,7 +569,7 @@ button {
 }
 
 .hero-role i {
-  color: rgba(17, 17, 15, 0.45);
+  color: var(--text-muted);
   font-style: normal;
 }
 
@@ -442,20 +579,20 @@ button {
   font-size: clamp(1.1rem, 1.45vw, 1.4rem);
   line-height: 1.55;
   letter-spacing: -0.025em;
-  color: rgba(17, 17, 15, 0.88);
+  color: var(--text-muted);
 }
 
 .hero-copy > p strong {
   font-weight: 800;
-  color: var(--ink);
+  color: var(--text);
 }
 
 .hero-proof {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 24px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .hero-proof > div {
@@ -463,7 +600,7 @@ button {
   flex-direction: column;
   gap: 5px;
   padding: 13px 14px 13px 0;
-  border-right: 1px solid var(--line);
+  border-right: 1px solid var(--border);
 }
 
 .hero-proof > div:not(:first-child) {
@@ -480,10 +617,11 @@ button {
   font-weight: 400;
   line-height: 1;
   text-transform: uppercase;
+  color: var(--text);
 }
 
 .hero-proof span {
-  color: rgba(17, 17, 15, 0.65);
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -503,11 +641,12 @@ button {
   align-items: center;
   gap: 9px;
   padding: 9px 0 5px;
-  border-bottom: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--text);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--text);
 }
 
 .text-link svg {
@@ -522,11 +661,11 @@ button {
   justify-self: end;
   align-self: center;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--border-strong);
   border-radius: 10px;
-  color: #f9f9f6;
-  background: rgba(17, 17, 15, 0.96);
-  box-shadow: 0 28px 60px -35px rgba(0, 0, 0, 0.8);
+  color: #f3f4f6;
+  background: var(--terminal-bg);
+  box-shadow: 0 28px 60px -35px rgba(0, 0, 0, 0.85);
   transform: rotate(-0.6deg);
 }
 
@@ -537,7 +676,7 @@ button {
   align-items: center;
   padding: 0 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   font-family: monospace;
   font-size: 11px;
 }
@@ -560,11 +699,34 @@ button {
 }
 
 .terminal-bar > div i:nth-child(3) {
-  background: var(--acid);
+  background: #2ea043;
 }
 
-.terminal-bar > span:last-child {
+.terminal-copy-btn {
   justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.terminal-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+}
+
+.terminal-copy-btn svg {
+  width: 12px;
+  height: 12px;
 }
 
 .terminal-body {
@@ -586,12 +748,12 @@ button {
   user-select: none;
 }
 
-.code-pink {
-  color: #ff748c;
+.code-accent {
+  color: var(--accent);
 }
 
-.code-green {
-  color: var(--acid);
+.code-amber {
+  color: var(--amber);
 }
 
 .terminal-output {
@@ -603,7 +765,7 @@ button {
 
 .terminal-output span {
   margin-right: 10px;
-  color: var(--acid);
+  color: var(--accent);
 }
 
 .hero-meta {
@@ -612,8 +774,8 @@ button {
   align-items: center;
   margin-top: 36px;
   padding: 16px 0 4px;
-  border-top: 1px solid var(--line);
-  color: rgba(17, 17, 15, 0.6);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -621,7 +783,7 @@ button {
 }
 
 .hero-meta-center {
-  color: var(--ink);
+  color: var(--text);
 }
 
 /* Marquee Bar */
@@ -629,11 +791,12 @@ button {
   position: relative;
   z-index: 2;
   overflow: hidden;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  color: var(--acid);
-  background: var(--ink);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  color: var(--marquee-text);
+  background: var(--marquee-bg);
   transform: rotate(-1.2deg) scale(1.02);
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .marquee-track {
@@ -656,7 +819,7 @@ button {
 
 .marquee i {
   margin: 0 24px;
-  color: var(--coral);
+  color: var(--accent);
   font-family: serif;
   font-style: normal;
   font-size: 0.55em;
@@ -720,14 +883,14 @@ button {
 }
 
 .section-heading h2 em {
-  color: var(--coral);
+  color: var(--accent);
   font-style: normal;
 }
 
 .section-intro {
   max-width: 420px;
   margin: 7px 0 0;
-  color: rgba(17, 17, 15, 0.72);
+  color: var(--text-muted);
   font-size: 15px;
   line-height: 1.7;
   letter-spacing: -0.01em;
@@ -760,17 +923,19 @@ button {
   flex-direction: column;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border: 1.5px solid var(--ink);
-  border-radius: 6px;
-  box-shadow: 12px 12px 0 var(--ink);
+  border: 1.5px solid var(--border-strong);
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
   isolation: isolate;
-  background: #ecebe4;
-  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  background: var(--surface);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .project-media:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 18px 18px 0 var(--ink);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--accent);
 }
 
 .browser-chrome {
@@ -782,9 +947,9 @@ button {
   align-items: center;
   gap: 12px;
   padding: 0 16px;
-  border-bottom: 1px solid rgba(17, 17, 15, 0.25);
-  color: var(--ink);
-  background: #ecebe4;
+  border-bottom: 1px solid var(--border);
+  color: var(--browser-text);
+  background: var(--browser-bg);
   font-size: 11px;
 }
 
@@ -798,22 +963,22 @@ button {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--coral);
+  background: #ff5f57;
 }
 
 .browser-chrome i:nth-child(2) {
-  background: #f8bf44;
+  background: #febc2e;
 }
 
 .browser-chrome i:nth-child(3) {
-  background: #79ad47;
+  background: #28c840;
 }
 
 .browser-chrome b {
   overflow: hidden;
   padding: 4px 14px;
   border-radius: 99px;
-  background: rgba(17, 17, 15, 0.08);
+  background: var(--border);
   font-weight: 600;
   text-align: center;
   text-overflow: ellipsis;
@@ -824,7 +989,7 @@ button {
 .project-chrome-badge {
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(17, 17, 15, 0.1);
+  background: var(--border-strong);
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -835,7 +1000,7 @@ button {
   position: relative;
   flex: 1;
   overflow: hidden;
-  background: #171714;
+  background: #000;
 }
 
 .project-viewport > img {
@@ -863,7 +1028,7 @@ button {
   position: absolute;
   right: -2%;
   bottom: -22%;
-  color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.12);
   font-family: "Anton", Impact, sans-serif;
   font-size: clamp(8rem, 18vw, 18rem);
   line-height: 1;
@@ -879,12 +1044,12 @@ button {
   gap: 18px;
   align-items: flex-start;
   padding-bottom: 18px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
 }
 
 .project-title-row > span {
   margin-top: 6px;
-  color: var(--coral);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 900;
 }
@@ -895,7 +1060,7 @@ button {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--coral);
+  color: var(--accent);
   margin-bottom: 4px;
 }
 
@@ -911,7 +1076,7 @@ button {
 
 .project-info > p {
   margin: 20px 0;
-  color: rgba(17, 17, 15, 0.78);
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.75;
 }
@@ -924,13 +1089,13 @@ button {
 
 .tag-list span {
   padding: 6px 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--surface-elevated);
 }
 
 .project-actions {
@@ -944,8 +1109,9 @@ button {
 /* Expertise Section */
 .expertise-section {
   position: relative;
-  color: #f6f5ef;
-  background: var(--ink);
+  background: var(--bg-subtle);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .expertise-section::before {
@@ -953,8 +1119,8 @@ button {
   position: absolute;
   inset: 0;
   opacity: 0.35;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
   background-size: 70px 70px;
   mask-image: radial-gradient(circle at 50% 30%, black, transparent 65%);
 }
@@ -964,18 +1130,18 @@ button {
 }
 
 .section-heading-light .section-intro {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
 }
 
 .section-heading-light h2 em {
-  color: var(--acid);
+  color: var(--accent);
 }
 
 .service-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
 }
 
 .service-card {
@@ -983,15 +1149,16 @@ button {
   display: flex;
   flex-direction: column;
   padding: clamp(24px, 2.8vw, 42px);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  transition: color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  transition: color 0.35s ease, background 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
 }
 
 .service-card:hover {
-  color: var(--ink);
-  background: var(--acid);
+  background: var(--surface-elevated);
   transform: translateY(-8px);
+  border-color: var(--accent);
 }
 
 .service-card > div {
@@ -999,11 +1166,13 @@ button {
   justify-content: space-between;
   font-size: 11px;
   font-weight: 800;
+  color: var(--accent);
 }
 
 .service-card > div i {
   font-size: 18px;
   font-style: normal;
+  color: var(--amber);
 }
 
 .service-card h3 {
@@ -1019,34 +1188,25 @@ button {
 .service-card > p {
   min-height: 72px;
   margin: 0 0 28px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.7;
 }
 
-.service-card:hover > p {
-  color: rgba(17, 17, 15, 0.85);
-}
-
 .service-card small {
   padding-top: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  color: var(--acid);
+  border-top: 1px solid var(--border);
+  color: var(--accent);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.service-card:hover small {
-  border-color: rgba(17, 17, 15, 0.2);
-  color: var(--ink);
-}
-
 .stack {
   margin-top: 120px;
   padding-top: 62px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--border);
 }
 
 .stack-heading {
@@ -1058,7 +1218,7 @@ button {
 }
 
 .stack-heading > div span {
-  color: var(--acid);
+  color: var(--accent);
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.16em;
@@ -1067,7 +1227,7 @@ button {
 
 .stack-heading > div p {
   margin: 10px 0 0;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-muted);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1086,7 +1246,7 @@ button {
 .stack-heading > p {
   max-width: 380px;
   margin: 4px 0 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.75;
 }
@@ -1103,16 +1263,16 @@ button {
   aspect-ratio: 1;
   min-height: 500px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.17);
+  border: 1px solid var(--border-strong);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(223, 255, 0, 0.08), transparent 52%);
+  background: radial-gradient(circle, var(--accent-glow), transparent 55%);
 }
 
 .skill-orbit::before,
 .skill-orbit::after {
   content: "";
   position: absolute;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--border);
 }
 
 .skill-orbit::before {
@@ -1133,7 +1293,7 @@ button {
   position: absolute;
   left: 50%;
   top: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--border);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
@@ -1168,9 +1328,9 @@ button {
   width: 35%;
   aspect-ratio: 1;
   border-radius: 50%;
-  color: var(--ink);
-  background: var(--acid);
-  box-shadow: 0 0 0 10px rgba(223, 255, 0, 0.08), 0 30px 70px -30px rgba(223, 255, 0, 0.7);
+  color: #fff;
+  background: var(--accent);
+  box-shadow: 0 0 0 10px var(--accent-glow), 0 30px 70px -30px var(--accent);
   transform: translate(-50%, -50%);
 }
 
@@ -1184,6 +1344,7 @@ button {
 .skill-core strong {
   margin: 2px 0;
   font-size: 16px;
+  color: var(--amber);
 }
 
 .skill-core small {
@@ -1198,11 +1359,11 @@ button {
   position: absolute;
   z-index: 3;
   padding: 10px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--border-strong);
   border-radius: 999px;
-  color: white;
-  background: #171714;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -1242,20 +1403,21 @@ button {
 .stack-groups {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
 }
 
 .stack-group {
   min-height: 240px;
   padding: clamp(22px, 2.5vw, 34px);
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
   transition: background 0.3s ease;
 }
 
 .stack-group:hover {
-  background: rgba(255, 255, 255, 0.045);
+  background: var(--surface-elevated);
 }
 
 .stack-group-title {
@@ -1270,9 +1432,9 @@ button {
   height: 28px;
   padding: 0;
   place-items: center;
-  border: 1px solid var(--acid);
+  border: 1px solid var(--accent);
   border-radius: 50%;
-  color: var(--acid);
+  color: var(--accent);
   font-size: 10px;
   font-weight: 800;
 }
@@ -1288,7 +1450,7 @@ button {
 .stack-group > p {
   min-height: 38px;
   margin: 18px 0 23px;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-muted);
   font-size: 13px;
   line-height: 1.55;
 }
@@ -1301,11 +1463,12 @@ button {
 
 .stack-group > div:last-child span {
   padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.05em;
+  background: var(--bg);
 }
 
 /* About & Experience Section */
@@ -1324,11 +1487,12 @@ button {
   top: 30px;
   align-self: start;
   padding: clamp(28px, 4vw, 52px);
-  border: 1px solid var(--ink);
-  color: white;
-  background: var(--ink);
-  box-shadow: 10px 10px 0 var(--coral);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 10px 10px 0 var(--accent);
   transform: rotate(-1deg);
+  border-radius: 6px;
 }
 
 .avatar-mark {
@@ -1338,8 +1502,8 @@ button {
   height: 86px;
   place-items: center;
   border-radius: 50%;
-  color: var(--ink);
-  background: var(--acid);
+  color: #fff;
+  background: var(--accent);
   font-family: "Anton", Impact, sans-serif;
   font-size: 2rem;
 }
@@ -1353,8 +1517,8 @@ button {
   height: 31px;
   place-items: center;
   border-radius: 50%;
-  color: white;
-  background: var(--coral);
+  color: var(--bg);
+  background: var(--amber);
   font-size: 13px;
   font-style: normal;
 }
@@ -1370,7 +1534,7 @@ button {
 }
 
 .about-card > p {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--text-muted);
   font-size: 13px;
   line-height: 1.7;
 }
@@ -1386,15 +1550,16 @@ button {
   width: 44px;
   height: 44px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid var(--border-strong);
   border-radius: 50%;
+  color: var(--text);
   transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
 
 .social-row a:hover {
-  color: var(--ink);
-  background: var(--acid);
-  border-color: var(--acid);
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .social-row svg {
@@ -1403,7 +1568,7 @@ button {
 }
 
 .timeline {
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--border);
 }
 
 .timeline-item {
@@ -1411,12 +1576,12 @@ button {
   grid-template-columns: 160px 1fr;
   gap: 35px;
   padding: 38px 0 48px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
 }
 
 .timeline-date {
   padding-top: 4px;
-  color: var(--coral);
+  color: var(--accent);
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -1425,7 +1590,7 @@ button {
 
 .timeline-copy > span {
   float: right;
-  color: rgba(17, 17, 15, 0.55);
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -1441,7 +1606,7 @@ button {
 
 .timeline-copy h4 {
   margin: 7px 0 16px;
-  color: rgba(17, 17, 15, 0.65);
+  color: var(--text-muted);
   font-size: 13px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1451,14 +1616,14 @@ button {
 .timeline-copy p {
   max-width: 580px;
   margin: 0;
-  color: rgba(17, 17, 15, 0.78);
+  color: var(--text-muted);
   font-size: 14px;
   line-height: 1.75;
 }
 
 .education {
   margin-top: 45px;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--border);
 }
 
 /* Contact Section */
@@ -1467,35 +1632,14 @@ button {
   z-index: 2;
   overflow: hidden;
   padding: clamp(90px, 9vw, 140px) 0 50px;
-  color: var(--ink);
-  background: var(--coral);
+  background: var(--contact-bg);
+  border-top: 1px solid var(--border);
   isolation: isolate;
 }
 
-.contact-section::before {
-  content: "";
-  position: absolute;
-  z-index: -2;
-  inset: 0;
-  background: radial-gradient(circle at 72% 40%, rgba(255, 255, 255, 0.18), transparent 28%);
-}
-
-.contact-orb {
-  position: absolute;
-  z-index: -1;
-  width: min(36vw, 560px);
-  aspect-ratio: 1;
-  top: -8%;
-  left: 37%;
-  border-radius: 50%;
-  background: var(--acid);
-  filter: blur(12px);
-  opacity: 0.7;
-}
-
 .contact-kicker {
-  border-color: rgba(17, 17, 15, 0.3);
-  background: rgba(255, 255, 255, 0.4);
+  border-color: var(--border-strong);
+  background: var(--surface-glass);
 }
 
 .contact-grid {
@@ -1516,7 +1660,7 @@ button {
 }
 
 .contact-inner h2 em {
-  color: white;
+  color: var(--accent);
   font-style: normal;
 }
 
@@ -1525,7 +1669,7 @@ button {
   margin: 0 0 28px;
   font-size: 15px;
   line-height: 1.7;
-  color: rgba(17, 17, 15, 0.85);
+  color: var(--text-muted);
 }
 
 .contact-email-row {
@@ -1540,10 +1684,11 @@ button {
   align-items: center;
   gap: 12px;
   padding-bottom: 6px;
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 2px solid var(--text);
   font-size: clamp(1rem, 1.6vw, 1.4rem);
   font-weight: 800;
   letter-spacing: -0.03em;
+  color: var(--text);
 }
 
 .contact-email svg {
@@ -1561,9 +1706,10 @@ button {
   align-items: center;
   gap: 7px;
   padding: 8px 16px;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--border-strong);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--surface);
+  color: var(--text);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -1578,7 +1724,8 @@ button {
 }
 
 .copy-email-btn:hover {
-  background: var(--ink);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -1589,11 +1736,12 @@ button {
   flex-direction: column;
   gap: 23px;
   padding: clamp(28px, 4vw, 52px);
-  color: white;
-  background: var(--ink);
-  box-shadow: 14px 14px 0 rgba(255, 255, 255, 0.95);
+  color: var(--text);
+  background: var(--contact-card);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-strong);
   transform: rotate(1deg);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .form-honey {
@@ -1606,15 +1754,15 @@ button {
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  color: var(--acid);
+  border-bottom: 1px solid var(--border);
+  color: var(--accent);
   font-family: "Anton", Impact, sans-serif;
   font-size: 1.85rem;
   text-transform: uppercase;
 }
 
 .form-topline i {
-  color: var(--coral);
+  color: var(--amber);
   font-family: serif;
   font-size: 18px;
   font-style: normal;
@@ -1633,7 +1781,7 @@ button {
 }
 
 .contact-form label > span {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--text-muted);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -1645,10 +1793,10 @@ button {
 .contact-form textarea {
   width: 100%;
   border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid var(--border-strong);
   border-radius: 0;
   outline: none;
-  color: white;
+  color: var(--text);
   background: transparent;
   font: 500 14px/1.5 "Archivo", sans-serif;
   transition: border-color 0.25s ease;
@@ -1668,26 +1816,26 @@ button {
 .contact-form input:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {
-  border-color: var(--acid);
+  border-color: var(--accent);
 }
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: var(--text-subtle);
 }
 
 .contact-form select {
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--acid) 50%),
-    linear-gradient(135deg, var(--acid) 50%, transparent 50%);
+  background-image: linear-gradient(45deg, transparent 50%, var(--accent) 50%),
+    linear-gradient(135deg, var(--accent) 50%, transparent 50%);
   background-position: calc(100% - 12px) 18px, calc(100% - 7px) 18px;
   background-size: 5px 5px;
   background-repeat: no-repeat;
 }
 
 .contact-form option {
-  color: var(--ink);
-  background: white;
+  color: var(--text);
+  background: var(--surface);
 }
 
 .form-submit-row {
@@ -1710,7 +1858,7 @@ button {
 .form-status {
   max-width: 230px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--text-muted);
   font-size: 11px;
   line-height: 1.55;
   letter-spacing: 0.05em;
@@ -1718,12 +1866,12 @@ button {
 }
 
 .form-status-sent {
-  color: var(--acid);
+  color: var(--accent);
   font-weight: 700;
 }
 
 .form-status-error {
-  color: #ff8d7e;
+  color: #ff5f57;
   font-weight: 700;
 }
 
@@ -1733,7 +1881,7 @@ button {
   align-items: end;
   margin-top: 80px;
   padding-top: 25px;
-  border-top: 1px solid rgba(17, 17, 15, 0.3);
+  border-top: 1px solid var(--border);
 }
 
 .contact-footer > p {
@@ -1768,8 +1916,9 @@ button {
 .footer {
   position: relative;
   z-index: 2;
-  color: rgba(255, 255, 255, 0.65);
-  background: var(--ink);
+  color: var(--text-muted);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
 }
 
 .footer > div {
@@ -1784,13 +1933,13 @@ button {
 }
 
 .footer a {
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--text);
+  border-bottom: 1px solid var(--border-strong);
 }
 
 .footer a:hover {
-  color: var(--acid);
-  border-color: var(--acid);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 
 /* Responsive Media Queries */
@@ -1929,10 +2078,6 @@ button {
     gap: 32px;
   }
 
-  .project-media {
-    box-shadow: 8px 8px 0 var(--ink);
-  }
-
   .project-title-row h3 {
     font-size: clamp(3rem, 9vw, 4.5rem);
   }
@@ -1955,12 +2100,6 @@ button {
     top: 0;
     max-width: 560px;
   }
-
-  .contact-orb {
-    width: 70vw;
-    left: auto;
-    right: -20%;
-  }
 }
 
 @media (max-width: 560px) {
@@ -1979,16 +2118,6 @@ button {
 
   .hero-title {
     font-size: clamp(3.8rem, 19vw, 6rem);
-  }
-
-  .hero-orb-one {
-    width: 90vw;
-    left: -35%;
-  }
-
-  .hero-orb-two {
-    width: 55vw;
-    right: -20%;
   }
 
   .hero-copy > p {
@@ -2090,7 +2219,6 @@ button {
 
   .contact-form {
     padding: 28px 20px;
-    box-shadow: 8px 8px 0 rgba(255, 255, 255, 0.95);
   }
 
   .form-row {
@@ -2125,6 +2253,17 @@ button {
   .footer > div span:nth-child(2) {
     display: none;
   }
+
+  .theme-toggle-text {
+    display: none;
+  }
+
+  .theme-toggle-btn {
+    padding: 8px;
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2135,5 +2274,8 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+  .ambient-spotlight {
+    display: none;
   }
 }
