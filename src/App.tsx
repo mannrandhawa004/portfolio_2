@@ -4,7 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
-import fluid from "../public/images/fluid.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -453,11 +452,11 @@ export default function App() {
               </div>
               <div className="terminal-body">
                 <p><span className="code-muted">01</span><span className="code-accent">const</span> engineer = {'{'}</p>
-                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-amber">"Manpreet Singh"</span>,</p>
-                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-amber">"Full-Stack & GenAI Engineer"</span>,</p>
-                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-amber">"React"</span>, <span className="code-amber">"Next.js"</span>, <span className="code-amber">"Node.js"</span>, <span className="code-amber">"LangChain"</span>],</p>
+                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-secondary">"Manpreet Singh"</span>,</p>
+                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-secondary">"Full-Stack & GenAI Engineer"</span>,</p>
+                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-secondary">"React"</span>, <span className="code-secondary">"Next.js"</span>, <span className="code-secondary">"Node.js"</span>, <span className="code-secondary">"LangChain"</span>],</p>
                 <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-accent">true</span>,</p>
-                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-amber">"Mohali, India"</span></p>
+                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-secondary">"Mohali, India"</span></p>
                 <p><span className="code-muted">07</span>{'}'};</p>
                 <p className="terminal-output"><span>→</span> Ready to build high-impact products_</p>
               </div>
@@ -684,10 +683,6 @@ export default function App() {
         </section>
 
         <footer className="footer">
-          <div className="footer-fluid-bg" aria-hidden="true">
-            <img src={fluid} alt="" className="footer-fluid-img drift" />
-            <div className="footer-fluid-overlay" />
-          </div>
           <div className="wrap footer-content">
             <div className="footer-meta-top">
               <div className="footer-brand-box">
