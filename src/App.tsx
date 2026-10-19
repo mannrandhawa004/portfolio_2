@@ -1,15 +1,13 @@
 import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import PortfolioRibbon from "./components/Ribbon";
-// import ScrollRibbon from "./components/Ribbon";
-import resume_builder from "../public/images/resume_builder.png"
+import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
-import task_management from "../public/images/task_management.png"
+import task_management from "../public/images/task_management.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type IconName = "arrow" | "github" | "linkedin" | "mail" | "download" | "menu" | "close";
+type IconName = "arrow" | "github" | "linkedin" | "mail" | "download" | "menu" | "close" | "copy" | "check" | "external";
 
 const links = {
   github: "https://github.com/mannrandhawa004",
@@ -21,38 +19,47 @@ const projects = [
   {
     number: "01",
     title: "Taskflow",
-    eyebrow: "Taskflow SaaS platform",
+    eyebrow: "Enterprise Multi-Tenant SaaS",
     description:
-      "TaskFlow helps organizations manage projects, tasks, departments, teams, attendance and leave from an isolated workspace. It features Stripe and Razorpay subscriptions, automated tenant provisioning, RBAC, TOTP 2FA, Redis caching, API rate limiting and real-time Socket.IO notifications.",
-    tags: ["Next.js", "Node.js", "Mysql", "Razorpay", "Stripe", "2FA", "Task management", "Multi-tenant", "Socket.io", "Taiwind css", "Redux toolkit"],
-    href: "https://github.com/mannrandhawa004/task_management_system",
+      "TaskFlow is a production-grade multi-tenant platform built for organizations to manage cross-functional projects, departments, attendance, and leave with strict tenant isolation. Engineered with RBAC permissions, TOTP two-factor authentication, Redis caching, API rate limiting, Stripe/Razorpay billing, and real-time Socket.IO event streaming.",
+    tags: ["Next.js", "Node.js", "MySQL", "Socket.IO", "Redis", "Stripe", "Razorpay", "2FA / TOTP", "Tailwind CSS", "Redux Toolkit"],
+    github: "https://github.com/mannrandhawa004/task_management_system",
+    live: "https://github.com/mannrandhawa004/task_management_system",
+    displayUrl: "github.com/mannrandhawa004/task_management_system",
+    isLiveDemo: false,
     className: "project-starsync",
     image: task_management,
-    metric: "Task management",
+    metric: "Multi-Tenant RBAC · 2FA",
   },
   {
     number: "02",
     title: "AI Resume Builder",
-    eyebrow: "AI-powered document editor",
+    eyebrow: "AI-Powered Document Engine",
     description:
-      "A dynamic resume workspace with live preview, flexible templates, cloud image delivery, and instant client-side PDF exports.",
-    tags: ["React", "Ai - Integration", "Node.js", "Tailwind", "PDF", "Redux Toolkit"],
-    href: "https://ai-resume-builder-beta-pink.vercel.app",
+      "A dynamic, high-performance resume engineering workspace featuring real-time preview rendering, ATS-optimized templates, cloud asset delivery, and instant client-side vector PDF generation.",
+    tags: ["React", "GenAI Integration", "Node.js", "Tailwind CSS", "PDF Engine", "Redux Toolkit"],
+    github: "https://github.com/mannrandhawa004/ai-resume-builder",
+    live: "https://ai-resume-builder-beta-pink.vercel.app",
+    displayUrl: "ai-resume-builder-beta-pink.vercel.app",
+    isLiveDemo: true,
     className: "project-resume",
     image: resume_builder,
-    metric: "Live document preview",
+    metric: "Instant ATS Preview · PDF Export",
   },
   {
     number: "03",
     title: "Scatch",
-    eyebrow: "Full-stack commerce",
+    eyebrow: "Full-Stack Commerce Engine",
     description:
-      "Scatch is a full-stack e-commerce platform that provides users with a seamless shopping experience, from exploring products and managing their cart to completing secure online payments. The application includes Google OAuth and JWT-based authentication for secure account access, along with Stripe integration for payment processing and webhook-based order updates",
-    tags: ["MERN", "OAuth", "JWT", "Stripe", "Webhooks", "Tailwind css"],
-    href: "https://scatch-bice.vercel.app",
+      "A modern full-stack e-commerce experience featuring dynamic product discovery, persistent cart state, Google OAuth + JWT session security, and end-to-end Stripe checkout backed by resilient webhook payment reconciliation.",
+    tags: ["MERN Stack", "Google OAuth", "JWT", "Stripe API", "Webhooks", "Tailwind CSS"],
+    github: "https://github.com/mannrandhawa004/scatch",
+    live: "https://scatch-bice.vercel.app",
+    displayUrl: "scatch-bice.vercel.app",
+    isLiveDemo: true,
     className: "project-scatch",
     image: scatch,
-    metric: "Automated order flow",
+    metric: "Stripe Webhooks · Secure Auth",
   },
 ];
 
@@ -60,26 +67,26 @@ const services = [
   {
     number: "01",
     title: "Full-stack products",
-    body: "Scalable React interfaces connected to clean Node.js APIs and thoughtfully modeled databases.",
-    tech: "React · Express · MongoDB · Mysql · Next.js",
+    body: "Scalable React and Next.js interfaces connected to high-throughput Node.js APIs and thoughtfully modeled relational and document databases.",
+    tech: "React · Next.js · Node.js · Express · MongoDB · MySQL",
   },
   {
     number: "02",
     title: "GenAI experiences",
-    body: "Useful AI features designed around real user workflows, from prompt systems to document generation.",
-    tech: "LangChain · LLM APIs · Python",
+    body: "Useful AI capabilities grounded in user workflows—from structured prompt pipelines to LLM document generation and intelligent agents.",
+    tech: "LangChain · OpenAI / Claude APIs · Python · Vector Search",
   },
   {
     number: "03",
     title: "Real-time systems",
-    body: "Responsive experiences for live communication, updates, and events that need to feel immediate.",
-    tech: "LiveKit · WebSockets · Webhooks",
+    body: "Responsive architectures for live collaboration, instantaneous notifications, and events that feel immediate to the end user.",
+    tech: "Socket.IO · WebSockets · Webhooks · Redis Pub/Sub",
   },
   {
     number: "04",
     title: "Secure integrations",
-    body: "Authentication and payment flows built with production-minded security and clear failure states.",
-    tech: "OAuth · JWT · Stripe · Razorpay",
+    body: "Authentication and payment gateways implemented with production-grade defense, rate limiting, and reliable webhook verification.",
+    tech: "OAuth 2.0 · JWT · TOTP 2FA · Stripe · Razorpay",
   },
 ];
 
@@ -87,24 +94,24 @@ const experience = [
   {
     date: "March 2026 — Present",
     role: "Full-Stack Developer",
-    company: "Fresco web services",
+    company: "Fresco Web Services",
     location: "Mohali, India",
-    body: "Contributed to a full-stack MERN application, coordinated feature delivery, and developed scalable Express APIs backed by MongoDB.",
+    body: "Architecting and shipping responsive MERN web applications. Developing production-ready RESTful APIs in Express and Node.js with MongoDB database optimization, implementing JWT session security, and collaborating with cross-functional teams to accelerate feature delivery cycles.",
   },
   {
     date: "Jul 2025 — Jan 2026",
     role: "Full-Stack Web Development Trainee",
     company: "Antier School of Blocktech",
     location: "Mohali, India",
-    body: "Built scalable MERN modules, secure authentication flows, predictable state management, and optimized database schemas.",
+    body: "Engineered scalable end-to-end full-stack modules. Designed secure role-based authentication flows, normalized relational and NoSQL database schemas, and integrated predictable client state management using Redux Toolkit.",
   },
 ];
 
 const stackGroups = [
-  { label: "Frontend", note: "Interfaces that feel fast, clear, and alive.", items: ["React.js", "Redux Toolkit", "Tailwind CSS", "GSAP", "HTML5 / CSS3", "Next.js"] },
-  { label: "Backend", note: "APIs and services designed to scale cleanly.", items: ["Node.js", "Express.js", "REST APIs", "Authentication", "Webhooks", "Redis"] },
-  { label: "AI & Data", note: "Intelligence grounded in useful product flows.", items: ["LangChain", "Python", "MongoDB", "MySQL", "LLM APIs"] },
-  { label: "Workflow", note: "From local build to reliable deployment.", items: ["Git", "Postman", "Vercel", "Render", "Azure"] },
+  { label: "Frontend", note: "Interfaces that feel fast, clear, and alive.", items: ["React.js", "Next.js", "Redux Toolkit", "Tailwind CSS", "GSAP", "TypeScript", "HTML5 / CSS3"] },
+  { label: "Backend", note: "APIs and services designed to scale cleanly.", items: ["Node.js", "Express.js", "REST APIs", "Socket.IO", "Webhooks", "Redis", "JWT Auth"] },
+  { label: "AI & Data", note: "Intelligence grounded in useful product flows.", items: ["LangChain", "LLM APIs", "Python", "MongoDB", "MySQL"] },
+  { label: "Workflow & Cloud", note: "From local build to reliable deployment.", items: ["Git / GitHub", "Postman", "Vercel", "Render", "Azure"] },
 ];
 
 function Icon({ name, className = "" }: { name: IconName; className?: string }) {
@@ -115,11 +122,14 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
   if (name === "menu") return <svg {...common} aria-hidden="true"><path d="M4 7h16M4 17h16" /></svg>;
   if (name === "close") return <svg {...common} aria-hidden="true"><path d="m5 5 14 14M19 5 5 19" /></svg>;
   if (name === "linkedin") return <svg {...common} aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6ZM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>;
+  if (name === "copy") return <svg {...common} aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
+  if (name === "check") return <svg {...common} aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
+  if (name === "external") return <svg {...common} aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" /></svg>;
   return <svg {...common} aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.2.5S18 0 15 1.9a13.4 13.4 0 0 0-7 0C5 .1 3.8.5 3.8.5A5 5 0 0 0 3.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 8 18v4" /></svg>;
 }
 
 function Marquee() {
-  const words = ["MERN", "GEN AI", "REACT", "NODE", "LANGCHAIN", "MONGODB", "EXPRESS", "PYTHON", "MYSQL"];
+  const words = ["MERN STACK", "GEN AI", "NEXT.JS", "NODE.JS", "LANGCHAIN", "MONGODB", "EXPRESS.JS", "PYTHON", "MYSQL", "SOCKET.IO", "REDIS"];
   return (
     <div className="marquee" aria-hidden="true">
       <div className="marquee-track">
@@ -136,6 +146,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
     const update = () => {
@@ -177,7 +188,7 @@ export default function App() {
       gsap.utils.toArray<HTMLElement>("[data-project]").forEach((card) => {
         const media = card.querySelector("[data-project-media]");
         if (!media || reduced) return;
-        gsap.fromTo(media, { scale: 1.08 }, {
+        gsap.fromTo(media, { scale: 1.05 }, {
           scale: 1,
           ease: "none",
           scrollTrigger: { trigger: card, start: "top bottom", end: "bottom top", scrub: true },
@@ -188,6 +199,16 @@ export default function App() {
   }, []);
 
   const closeMenu = () => setMenuOpen(false);
+
+  const copyEmailToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText("randhawamanpreet37@gmail.com");
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2400);
+    } catch {
+      // fallback
+    }
+  };
 
   const handleContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -210,14 +231,16 @@ export default function App() {
 
   return (
     <>
-
       <main ref={rootRef} className="site-shell">
         <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
         <nav className="nav wrap" data-nav aria-label="Main navigation">
           <a href="#top" className="brand" aria-label="Manpreet Singh home">
             <span className="brand-mark">MS</span>
-            <span className="brand-copy">Mann<small>MERN + GenAI Developer</small></span>
+            <span className="brand-copy">
+              Manpreet Singh
+              <small>Full-Stack & GenAI Engineer</small>
+            </span>
           </a>
           <div className="nav-links">
             <a href="#work">Work</a>
@@ -237,7 +260,7 @@ export default function App() {
               <a href="#about" onClick={closeMenu}>About <span>03</span></a>
               <a href="#contact" onClick={closeMenu}>Contact <span>04</span></a>
             </div>
-            <p>Mohali, Punjab · Available for opportunities</p>
+            <p>Mohali, Punjab · Available for Full-Time & Select Contracts</p>
           </div>
         )}
 
@@ -247,45 +270,48 @@ export default function App() {
 
           <div className="hero-kicker" data-hero-kicker>
             <span className="status-dot" />
-            Available for full-time roles & select projects
+            Manpreet Singh · Available for full-time roles & engineering teams
           </div>
           <h1 className="hero-title" aria-label="Manpreet Singh">
-            <span className="hero-line"><span data-hero-word>Mann</span></span>
-            <span className="hero-line hero-line-bottom"><span data-hero-word>dev<span className="title-dot">.</span></span></span>
+            <span className="hero-line"><span data-hero-word>Manpreet</span></span>
+            <span className="hero-line hero-line-bottom"><span data-hero-word>Singh<span className="title-dot">.</span></span></span>
           </h1>
           <div className="hero-bottom">
             <div className="hero-copy" data-hero-copy>
               <div className="hero-role"><span>Full-stack engineer</span><i>×</i><span>GenAI builder</span></div>
-              <p>I turn ambitious ideas into <strong>fast, secure products</strong>—from polished React interfaces to intelligent LangChain workflows.</p>
+              <p>I architect and ship <strong>fast, scalable, and secure products</strong>—from high-performance React & Next.js web applications to production-grade LangChain intelligence workflows.</p>
               <div className="hero-proof">
-                <div><strong>05</strong><span>Live products</span></div>
+                <div><strong>03</strong><span>Shipped apps</span></div>
                 <div><strong>MERN</strong><span>End-to-end</span></div>
-                <div><strong>AI</strong><span>Product-minded</span></div>
+                <div><strong>GenAI</strong><span>Production-ready</span></div>
               </div>
               <div className="hero-actions">
                 <a className="pill pill-acid" href="#work">Explore my work <Icon name="arrow" /></a>
-                <a className="text-link" href="/resume.pdf" download>Download résumé <Icon name="download" /></a>
+                <a className="text-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">
+                  Download résumé <Icon name="download" />
+                </a>
               </div>
             </div>
             <div className="terminal" data-terminal>
               <div className="terminal-bar">
                 <div><i /><i /><i /></div>
-                <span>mann.dev</span>
+                <span>manpreet.dev</span>
                 <span>⌘</span>
               </div>
               <div className="terminal-body">
-                <p><span className="code-muted">01</span><span className="code-pink">const</span> developer = {'{'}</p>
+                <p><span className="code-muted">01</span><span className="code-pink">const</span> engineer = {'{'}</p>
                 <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-green">"Manpreet Singh"</span>,</p>
-                <p><span className="code-muted">03</span>&nbsp;&nbsp;focus: [<span className="code-green">"Full stack"</span>, <span className="code-green">"GenAI"</span>],</p>
-                <p><span className="code-muted">04</span>&nbsp;&nbsp;ships: <span className="code-pink">true</span>,</p>
-                <p><span className="code-muted">05</span>&nbsp;&nbsp;location: <span className="code-green">"Mohali, IN"</span></p>
-                <p><span className="code-muted">06</span>{'}'};</p>
-                <p className="terminal-output"><span>→</span> Ready to build something meaningful_</p>
+                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-green">"Full-Stack & GenAI Engineer"</span>,</p>
+                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-green">"React"</span>, <span className="code-green">"Next.js"</span>, <span className="code-green">"Node.js"</span>, <span className="code-green">"LangChain"</span>],</p>
+                <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-pink">true</span>,</p>
+                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-green">"Mohali, India"</span></p>
+                <p><span className="code-muted">07</span>{'}'};</p>
+                <p className="terminal-output"><span>→</span> Ready to build high-impact products_</p>
               </div>
             </div>
           </div>
           <div className="hero-meta">
-            <span>01° 00' N / 76° 43' E</span>
+            <span>30° 42' N / 76° 43' E</span>
             <span className="hero-meta-center">Scroll to explore ↓</span>
             <span>Portfolio / 2026</span>
           </div>
@@ -297,33 +323,51 @@ export default function App() {
           <div className="section-heading" data-reveal>
             <div><span className="section-no">01</span><p>Selected work</p></div>
             <h2>Products built to<br /><em>work in the real world.</em></h2>
-            <p className="section-intro">From live consultations to intelligent documents and commerce—each project solves a complete product problem.</p>
+            <p className="section-intro">From multi-tenant SaaS platforms to AI document engines and e-commerce—each project solves an end-to-end engineering challenge.</p>
           </div>
 
           <div className="projects">
             {projects.map((project) => (
               <article className="project" key={project.title} data-project data-reveal>
-                <a href={project.href} target="_blank" rel="noreferrer" className={`project-media ${project.className}`} data-project-media aria-label={`View ${project.title} live`}>
-                  {project.image && <img src={project.image} alt={`${project.title} interface`} />}
+                <div className={`project-media ${project.className}`} data-project-media>
                   <div className="browser-chrome">
                     <span><i /><i /><i /></span>
-                    <b>{project.href.replace("https://", "")}</b>
-                    <span>↗</span>
+                    <b>{project.displayUrl}</b>
+                    <span className="project-chrome-badge">{project.metric}</span>
                   </div>
-                  <div className="project-art">
-                    <span className="project-ghost" style={{ position: "absolute", color: "red" }}>{project.number}</span>
-                    <div className="project-screen">
-                      <small>{project.eyebrow}</small>
-                      <strong>{project.title}</strong>
-                      <span>{project.metric}</span>
+                  <div className="project-viewport">
+                    {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
+                    <div className="project-ghost-overlay">
+                      <span className="project-ghost">{project.number}</span>
                     </div>
                   </div>
-                  <div className="project-open">Open live project <Icon name="arrow" /></div>
-                </a>
+                </div>
                 <div className="project-info">
-                  <div className="project-title-row"><span>{project.number}</span><h3>{project.title}</h3></div>
+                  <div className="project-title-row">
+                    <span>{project.number}</span>
+                    <div>
+                      <small className="project-eyebrow">{project.eyebrow}</small>
+                      <h3>{project.title}</h3>
+                    </div>
+                  </div>
                   <p>{project.description}</p>
-                  <div className="tag-list">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                  <div className="tag-list">
+                    {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+                  </div>
+                  <div className="project-actions">
+                    {project.isLiveDemo ? (
+                      <a href={project.live} target="_blank" rel="noreferrer" className="pill pill-acid">
+                        Live Demo <Icon name="arrow" />
+                      </a>
+                    ) : (
+                      <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-acid">
+                        Explore Architecture <Icon name="arrow" />
+                      </a>
+                    )}
+                    <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-outline">
+                      <Icon name="github" /> Source Code
+                    </a>
+                  </div>
                 </div>
               </article>
             ))}
@@ -335,7 +379,7 @@ export default function App() {
             <div className="section-heading section-heading-light" data-reveal>
               <div><span className="section-no">02</span><p>What I bring</p></div>
               <h2>One developer.<br /><em>The full product loop.</em></h2>
-              <p className="section-intro">I move between interface, API, data, and intelligence so the whole experience stays coherent.</p>
+              <p className="section-intro">I bridge user interfaces, robust backend APIs, database architecture, and intelligent AI models to deliver unified experiences.</p>
             </div>
             <div className="service-grid">
               {services.map((service) => (
@@ -351,13 +395,18 @@ export default function App() {
               <div className="stack-heading">
                 <div><span>03 / Skill system</span><p>How the pieces connect</p></div>
                 <h3>From interface<br />to intelligence.</h3>
-                <p>My toolkit covers the complete path from a user's first click to the data, logic, and AI working behind it.</p>
+                <p>My stack covers the full journey from client interactions to distributed services, caching, and applied AI systems.</p>
               </div>
               <div className="skill-system">
                 <div className="skill-orbit" aria-label="Core development stack">
                   <div className="orbit-ring orbit-ring-one" />
                   <div className="orbit-ring orbit-ring-two" />
-                  <div className="skill-core"><span>MERN</span><strong>+</strong><span>GEN AI</span><small>Full product thinking</small></div>
+                  <div className="skill-core">
+                    <span>MERN</span>
+                    <strong>+</strong>
+                    <span>GEN AI</span>
+                    <small>Full product thinking</small>
+                  </div>
                   <span className="orbit-chip orbit-react">React</span>
                   <span className="orbit-chip orbit-node">Node.js</span>
                   <span className="orbit-chip orbit-mongo">MongoDB</span>
@@ -383,14 +432,14 @@ export default function App() {
           <div className="section-heading" data-reveal>
             <div><span className="section-no">03</span><p>Experience</p></div>
             <h2>Learning fast.<br /><em>Shipping faster.</em></h2>
-            <p className="section-intro">A BCA graduate with hands-on experience building production-minded MERN applications.</p>
+            <p className="section-intro">A BCA graduate with proven production experience building resilient MERN stack products.</p>
           </div>
 
           <div className="experience-layout">
             <aside className="about-card" data-reveal>
               <div className="avatar-mark"><span>MS</span><i>✦</i></div>
               <blockquote>“I care about the tiny details users feel—and the robust systems they never have to think about.”</blockquote>
-              <p>Based in Mohali, Punjab.<br />Open to teams building ambitious digital products.</p>
+              <p>Based in Mohali, Punjab.<br />Open to engineering teams building ambitious digital products.</p>
               <div className="social-row">
                 <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Icon name="github" /></a>
                 <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a>
@@ -415,7 +464,7 @@ export default function App() {
                   <span>Amritsar, India</span>
                   <h3>Bachelor of Computer Applications</h3>
                   <h4>Global Group of Institutes · CGPA 7.5</h4>
-                  <p>Foundation in software development, computer science, databases, and web technologies.</p>
+                  <p>Comprehensive grounding in software development, data structures, algorithms, databases, and modern web application architecture.</p>
                 </div>
               </article>
             </div>
@@ -429,8 +478,21 @@ export default function App() {
               <div className="contact-copy">
                 <div className="contact-kicker"><span className="status-dot" />Have a role, project, or bold idea?</div>
                 <h2>Let's build<br /><em>what's next.</em></h2>
-                <p>Tell me what you're working on, what you need, and where I can help. I usually reply within 24–48 hours.</p>
-                <a href={links.email} className="contact-email">randhawamanpreet37@gmail.com <Icon name="arrow" /></a>
+                <p>Looking for a dedicated Full-Stack & GenAI Engineer? Let's connect. I reply promptly within 24 hours.</p>
+                <div className="contact-email-row">
+                  <a href={links.email} className="contact-email">
+                    randhawamanpreet37@gmail.com <Icon name="arrow" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyEmailToClipboard}
+                    className="copy-email-btn"
+                    aria-label="Copy email address"
+                  >
+                    <Icon name={copiedEmail ? "check" : "copy"} />
+                    <span>{copiedEmail ? "Copied!" : "Copy"}</span>
+                  </button>
+                </div>
               </div>
 
               <form
@@ -442,7 +504,7 @@ export default function App() {
                 <input type="hidden" name="_subject" value="New portfolio enquiry" />
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
-                <input className="form-honey" type="text" name="_honey" tabIndex={-1} autoComplete="off" />
+                <input className="form-honey" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                 <div className="form-topline"><span>Start a conversation</span><i>✦</i></div>
                 <div className="form-row">
                   <label><span>Your name</span><input type="text" name="name" placeholder="Jane Smith" autoComplete="name" required /></label>
@@ -452,16 +514,16 @@ export default function App() {
                   <select name="subject" defaultValue="" required>
                     <option value="" disabled>Select a topic</option>
                     <option value="Full-time opportunity">Full-time opportunity</option>
-                    <option value="Freelance project">Freelance project</option>
-                    <option value="Collaboration">Collaboration</option>
-                    <option value="Just saying hello">Just saying hello</option>
+                    <option value="Contract / Freelance">Contract / Freelance</option>
+                    <option value="Technical Collaboration">Technical Collaboration</option>
+                    <option value="General Enquiry">General Enquiry</option>
                   </select>
                 </label>
-                <label><span>Tell me about it</span><textarea name="message" rows={5} placeholder="A few details about the role, project, or idea..." required /></label>
+                <label><span>Tell me about it</span><textarea name="message" rows={5} placeholder="A few details about the role, project, or timeline..." required /></label>
                 <div className="form-submit-row">
                   <p aria-live="polite" className={`form-status form-status-${formStatus}`}>
                     {formStatus === "sent" && "Message sent — I'll be in touch soon."}
-                    {formStatus === "error" && "Something went wrong. Please email me directly."}
+                    {formStatus === "error" && "Something went wrong. Please email directly."}
                     {(formStatus === "idle" || formStatus === "sending") && "Your details stay private. No spam, ever."}
                   </p>
                   <button className="pill pill-acid" type="submit" disabled={formStatus === "sending"}>
@@ -471,14 +533,22 @@ export default function App() {
               </form>
             </div>
             <div className="contact-footer">
-              <p>Mohali, Punjab, India<br /><span>Available for remote & on-site opportunities</span></p>
-              <div><a href={links.github} target="_blank" rel="noreferrer">GitHub ↗</a><a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="/resume.pdf" download>Résumé ↓</a></div>
+              <p>Mohali, Punjab, India<br /><span>Available for Remote & On-Site Engineering Roles</span></p>
+              <div>
+                <a href={links.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+                <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+                <a href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">Résumé ↓</a>
+              </div>
             </div>
           </div>
         </section>
 
         <footer className="footer">
-          <div className="wrap"><span>© {new Date().getFullYear()} Manpreet Singh</span><span>Designed & built with React + caffeine</span><a href="#top">Back to top ↑</a></div>
+          <div className="wrap">
+            <span>© {new Date().getFullYear()} Manpreet Singh</span>
+            <span>Architected & Built with React, TypeScript & Tailwind</span>
+            <a href="#top">Back to top ↑</a>
+          </div>
         </footer>
       </main>
     </>
