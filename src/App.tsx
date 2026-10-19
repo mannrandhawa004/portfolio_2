@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ContributionSkyline from "@/components/ui/contribution-skyline";
+import HalftoneWordmarkFooter from "@/components/ui/halftone-wordmark-footer";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
@@ -27,6 +28,35 @@ const links = {
   linkedin: "https://www.linkedin.com/in/manpreet-singh-27099b280/",
   email: "mailto:randhawamanpreet37@gmail.com",
 };
+
+const footerColumns = [
+  {
+    title: "Navigation",
+    links: [
+      { label: "Work", href: "#work" },
+      { label: "Expertise", href: "#expertise" },
+      { label: "Activity", href: "#activity" },
+      { label: "Experience", href: "#about" },
+      { label: "Contact", href: "#contact" },
+    ],
+  },
+  {
+    title: "Featured",
+    links: [
+      { label: "Taskflow (SaaS)", href: "https://github.com/mannrandhawa004/task_management_system" },
+      { label: "Scatch (E-Commerce)", href: "https://github.com/mannrandhawa004/scatch" },
+      { label: "Resume AI", href: "https://github.com/mannrandhawa004" },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "GitHub ↗", href: links.github },
+      { label: "LinkedIn ↗", href: links.linkedin },
+      { label: "Email Directly ↗", href: links.email },
+    ],
+  },
+];
 
 const projects = [
   {
@@ -765,21 +795,22 @@ export default function App() {
           </div>
         </section>
 
-        <footer className="footer">
-          <div className="wrap footer-content">
-            <div className="footer-meta-top">
-              <div className="footer-brand-box">
-                <span className="brand-mark">MS</span>
-                <span className="footer-brand-text">Manpreet Singh</span>
-              </div>
-              <span className="footer-tagline">Architected & Shipped with React, Next.js & TypeScript</span>
-            </div>
-            <div className="footer-meta-bottom">
-              <span>© {new Date().getFullYear()} Manpreet Singh · Built for real-world impact</span>
-              <a href="#top" className="footer-back-to-top">Back to top ↑</a>
-            </div>
-          </div>
-        </footer>
+        <HalftoneWordmarkFooter
+          wordmark="manpreet"
+          label="Manpreet Singh"
+          meta="© 2026 · Mohali, Punjab · Full-Stack & GenAI Engineer"
+          columns={footerColumns}
+          backToTop={true}
+          height="520px"
+          crop={0.18}
+          dotGap={6}
+          radius={85}
+          palette={
+            theme === "dark"
+              ? { background: "#07080a", ink: "#febc2e", warm: "#fb923c" }
+              : { background: "#f8faf9", ink: "#205969", warm: "#0891b2" }
+          }
+        />
       </main>
     </>
   );
