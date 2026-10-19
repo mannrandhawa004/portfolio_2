@@ -12,12 +12,13 @@
   --text: #f1f3f7;
   --text-muted: #838b99;
   --text-subtle: #4e5563;
-  --accent: #f43f5e; /* Vivid Neon Rose / Crimson */
-  --accent-hover: #fb7185;
-  --accent-glow: rgba(244, 63, 94, 0.35);
-  --secondary: #fb7185; /* Luminous Petal Rose */
+  --accent: #2ecc40; /* Luminous Botanical Leaf Green (same tone calibrated for dark) */
+  --accent-hover: #4ade80;
+  --accent-glow: rgba(46, 204, 64, 0.28);
+  --accent-text: #07080a;
+  --secondary: #22a033; /* Deep Lush Green */
   --card-shadow: 10px 10px 0 #000000;
-  --card-shadow-hover: 14px 14px 0 #f43f5e;
+  --card-shadow-hover: 14px 14px 0 #2ecc40;
   --pill-primary-bg: #f1f3f7;
   --pill-primary-text: #07080a;
   --marquee-bg: #11131a;
@@ -45,12 +46,13 @@
   --text: #121316; /* Deep Charcoal Ink */
   --text-muted: #585d68;
   --text-subtle: #8c929e;
-  --accent: #2563eb; /* Electric Cobalt Blue */
-  --accent-hover: #1d4ed8;
-  --accent-glow: rgba(37, 99, 235, 0.22);
-  --secondary: #0284c7; /* Ocean Cyan / Sapphire */
+  --accent: #0d7318; /* Rich Forest Botanical Green (User selected) */
+  --accent-hover: #095912;
+  --accent-glow: rgba(13, 115, 24, 0.22);
+  --accent-text: #ffffff;
+  --secondary: #15803d; /* Verdant Pine */
   --card-shadow: 10px 10px 0 #121316;
-  --card-shadow-hover: 14px 14px 0 #2563eb;
+  --card-shadow-hover: 14px 14px 0 #0d7318;
   --pill-primary-bg: #121316;
   --pill-primary-text: #ffffff;
   --marquee-bg: #121316;
@@ -103,7 +105,7 @@ button {
 }
 
 ::selection {
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
 }
 
@@ -172,7 +174,7 @@ button {
   height: 44px;
   place-items: center;
   border-radius: 50%;
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   font-size: 13px;
   font-weight: 900;
@@ -362,13 +364,13 @@ button {
 }
 
 .pill-primary:hover {
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   border-color: var(--accent);
 }
 
 .pill-accent {
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   border: 1.5px solid var(--accent);
 }
@@ -1375,7 +1377,7 @@ button {
   width: 35%;
   aspect-ratio: 1;
   border-radius: 50%;
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   box-shadow: 0 0 0 10px var(--accent-glow), 0 30px 70px -30px var(--accent);
   transform: translate(-50%, -50%);
@@ -1391,7 +1393,7 @@ button {
 .skill-core strong {
   margin: 2px 0;
   font-size: 16px;
-  color: #fff;
+  color: var(--accent-text);
 }
 
 .skill-core small {
@@ -1608,7 +1610,7 @@ button {
   height: 86px;
   place-items: center;
   border-radius: 50%;
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   font-family: "Anton", Impact, sans-serif;
   font-size: 2rem;
@@ -1663,7 +1665,7 @@ button {
 }
 
 .social-row a:hover {
-  color: #fff;
+  color: var(--accent-text);
   background: var(--accent);
   border-color: var(--accent);
 }
@@ -1832,7 +1834,7 @@ button {
 .copy-email-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-text);
 }
 
 /* Contact Form */
@@ -2099,7 +2101,7 @@ button {
 .footer-back-to-top:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--accent-text);
   transform: translateY(-2px);
 }
 
