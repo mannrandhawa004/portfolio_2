@@ -343,7 +343,7 @@ export default function App() {
         .from("[data-hero-kicker]", { y: 20, opacity: 0, duration: 0.6 }, "-=0.3")
         .from("[data-hero-word]", { yPercent: 110, rotate: 2, duration: 1.15, stagger: 0.08, ease: "expo.out" }, "-=0.2")
         .from("[data-hero-copy]", { y: 24, opacity: 0, duration: 0.8 }, "-=0.55")
-        .from("[data-terminal]", { y: 36, opacity: 0, rotate: 0, duration: 1 }, "-=0.7");
+        .from("[data-terminal]", { y: 36, opacity: 0, rotate: 1.5, duration: 1 }, "-=0.7");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
@@ -419,44 +419,42 @@ export default function App() {
       <main ref={rootRef} className="site-shell">
         <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
-        <header className="nav-header" data-nav>
-          <nav className="nav wrap" aria-label="Main navigation">
-            <a href="#top" className="brand" aria-label="Manpreet Singh home">
-              <span className="brand-mark">MS</span>
-              <span className="brand-copy">
-                Manpreet Singh
-                <small>Full-Stack & GenAI Engineer</small>
+        <nav className="nav wrap" data-nav aria-label="Main navigation">
+          <a href="#top" className="brand" aria-label="Manpreet Singh home">
+            <span className="brand-mark">MS</span>
+            <span className="brand-copy">
+              Manpreet Singh
+              <small>Full-Stack & GenAI Engineer</small>
+            </span>
+          </a>
+          <div className="nav-links">
+            <a href="#work">Work</a>
+            <a href="#vault">Vault</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#activity">Activity</a>
+            <a href="#about">About</a>
+          </div>
+          <div className="nav-actions">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="theme-toggle-btn"
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              <span key={theme} className="theme-icon-slot">
+                <Icon name={theme === "dark" ? "moon" : "sun"} />
               </span>
+              <span className="theme-toggle-text">{theme === "dark" ? "Dark" : "Light"}</span>
+            </button>
+            <a href="#contact" className="pill pill-primary nav-cta">
+              Let's talk <Icon name="arrow" />
             </a>
-            <div className="nav-links">
-              <a href="#work">Work</a>
-              <a href="#vault">Vault</a>
-              <a href="#expertise">Expertise</a>
-              <a href="#activity">Activity</a>
-              <a href="#about">About</a>
-            </div>
-            <div className="nav-actions">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="theme-toggle-btn"
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-                title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              >
-                <span key={theme} className="theme-icon-slot">
-                  <Icon name={theme === "dark" ? "moon" : "sun"} />
-                </span>
-                <span className="theme-toggle-text">{theme === "dark" ? "Dark" : "Light"}</span>
-              </button>
-              <a href="#contact" className="pill pill-primary nav-cta">
-                Let's talk <Icon name="arrow" />
-              </a>
-              <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu">
-                <Icon name="menu" />
-              </button>
-            </div>
-          </nav>
-        </header>
+            <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+              <Icon name="menu" />
+            </button>
+          </div>
+        </nav>
 
         {menuOpen && (
           <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
@@ -511,7 +509,7 @@ export default function App() {
               </div>
               <div className="hero-actions">
                 <a className="pill pill-accent" href="#work">Explore my work <Icon name="arrow" /></a>
-                <a className="pill pill-outline" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">
+                <a className="text-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">
                   Download résumé <Icon name="download" />
                 </a>
               </div>
