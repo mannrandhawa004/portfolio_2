@@ -232,8 +232,51 @@ export default function App() {
     localStorage.setItem("portfolio-theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = (e?: React.MouseEvent) => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+
+    if (
+      typeof document === "undefined" ||
+      !("startViewTransition" in document) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      document.documentElement.classList.add("theme-transitioning");
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      setTheme(nextTheme);
+      setTimeout(() => {
+        document.documentElement.classList.remove("theme-transitioning");
+      }, 500);
+      return;
+    }
+
+    const rect = e?.currentTarget?.getBoundingClientRect?.();
+    const x = e?.clientX ?? (rect ? rect.left + rect.width / 2 : window.innerWidth / 2);
+    const y = e?.clientY ?? (rect ? rect.top + rect.height / 2 : window.innerHeight / 2);
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+
+    const transition = (document as any).startViewTransition(() => {
+      document.documentElement.setAttribute("data-theme", nextTheme);
+      setTheme(nextTheme);
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 620,
+          easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        }
+      );
+    });
   };
 
   useEffect(() => {
@@ -365,7 +408,7 @@ export default function App() {
               aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             >
-              <span className="theme-icon-slot">
+              <span key={theme} className="theme-icon-slot">
                 <Icon name={theme === "dark" ? "moon" : "sun"} />
               </span>
               <span className="theme-toggle-text">{theme === "dark" ? "Dark" : "Light"}</span>
@@ -388,7 +431,7 @@ export default function App() {
                 className="theme-toggle-btn"
                 aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
               >
-                <span className="theme-icon-slot">
+                <span key={theme} className="theme-icon-slot">
                   <Icon name={theme === "dark" ? "moon" : "sun"} />
                 </span>
                 <span>{theme === "dark" ? "Dark Mode" : "Light Mode"}</span>

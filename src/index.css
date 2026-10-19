@@ -12,12 +12,12 @@
   --text: #f1f3f7;
   --text-muted: #838b99;
   --text-subtle: #4e5563;
-  --accent: #3b82f6; /* Electric Cobalt Blue */
-  --accent-hover: #60a5fa;
-  --accent-glow: rgba(59, 130, 246, 0.28);
-  --secondary: #38bdf8; /* Luminous Sky Blue */
+  --accent: #f43f5e; /* Vivid Neon Rose / Crimson */
+  --accent-hover: #fb7185;
+  --accent-glow: rgba(244, 63, 94, 0.35);
+  --secondary: #fb7185; /* Luminous Petal Rose */
   --card-shadow: 10px 10px 0 #000000;
-  --card-shadow-hover: 14px 14px 0 #3b82f6;
+  --card-shadow-hover: 14px 14px 0 #f43f5e;
   --pill-primary-bg: #f1f3f7;
   --pill-primary-text: #07080a;
   --marquee-bg: #11131a;
@@ -41,12 +41,12 @@
   --text: #121316; /* Deep Charcoal Ink */
   --text-muted: #585d68;
   --text-subtle: #8c929e;
-  --accent: #e11d48; /* Deep Crimson Rose */
-  --accent-hover: #f43f5e;
-  --accent-glow: rgba(225, 29, 72, 0.22);
-  --secondary: #be123c; /* Bordeaux Wine */
+  --accent: #2563eb; /* Electric Cobalt Blue */
+  --accent-hover: #1d4ed8;
+  --accent-glow: rgba(37, 99, 235, 0.22);
+  --secondary: #0284c7; /* Ocean Cyan / Sapphire */
   --card-shadow: 10px 10px 0 #121316;
-  --card-shadow-hover: 14px 14px 0 #e11d48;
+  --card-shadow-hover: 14px 14px 0 #2563eb;
   --pill-primary-bg: #121316;
   --pill-primary-text: #ffffff;
   --marquee-bg: #121316;
@@ -259,16 +259,59 @@ button {
 .theme-icon-slot {
   display: grid;
   place-items: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle-btn:hover .theme-icon-slot {
+  transform: rotate(20deg) scale(1.12);
+}
+
+.theme-toggle-btn:active .theme-icon-slot {
+  transform: rotate(180deg) scale(0.9);
 }
 
 .theme-icon-slot svg {
   width: 15px;
   height: 15px;
-  transition: transform 0.35s ease;
+  animation: themeIconSpin 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.theme-toggle-btn:hover .theme-icon-slot svg {
-  transform: rotate(20deg);
+@keyframes themeIconSpin {
+  0% {
+    transform: rotate(-120deg) scale(0.4);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* View Transition API - Circular Wave Theme Morph */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Fallback smooth theme transition */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: background-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.45s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-delay: 0s !important;
 }
 
 /* Pills & Buttons */
