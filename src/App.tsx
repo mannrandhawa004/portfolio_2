@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ContributionSkyline from "@/components/ui/contribution-skyline";
 import HalftoneWordmarkFooter from "@/components/ui/halftone-wordmark-footer";
+import GlassFolder from "@/components/ui/glass-folder-cards";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
@@ -428,6 +429,7 @@ export default function App() {
           </a>
           <div className="nav-links">
             <a href="#work">Work</a>
+            <a href="#vault">Vault</a>
             <a href="#expertise">Expertise</a>
             <a href="#activity">Activity</a>
             <a href="#about">About</a>
@@ -474,10 +476,11 @@ export default function App() {
             </div>
             <div className="mobile-menu-links">
               <a href="#work" onClick={closeMenu}>Work <span>01</span></a>
-              <a href="#expertise" onClick={closeMenu}>Expertise <span>02</span></a>
-              <a href="#activity" onClick={closeMenu}>Activity <span>03</span></a>
-              <a href="#about" onClick={closeMenu}>About <span>04</span></a>
-              <a href="#contact" onClick={closeMenu}>Contact <span>05</span></a>
+              <a href="#vault" onClick={closeMenu}>Vault <span>02</span></a>
+              <a href="#expertise" onClick={closeMenu}>Expertise <span>03</span></a>
+              <a href="#activity" onClick={closeMenu}>Activity <span>04</span></a>
+              <a href="#about" onClick={closeMenu}>About <span>05</span></a>
+              <a href="#contact" onClick={closeMenu}>Contact <span>06</span></a>
             </div>
             <p>Mohali, Punjab · Available for Full-Time & Select Contracts</p>
           </div>
@@ -590,10 +593,92 @@ export default function App() {
           </div>
         </section>
 
+        <section id="vault" className="section section-vault wrap">
+          <div className="section-heading" data-reveal>
+            <div><span className="section-no">02</span><p>Tactile Vault</p></div>
+            <h2>Interactive archives.<br /><em>Explore what I ship.</em></h2>
+            <p className="section-intro">Three real layered frosted glass containers holding production systems, UI prototypes, and credentials. Hover to lean forward, click to fan out the files.</p>
+          </div>
+
+          <div className="vault-folders-container" data-reveal>
+            <GlassFolder
+              label="Projects"
+              meta="3 Shipped Apps"
+              tone={theme === "dark" ? "dark" : "light"}
+              art="ember"
+              seed={7}
+              action="more"
+              appearDelay={0}
+              files={[
+                { name: "Taskflow (SaaS)", meta: "Next.js · Node.js · 2FA", art: "aurora", href: "https://github.com/mannrandhawa004/task_management_system" },
+                { name: "Scatch E-Commerce", meta: "MERN · Stripe · JWT", art: "ember", href: "https://github.com/mannrandhawa004/scatch" },
+                { name: "Resume Builder AI", meta: "LangChain · GenAI", art: "dusk", href: "https://github.com/mannrandhawa004" },
+              ]}
+              menu={[
+                { label: "View All GitHub Repos", onSelect: () => window.open(links.github, "_blank") },
+                { label: "Scroll to Project Details", onSelect: () => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }) },
+              ]}
+            />
+
+            <GlassFolder
+              label="Frontend Design"
+              meta="4 Interactive Labs"
+              tone={theme === "dark" ? "dark" : "light"}
+              art="aurora"
+              seed={15}
+              action="add"
+              labelPlacement="top-left"
+              appearDelay={140}
+              files={[
+                { name: "Halftone Canvas Wordmark", meta: "Spring Physics Engine", art: "ember" },
+                { name: "3D Contribution Skyline", meta: "Isometric Matrix Canvas", art: "verdant" },
+                { name: "View Transition Ripples", meta: "CSS clip-path morph", art: "glacier" },
+                { name: "GSAP Kinetic Scroll", meta: "GPU Accelerated Motion", art: "aurora" },
+              ]}
+              onAdd={(existing) => ({
+                name: "Interactive Experiment " + (existing.length + 1),
+                meta: "Just compiled",
+                art: "dusk",
+              })}
+            />
+
+            <GlassFolder
+              label="Résumé & Credentials"
+              meta="Verified Documents"
+              tone={theme === "dark" ? "dark" : "light"}
+              art="verdant"
+              seed={23}
+              action="more"
+              labelPlacement="top-right"
+              appearDelay={280}
+              files={[
+                { name: "Manpreet_Singh_Resume.pdf", meta: "Full-Stack & GenAI Engineer", href: "/resume.pdf" },
+                { name: "BCA Degree (CGPA 7.5)", meta: "Global Group of Institutes", href: "#about" },
+                { name: "Antier Blocktech Cert", meta: "Full-Stack Web Dev Trainee", href: "#about" },
+              ]}
+              menu={[
+                {
+                  label: "Download Résumé (PDF)",
+                  onSelect: () => {
+                    const a = document.createElement("a");
+                    a.href = "/resume.pdf";
+                    a.download = "Manpreet_Singh_Resume.pdf";
+                    a.click();
+                  },
+                },
+                { label: "View Experience Timeline", onSelect: () => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" }) },
+              ]}
+            />
+          </div>
+          <p className="vault-hint">
+            Hover folder to lean · Click to fan open · Click any file to view
+          </p>
+        </section>
+
         <section id="expertise" className="section expertise-section">
           <div className="wrap">
             <div className="section-heading section-heading-light" data-reveal>
-              <div><span className="section-no">02</span><p>What I bring</p></div>
+              <div><span className="section-no">03</span><p>What I bring</p></div>
               <h2>One developer.<br /><em>The full product loop.</em></h2>
               <p className="section-intro">I bridge user interfaces, robust backend APIs, database architecture, and intelligent AI models to deliver unified experiences.</p>
             </div>
@@ -646,7 +731,7 @@ export default function App() {
 
         <section id="activity" className="section section-activity wrap">
           <div className="section-heading" data-reveal>
-            <div><span className="section-no">03</span><p>Commitment</p></div>
+            <div><span className="section-no">04</span><p>Commitment</p></div>
             <h2>Continuous shipping.<br /><em>Engineering skyline.</em></h2>
             <p className="section-intro">An interactive 3D activity skyline tracking daily code velocity, continuous releases, and open-source contributions.</p>
           </div>
@@ -683,7 +768,7 @@ export default function App() {
 
         <section id="about" className="section about-section wrap">
           <div className="section-heading" data-reveal>
-            <div><span className="section-no">04</span><p>Experience</p></div>
+            <div><span className="section-no">05</span><p>Experience</p></div>
             <h2>Learning fast.<br /><em>Shipping faster.</em></h2>
             <p className="section-intro">A BCA graduate with proven production experience building resilient MERN stack products.</p>
           </div>

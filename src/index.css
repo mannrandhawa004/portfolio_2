@@ -1155,6 +1155,33 @@ button {
   flex-wrap: wrap;
 }
 
+/* Interactive Glass Vault Section */
+.section-vault {
+  position: relative;
+  z-index: 2;
+  padding-bottom: clamp(60px, 8vw, 120px);
+}
+
+.vault-folders-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(32px, 4vw, 56px);
+  padding: 40px 16px 24px;
+}
+
+.vault-hint {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  opacity: 0.75;
+  margin-top: 12px;
+}
+
 /* Expertise Section */
 .expertise-section {
   position: relative;
