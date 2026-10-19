@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
+import fluid from "../public/images/fluid.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -683,10 +684,22 @@ export default function App() {
         </section>
 
         <footer className="footer">
-          <div className="wrap">
-            <span>© {new Date().getFullYear()} Manpreet Singh</span>
-            <span>Architected & Built with React, TypeScript & Tailwind</span>
-            <a href="#top">Back to top ↑</a>
+          <div className="footer-fluid-bg" aria-hidden="true">
+            <img src={fluid} alt="" className="footer-fluid-img drift" />
+            <div className="footer-fluid-overlay" />
+          </div>
+          <div className="wrap footer-content">
+            <div className="footer-meta-top">
+              <div className="footer-brand-box">
+                <span className="brand-mark">MS</span>
+                <span className="footer-brand-text">Manpreet Singh</span>
+              </div>
+              <span className="footer-tagline">Architected & Shipped with React, Next.js & TypeScript</span>
+            </div>
+            <div className="footer-meta-bottom">
+              <span>© {new Date().getFullYear()} Manpreet Singh · Built for real-world impact</span>
+              <a href="#top" className="footer-back-to-top">Back to top ↑</a>
+            </div>
           </div>
         </footer>
       </main>
