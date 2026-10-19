@@ -639,8 +639,8 @@ export default function App() {
 
             <ContributionSkyline
               palette={{
-                light: ["#dcfce7", "#86efac", "#22c55e", "#0d7318"],
-                dark: ["#052e16", "#14532d", "#16a34a", "#2ecc40"],
+                light: ["#93c5fd", "#60a5fa", "#2563eb", "#1d4ed8"],
+                dark: ["#4c0519", "#9f1239", "#e11d48", "#f43f5e"],
               }}
               defaultView="3d"
               orbit={true}
