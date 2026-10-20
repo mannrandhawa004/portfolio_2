@@ -296,53 +296,60 @@ export default function App() {
   return (
     <>
       <main ref={rootRef} className="site-shell">
-        <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`}>
-          <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
-          <nav className="nav wrap portfolio-nav" data-nav aria-label="Main navigation">
-            <a href="#top" className="brand" aria-label="Manpreet Singh home">
-              <span className="brand-mark">
+        {/* Floating Dock Navigation */}
+        <header className="floating-dock-container" data-nav>
+          <div className="floating-dock">
+            {/* Embedded Dock Progress Bar */}
+            <div className="dock-progress-track">
+              <div
+                className="dock-progress-fill"
+                style={{ transform: `scaleX(${progress})` }}
+              />
+            </div>
+
+            {/* Brand Item */}
+            <a href="#top" className="dock-brand" aria-label="Manpreet Singh home" title="Manpreet Singh · Full-Stack & GenAI Engineer">
+              <span className="dock-avatar">
                 <span>MS</span>
-                <span className="brand-status-ping" aria-hidden="true" />
+                <span className="dock-pulse-dot" aria-hidden="true" />
               </span>
-              <span className="brand-copy">
-                <span className="brand-name">
-                  Manpreet Singh
-                  <span className="brand-badge">
-                    <span className="status-dot-mini" />
-                    Available
-                  </span>
-                </span>
-                <small>Full-Stack &amp; GenAI Engineer</small>
+              <span className="dock-brand-info">
+                <span className="dock-brand-name">Manpreet</span>
+                <span className="dock-status-tag">Available</span>
               </span>
             </a>
 
-            <div className="nav-dock" role="navigation" aria-label="Page sections">
-              <div className="nav-links">
-                <a href="#work" className={activeSection === "work" ? "is-active" : ""}>
-                  Work
-                </a>
-                <a href="#vault" className={activeSection === "vault" ? "is-active" : ""}>
-                  Vault
-                </a>
-                <a href="#expertise" className={activeSection === "expertise" ? "is-active" : ""}>
-                  Expertise
-                </a>
-                <a href="#activity" className={activeSection === "activity" ? "is-active" : ""}>
-                  Activity
-                </a>
-                <a href="#about" className={activeSection === "about" ? "is-active" : ""}>
-                  About
-                </a>
-              </div>
-            </div>
+            <span className="dock-divider" aria-hidden="true" />
 
-            <div className="nav-actions">
-              <a href="#contact" className="pill pill-primary nav-cta">
+            {/* Center Nav Links */}
+            <nav className="dock-links" aria-label="Main navigation">
+              <a href="#work" className={`dock-link ${activeSection === "work" ? "is-active" : ""}`}>
+                <span>Work</span>
+              </a>
+              <a href="#vault" className={`dock-link ${activeSection === "vault" ? "is-active" : ""}`}>
+                <span>Vault</span>
+              </a>
+              <a href="#expertise" className={`dock-link ${activeSection === "expertise" ? "is-active" : ""}`}>
+                <span>Expertise</span>
+              </a>
+              <a href="#activity" className={`dock-link ${activeSection === "activity" ? "is-active" : ""}`}>
+                <span>Activity</span>
+              </a>
+              <a href="#about" className={`dock-link ${activeSection === "about" ? "is-active" : ""}`}>
+                <span>About</span>
+              </a>
+            </nav>
+
+            <span className="dock-divider" aria-hidden="true" />
+
+            {/* Action CTA & Mobile Menu Trigger */}
+            <div className="dock-actions">
+              <a href="#contact" className="dock-cta">
                 <span>Let's talk</span>
                 <Icon name="arrow" />
               </a>
               <button
-                className="menu-button"
+                className="dock-menu-btn"
                 type="button"
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open menu"
@@ -352,7 +359,7 @@ export default function App() {
                 <Icon name="menu" />
               </button>
             </div>
-          </nav>
+          </div>
         </header>
 
         {menuOpen && (
