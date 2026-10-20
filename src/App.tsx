@@ -412,124 +412,36 @@ export default function App() {
         )}
 
         <header id="top" className="p-hero p-container">
-          {/* Ambient Glow & Grid Backdrop */}
-          <div className="p-hero-ambient" aria-hidden="true">
-            <div className="p-hero-glow-1" />
-            <div className="p-hero-glow-2" />
-            <div className="p-hero-grid-mesh" />
-          </div>
-
           <div className="p-hero-top" data-hero-kicker>
-            <div className="p-hero-badge">
-              <span className="p-badge-pulse" />
-              <span>Available for Full-Time Roles &amp; Select Contracts</span>
-            </div>
-            <div className="p-hero-loc-tag">
-              <span className="p-loc-dot" />
-              <span>Mohali, Punjab, India</span>
-              <span className="p-loc-sep">·</span>
-              <span>IST / Global Remote</span>
-            </div>
+            <span className="p-eyebrow">Developer. Builder. Always learning.</span>
+            <span className="p-available"><i aria-hidden="true" /> Open to opportunities</span>
           </div>
-
           <div className="p-hero-grid">
             <div className="p-hero-identity">
-              <div className="p-hello-row" data-hero-copy>
-                <span className="p-hello-tag">01 / Introduction</span>
-                <p className="p-hello">Hey, I'm</p>
-              </div>
+              <p className="p-hello" data-hero-copy>Hey, I'm</p>
               <h1 className="p-name">
                 <span className="p-name-line"><span data-hero-word>Manpreet</span></span>
-                <span className="p-name-line">
-                  <span data-hero-word className="p-name-serif">
-                    Singh<span className="p-name-dot">.</span>
-                  </span>
-                </span>
+                <span className="p-name-line"><span data-hero-word className="p-name-serif">Singh.</span></span>
               </h1>
-              <div className="p-hero-stack" aria-label="Core technology stack">
-                <span className="p-stack-label">Specializing in</span>
-                <div className="p-stack-chips">
-                  <span className="p-chip">React</span>
-                  <span className="p-chip">Next.js</span>
-                  <span className="p-chip">Node.js</span>
-                  <span className="p-chip">LangChain</span>
-                  <span className="p-chip">TypeScript</span>
-                  <span className="p-chip">MongoDB</span>
-                </div>
-              </div>
             </div>
-
             <div className="p-hero-profile" data-hero-profile>
-              <div className="p-role-pill">
-                <span className="p-role-icon">✦</span>
-                <span>Full-Stack &amp; GenAI Engineer</span>
-              </div>
+              <span className="p-role-label">Full-stack & GenAI Engineer</span>
               <h2>I build for the web.<br /><span>And the people using it.</span></h2>
-              <p>I architect and ship fast, scalable, and secure applications—from high-performance Next.js web products to production-grade LangChain AI workflows.</p>
-
-              {/* Micro-Metrics / Proof Strip */}
-              <div className="p-hero-metrics">
-                <div className="p-metric-card">
-                  <strong>03+</strong>
-                  <span>Shipped Apps</span>
-                </div>
-                <div className="p-metric-card">
-                  <strong>MERN</strong>
-                  <span>End-to-End Loop</span>
-                </div>
-                <div className="p-metric-card">
-                  <strong>GenAI</strong>
-                  <span>Applied Workflows</span>
-                </div>
-              </div>
-
+              <p>I'm a developer based in Mohali, India, turning ideas into useful web applications. I work across interfaces, backend systems, and applied AI.</p>
               <div className="p-hero-actions">
-                <a href="#work" className="p-button">
-                  <span>Explore my work</span>
-                  <Icon name="arrow" />
-                </a>
-                <a href="/resume.pdf" className="p-resume" download="Manpreet_Singh_Resume.pdf">
-                  <span>My résumé</span>
-                  <Icon name="download" />
-                </a>
+                <a href="#work" className="p-button">Explore my work <Icon name="arrow" /></a>
+                <a href="/resume.pdf" className="p-resume" download="Manpreet_Singh_Resume.pdf">My résumé <Icon name="download" /></a>
               </div>
-
-              {/* Currently Building Badge */}
-              <div className="p-current">
-                <span className="p-current-badge">
-                  <span className="p-current-pulse" />
-                  Current
-                </span>
-                <div className="p-current-body">
-                  <span className="p-current-company">Fresco Web Services</span>
-                  <span className="p-current-role">Full-Stack Web Development Trainee</span>
-                </div>
-              </div>
+              <div className="p-current"><span className="p-current-mark" aria-hidden="true">↳</span><div>Currently building at<strong>Fresco Web Services</strong></div></div>
             </div>
           </div>
-
           <div className="p-hero-bottom">
             <div className="p-hero-links">
-              <a href={links.github} target="_blank" rel="noreferrer" className="p-social-pill">
-                <Icon name="github" />
-                <span>GitHub</span>
-                <span className="p-link-arrow">↗</span>
-              </a>
-              <a href={links.linkedin} target="_blank" rel="noreferrer" className="p-social-pill">
-                <Icon name="linkedin" />
-                <span>LinkedIn</span>
-                <span className="p-link-arrow">↗</span>
-              </a>
-              <a href={links.email} className="p-social-pill">
-                <Icon name="mail" />
-                <span>Email</span>
-                <span className="p-link-arrow">↗</span>
-              </a>
+              <a href={links.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" /></a>
+              <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Icon name="arrow" /></a>
+              <a href={links.email}>Email <Icon name="arrow" /></a>
             </div>
-            <a className="p-scroll-link" href="#work">
-              <span>A selection of my work</span>
-              <span className="p-scroll-arrow" aria-hidden="true">↓</span>
-            </a>
+            <a className="p-scroll-link" href="#work">A selection of my work <span aria-hidden="true">↓</span></a>
           </div>
         </header>
 
