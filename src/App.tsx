@@ -174,12 +174,31 @@ export default function App() {
   const rootRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [copiedEmail, setCopiedEmail] = useState(false);
+
   useEffect(() => {
     const update = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+      setIsScrolled(window.scrollY > 20);
+
+      const sections = ["work", "vault", "expertise", "activity", "about", "contact"];
+      const scrollPos = window.scrollY + 180;
+      let current = "";
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            current = sectionId;
+          }
+        }
+      }
+      setActiveSection(current);
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -277,50 +296,111 @@ export default function App() {
   return (
     <>
       <main ref={rootRef} className="site-shell">
-        <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
-
-        <nav className="nav wrap portfolio-nav" data-nav aria-label="Main navigation">
-          <a href="#top" className="brand" aria-label="Manpreet Singh home">
-            <span className="brand-mark">MS</span>
-            <span className="brand-copy">
-              Manpreet Singh
-              <small>Full-Stack & GenAI Engineer</small>
-            </span>
-          </a>
-          <div className="nav-links">
-            <a href="#work">Work</a>
-            <a href="#vault">Vault</a>
-            <a href="#expertise">Expertise</a>
-            <a href="#activity">Activity</a>
-            <a href="#about">About</a>
-          </div>
-          <div className="nav-actions">
-            <a href="#contact" className="pill pill-primary nav-cta">
-              Let's talk <Icon name="arrow" />
+        <header className={`site-header ${isScrolled ? "is-scrolled" : ""}`}>
+          <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
+          <nav className="nav wrap portfolio-nav" data-nav aria-label="Main navigation">
+            <a href="#top" className="brand" aria-label="Manpreet Singh home">
+              <span className="brand-mark">
+                <span>MS</span>
+                <span className="brand-status-ping" aria-hidden="true" />
+              </span>
+              <span className="brand-copy">
+                <span className="brand-name">
+                  Manpreet Singh
+                  <span className="brand-badge">
+                    <span className="status-dot-mini" />
+                    Available
+                  </span>
+                </span>
+                <small>Full-Stack &amp; GenAI Engineer</small>
+              </span>
             </a>
-            <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu" aria-expanded={menuOpen} aria-controls="mobile-navigation">
-              <Icon name="menu" />
-            </button>
-          </div>
-        </nav>
+
+            <div className="nav-dock" role="navigation" aria-label="Page sections">
+              <div className="nav-links">
+                <a href="#work" className={activeSection === "work" ? "is-active" : ""}>
+                  Work
+                </a>
+                <a href="#vault" className={activeSection === "vault" ? "is-active" : ""}>
+                  Vault
+                </a>
+                <a href="#expertise" className={activeSection === "expertise" ? "is-active" : ""}>
+                  Expertise
+                </a>
+                <a href="#activity" className={activeSection === "activity" ? "is-active" : ""}>
+                  Activity
+                </a>
+                <a href="#about" className={activeSection === "about" ? "is-active" : ""}>
+                  About
+                </a>
+              </div>
+            </div>
+
+            <div className="nav-actions">
+              <a href="#contact" className="pill pill-primary nav-cta">
+                <span>Let's talk</span>
+                <Icon name="arrow" />
+              </a>
+              <button
+                className="menu-button"
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-navigation"
+              >
+                <Icon name="menu" />
+              </button>
+            </div>
+          </nav>
+        </header>
 
         {menuOpen && (
           <div id="mobile-navigation" className="mobile-menu portfolio-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
             <div className="mobile-menu-header">
-              <span className="menu-label">Navigation</span>
+              <div className="mobile-brand">
+                <span className="brand-mark">MS</span>
+                <span className="brand-copy">
+                  Manpreet Singh
+                  <small>Full-Stack &amp; GenAI</small>
+                </span>
+              </div>
               <button className="menu-close" type="button" onClick={closeMenu} aria-label="Close menu">
                 <Icon name="close" />
               </button>
             </div>
             <div className="mobile-menu-links">
-              <a href="#work" onClick={closeMenu}>Work <span>01</span></a>
-              <a href="#vault" onClick={closeMenu}>Vault <span>02</span></a>
-              <a href="#expertise" onClick={closeMenu}>Expertise <span>03</span></a>
-              <a href="#activity" onClick={closeMenu}>Activity <span>04</span></a>
-              <a href="#about" onClick={closeMenu}>About <span>05</span></a>
-              <a href="#contact" onClick={closeMenu}>Contact <span>06</span></a>
+              <a href="#work" onClick={closeMenu}>
+                <span>Work</span>
+                <span className="mobile-menu-index">01</span>
+              </a>
+              <a href="#vault" onClick={closeMenu}>
+                <span>Vault</span>
+                <span className="mobile-menu-index">02</span>
+              </a>
+              <a href="#expertise" onClick={closeMenu}>
+                <span>Expertise</span>
+                <span className="mobile-menu-index">03</span>
+              </a>
+              <a href="#activity" onClick={closeMenu}>
+                <span>Activity</span>
+                <span className="mobile-menu-index">04</span>
+              </a>
+              <a href="#about" onClick={closeMenu}>
+                <span>About</span>
+                <span className="mobile-menu-index">05</span>
+              </a>
+              <a href="#contact" onClick={closeMenu}>
+                <span>Contact</span>
+                <span className="mobile-menu-index">06</span>
+              </a>
             </div>
-            <p>Mohali, Punjab · Available for Full-Time & Select Contracts</p>
+            <div className="mobile-menu-footer">
+              <a href="#contact" onClick={closeMenu} className="pill pill-accent mobile-cta">
+                Let's talk <Icon name="arrow" />
+              </a>
+              <p>Mohali, Punjab · Available for Full-Time &amp; Contracts</p>
+            </div>
           </div>
         )}
 
