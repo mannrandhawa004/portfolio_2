@@ -20,9 +20,7 @@ type IconName =
   | "close"
   | "copy"
   | "check"
-  | "external"
-  | "sun"
-  | "moon";
+  | "external";
 
 const links = {
   github: "https://github.com/mannrandhawa004",
@@ -65,7 +63,7 @@ const projects = [
     title: "Taskflow",
     eyebrow: "Enterprise Multi-Tenant SaaS",
     description:
-      "TaskFlow is a production-grade multi-tenant platform built for organizations to manage cross-functional projects, departments, attendance, and leave with strict tenant isolation. Engineered with RBAC permissions, TOTP two-factor authentication, Redis caching, API rate limiting, Stripe/Razorpay billing, and real-time Socket.IO event streaming.",
+      "A workspace for teams to manage projects, departments, and attendance. Built with tenant isolation, role-based access, two-factor authentication, real-time updates, and integrated billing.",
     tags: ["Next.js", "Node.js", "MySQL", "Socket.IO", "Redis", "Stripe", "Razorpay", "2FA / TOTP", "Tailwind CSS", "Redux Toolkit"],
     github: "https://github.com/mannrandhawa004/task_management_system",
     live: "https://github.com/mannrandhawa004/task_management_system",
@@ -80,7 +78,7 @@ const projects = [
     title: "AI Resume Builder",
     eyebrow: "AI-Powered Document Engine",
     description:
-      "A dynamic, high-performance resume engineering workspace featuring real-time preview rendering, ATS-optimized templates, cloud asset delivery, and instant client-side vector PDF generation.",
+      "An AI-powered workspace for building résumés, with live previews, ATS-friendly templates, and instant PDF export. From a blank page to a document ready to share.",
     tags: ["React", "GenAI Integration", "Node.js", "Tailwind CSS", "PDF Engine", "Redux Toolkit"],
     github: "https://github.com/mannrandhawa004/ai-resume-builder",
     live: "https://ai-resume-builder-beta-pink.vercel.app",
@@ -95,7 +93,7 @@ const projects = [
     title: "Scatch",
     eyebrow: "Full-Stack Commerce Engine",
     description:
-      "A modern full-stack e-commerce experience featuring dynamic product discovery, persistent cart state, Google OAuth + JWT session security, and end-to-end Stripe checkout backed by resilient webhook payment reconciliation.",
+      "An e-commerce application with product discovery, persistent carts, Google sign-in, and Stripe checkout. Built around a secure shopping flow, from browsing to payment.",
     tags: ["MERN Stack", "Google OAuth", "JWT", "Stripe API", "Webhooks", "Tailwind CSS"],
     github: "https://github.com/mannrandhawa004/scatch",
     live: "https://scatch-bice.vercel.app",
@@ -169,76 +167,7 @@ function Icon({ name, className = "" }: { name: IconName; className?: string }) 
   if (name === "copy") return <svg {...common} aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>;
   if (name === "check") return <svg {...common} aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>;
   if (name === "external") return <svg {...common} aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" /></svg>;
-  if (name === "sun")
-    return (
-      <svg {...common} aria-hidden="true">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-      </svg>
-    );
-  if (name === "moon")
-    return (
-      <svg {...common} aria-hidden="true">
-        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-      </svg>
-    );
   return <svg {...common} aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.2.5S18 0 15 1.9a13.4 13.4 0 0 0-7 0C5 .1 3.8.5 3.8.5A5 5 0 0 0 3.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 8 18v4" /></svg>;
-}
-
-function Marquee() {
-  const words = ["MERN STACK", "GEN AI", "NEXT.JS", "NODE.JS", "LANGCHAIN", "MONGODB", "EXPRESS.JS", "PYTHON", "MYSQL", "SOCKET.IO", "REDIS"];
-  return (
-    <div className="marquee" aria-hidden="true">
-      <div className="marquee-track">
-        {[...words, ...words].map((word, index) => (
-          <span key={`${word}-${index}`}>{word}<i>✦</i></span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ProjectInteractiveMedia({ project }: { project: typeof projects[0] }) {
-  const mediaRef = useRef<HTMLDivElement>(null);
-  const [tiltStyle, setTiltStyle] = useState("");
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mediaRef.current) return;
-    const rect = mediaRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTiltStyle(`perspective(1000px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) scale3d(1.02, 1.02, 1.02)`);
-  };
-
-  const handleMouseLeave = () => {
-    setTiltStyle("perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1, 1, 1)");
-  };
-
-  return (
-    <div
-      ref={mediaRef}
-      className={`project-media ${project.className}`}
-      data-project-media
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: tiltStyle || undefined,
-        transition: tiltStyle ? "transform 0.15s ease-out" : "transform 0.5s ease",
-      }}
-    >
-      <div className="browser-chrome">
-        <span><i /><i /><i /></span>
-        <b>{project.displayUrl}</b>
-        <span className="project-chrome-badge">{project.metric}</span>
-      </div>
-      <div className="project-viewport">
-        {project.image && <img src={project.image} alt={`${project.title} application screenshot`} />}
-        <div className="project-ghost-overlay">
-          <span className="project-ghost">{project.number}</span>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export default function App() {
@@ -247,78 +176,6 @@ export default function App() {
   const [progress, setProgress] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [terminalCopied, setTerminalCopied] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
-
-  const [theme, setTheme] = useState<"dark" | "light">(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("portfolio-theme");
-      if (saved === "light" || saved === "dark") return saved;
-      return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-    }
-    return "dark";
-  });
-
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("portfolio-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = (e?: React.MouseEvent) => {
-    const nextTheme = theme === "dark" ? "light" : "dark";
-
-    if (
-      typeof document === "undefined" ||
-      !("startViewTransition" in document) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      document.documentElement.classList.add("theme-transitioning");
-      document.documentElement.setAttribute("data-theme", nextTheme);
-      setTheme(nextTheme);
-      setTimeout(() => {
-        document.documentElement.classList.remove("theme-transitioning");
-      }, 500);
-      return;
-    }
-
-    const rect = e?.currentTarget?.getBoundingClientRect?.();
-    const x = e?.clientX ?? (rect ? rect.left + rect.width / 2 : window.innerWidth / 2);
-    const y = e?.clientY ?? (rect ? rect.top + rect.height / 2 : window.innerHeight / 2);
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    const transition = (document as any).startViewTransition(() => {
-      document.documentElement.setAttribute("data-theme", nextTheme);
-      setTheme(nextTheme);
-    });
-
-    transition.ready.then(() => {
-      document.documentElement.animate(
-        {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${endRadius}px at ${x}px ${y}px)`,
-          ],
-        },
-        {
-          duration: 620,
-          easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
-          pseudoElement: "::view-transition-new(root)",
-        }
-      );
-    });
-  };
-
-  useEffect(() => {
-    const handlePointerMove = (e: PointerEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, []);
-
   useEffect(() => {
     const update = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -330,12 +187,40 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const menu = document.getElementById("mobile-navigation");
+    const controls = menu?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+    document.body.style.overflow = "hidden";
+    controls?.[0]?.focus();
+
+    const handleMenuKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
+      }
+      if (event.key !== "Tab" || !controls?.length) return;
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handleMenuKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleMenuKey);
+      previousFocus?.focus({ preventScroll: true });
+    };
   }, [menuOpen]);
 
   useLayoutEffect(() => {
-    if (!rootRef.current) return;
+    if (!rootRef.current || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const ctx = gsap.context(() => {
       const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
       intro
@@ -343,7 +228,7 @@ export default function App() {
         .from("[data-hero-kicker]", { y: 20, opacity: 0, duration: 0.6 }, "-=0.3")
         .from("[data-hero-word]", { yPercent: 110, rotate: 2, duration: 1.15, stagger: 0.08, ease: "expo.out" }, "-=0.2")
         .from("[data-hero-copy]", { y: 24, opacity: 0, duration: 0.8 }, "-=0.55")
-        .from("[data-terminal]", { y: 36, opacity: 0, rotate: 1.5, duration: 1 }, "-=0.7");
+        .from("[data-hero-profile]", { y: 24, opacity: 0, duration: 0.8 }, "-=0.7");
 
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
         gsap.from(element, {
@@ -370,23 +255,6 @@ export default function App() {
     }
   };
 
-  const copyTerminalSnippet = async () => {
-    const snippet = `const engineer = {
-  name: "Manpreet Singh",
-  role: "Full-Stack & GenAI Engineer",
-  stack: ["React", "Next.js", "Node.js", "LangChain"],
-  shipsProduction: true,
-  location: "Mohali, India"
-};`;
-    try {
-      await navigator.clipboard.writeText(snippet);
-      setTerminalCopied(true);
-      setTimeout(() => setTerminalCopied(false), 2000);
-    } catch {
-      // fallback
-    }
-  };
-
   const handleContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -408,18 +276,10 @@ export default function App() {
 
   return (
     <>
-      <div
-        className="ambient-spotlight"
-        style={{
-          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
-        }}
-        aria-hidden="true"
-      />
-
       <main ref={rootRef} className="site-shell">
         <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
 
-        <nav className="nav wrap" data-nav aria-label="Main navigation">
+        <nav className="nav wrap portfolio-nav" data-nav aria-label="Main navigation">
           <a href="#top" className="brand" aria-label="Manpreet Singh home">
             <span className="brand-mark">MS</span>
             <span className="brand-copy">
@@ -435,41 +295,19 @@ export default function App() {
             <a href="#about">About</a>
           </div>
           <div className="nav-actions">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="theme-toggle-btn"
-              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            >
-              <span key={theme} className="theme-icon-slot">
-                <Icon name={theme === "dark" ? "moon" : "sun"} />
-              </span>
-              <span className="theme-toggle-text">{theme === "dark" ? "Dark" : "Light"}</span>
-            </button>
             <a href="#contact" className="pill pill-primary nav-cta">
               Let's talk <Icon name="arrow" />
             </a>
-            <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+            <button className="menu-button" type="button" onClick={() => setMenuOpen(true)} aria-label="Open menu" aria-expanded={menuOpen} aria-controls="mobile-navigation">
               <Icon name="menu" />
             </button>
           </div>
         </nav>
 
         {menuOpen && (
-          <div className="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
+          <div id="mobile-navigation" className="mobile-menu portfolio-menu" role="dialog" aria-modal="true" aria-label="Navigation menu">
             <div className="mobile-menu-header">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="theme-toggle-btn"
-                aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-              >
-                <span key={theme} className="theme-icon-slot">
-                  <Icon name={theme === "dark" ? "moon" : "sun"} />
-                </span>
-                <span>{theme === "dark" ? "Dark Mode" : "Light Mode"}</span>
-              </button>
+              <span className="menu-label">Navigation</span>
               <button className="menu-close" type="button" onClick={closeMenu} aria-label="Close menu">
                 <Icon name="close" />
               </button>
@@ -486,111 +324,71 @@ export default function App() {
           </div>
         )}
 
-        <header id="top" className="hero wrap">
-          <div className="hero-orb hero-orb-one" />
-          <div className="hero-orb hero-orb-two" />
-
-          <div className="hero-kicker" data-hero-kicker>
-            <span className="status-dot" />
-            Manpreet Singh · Available for full-time engineering teams
+        <header id="top" className="p-hero p-container">
+          <div className="p-hero-top" data-hero-kicker>
+            <span className="p-eyebrow">Developer. Builder. Always learning.</span>
+            <span className="p-available"><i aria-hidden="true" /> Open to opportunities</span>
           </div>
-          <h1 className="hero-title" aria-label="Manpreet Singh">
-            <span className="hero-line"><span data-hero-word>Manpreet</span></span>
-            <span className="hero-line hero-line-bottom"><span data-hero-word>Singh<span className="title-dot">.</span></span></span>
-          </h1>
-          <div className="hero-bottom">
-            <div className="hero-copy" data-hero-copy>
-              <div className="hero-role"><span>Full-stack engineer</span><i>×</i><span>GenAI builder</span></div>
-              <p>I architect and ship <strong>fast, scalable, and secure products</strong>—from high-performance React & Next.js web applications to production-grade LangChain intelligence workflows.</p>
-              <div className="hero-proof">
-                <div><strong>03</strong><span>Shipped apps</span></div>
-                <div><strong>MERN</strong><span>End-to-end</span></div>
-                <div><strong>GenAI</strong><span>Production-ready</span></div>
-              </div>
-              <div className="hero-actions">
-                <a className="pill pill-accent" href="#work">Explore my work <Icon name="arrow" /></a>
-                <a className="text-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">
-                  Download résumé <Icon name="download" />
-                </a>
-              </div>
+          <div className="p-hero-grid">
+            <div className="p-hero-identity">
+              <p className="p-hello" data-hero-copy>Hey, I'm</p>
+              <h1 className="p-name">
+                <span className="p-name-line"><span data-hero-word>Manpreet</span></span>
+                <span className="p-name-line"><span data-hero-word className="p-name-serif">Singh.</span></span>
+              </h1>
             </div>
-            <div className="terminal" data-terminal>
-              <div className="terminal-bar">
-                <div><i /><i /><i /></div>
-                <span>manpreet.dev</span>
-                <button
-                  type="button"
-                  className="terminal-copy-btn"
-                  onClick={copyTerminalSnippet}
-                  aria-label="Copy terminal snippet"
-                  title="Copy terminal snippet"
-                >
-                  <Icon name={terminalCopied ? "check" : "copy"} />
-                  <span>{terminalCopied ? "Copied" : "Copy"}</span>
-                </button>
+            <div className="p-hero-profile" data-hero-profile>
+              <span className="p-role-label">Full-stack & GenAI Engineer</span>
+              <h2>I build for the web.<br /><span>And the people using it.</span></h2>
+              <p>I'm a developer based in Mohali, India, turning ideas into useful web applications. I work across interfaces, backend systems, and applied AI.</p>
+              <div className="p-hero-actions">
+                <a href="#work" className="p-button">Explore my work <Icon name="arrow" /></a>
+                <a href="/resume.pdf" className="p-resume" download="Manpreet_Singh_Resume.pdf">My résumé <Icon name="download" /></a>
               </div>
-              <div className="terminal-body">
-                <p><span className="code-muted">01</span><span className="code-accent">const</span> engineer = {'{'}</p>
-                <p><span className="code-muted">02</span>&nbsp;&nbsp;name: <span className="code-secondary">"Manpreet Singh"</span>,</p>
-                <p><span className="code-muted">03</span>&nbsp;&nbsp;role: <span className="code-secondary">"Full-Stack & GenAI Engineer"</span>,</p>
-                <p><span className="code-muted">04</span>&nbsp;&nbsp;stack: [<span className="code-secondary">"React"</span>, <span className="code-secondary">"Next.js"</span>, <span className="code-secondary">"Node.js"</span>, <span className="code-secondary">"LangChain"</span>],</p>
-                <p><span className="code-muted">05</span>&nbsp;&nbsp;shipsProduction: <span className="code-accent">true</span>,</p>
-                <p><span className="code-muted">06</span>&nbsp;&nbsp;location: <span className="code-secondary">"Mohali, India"</span></p>
-                <p><span className="code-muted">07</span>{'}'};</p>
-                <p className="terminal-output"><span>→</span> Ready to build high-impact products_</p>
-              </div>
+              <div className="p-current"><span className="p-current-mark" aria-hidden="true">↳</span><div>Currently building at<strong>Fresco Web Services</strong></div></div>
             </div>
           </div>
-          <div className="hero-meta">
-            <span>30° 42' N / 76° 43' E</span>
-            <span className="hero-meta-center">Scroll to explore ↓</span>
-            <span>Portfolio / 2026</span>
+          <div className="p-hero-bottom">
+            <div className="p-hero-links">
+              <a href={links.github} target="_blank" rel="noreferrer">GitHub <Icon name="arrow" /></a>
+              <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn <Icon name="arrow" /></a>
+              <a href={links.email}>Email <Icon name="arrow" /></a>
+            </div>
+            <a className="p-scroll-link" href="#work">A selection of my work <span aria-hidden="true">↓</span></a>
           </div>
         </header>
 
-        <Marquee />
-
-        <section id="work" className="section section-work wrap">
-          <div className="section-heading" data-reveal>
-            <div><span className="section-no">01</span><p>Selected work</p></div>
-            <h2>Products built to<br /><em>work in the real world.</em></h2>
-            <p className="section-intro">From multi-tenant SaaS platforms to AI document engines and e-commerce—each project solves an end-to-end engineering challenge.</p>
+        <section id="work" className="p-section p-work p-container">
+          <div className="p-section-heading" data-reveal>
+            <div><p className="p-eyebrow">01 / Selected work</p><h2>Ideas made <em>real.</em></h2></div>
+            <p>A few projects I've taken from idea to implementation. Each one taught me something new.</p>
           </div>
-
-          <div className="projects">
+          <div className="p-project-grid">
             {projects.map((project) => (
-              <article className="project" key={project.title} data-project data-reveal>
-                <ProjectInteractiveMedia project={project} />
-                <div className="project-info">
-                  <div className="project-title-row">
-                    <span>{project.number}</span>
-                    <div>
-                      <small className="project-eyebrow">{project.eyebrow}</small>
-                      <h3>{project.title}</h3>
-                    </div>
+              <article id={`project-${project.number}`} className={`p-project p-project-${project.number}`} key={project.title} data-reveal>
+                <a className="p-project-image" href={project.live} target="_blank" rel="noreferrer" aria-label={`View ${project.title} ${project.isLiveDemo ? "live demo" : "repository"}`}>
+                  <div className="p-project-image-meta"><span>{project.number} / {project.isLiveDemo ? "Live project" : "Featured build"}</span><Icon name="arrow" /></div>
+                  <div className="p-project-browser">
+                    <div className="p-browser-top"><span /><span /><span /><small>{project.title}</small></div>
+                    <img src={project.image} alt={`${project.title} application screenshot`} loading="lazy" />
                   </div>
-                  <p>{project.description}</p>
-                  <div className="tag-list">
-                    {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
-                  </div>
-                  <div className="project-actions">
-                    {project.isLiveDemo ? (
-                      <a href={project.live} target="_blank" rel="noreferrer" className="pill pill-accent">
-                        Live Demo <Icon name="arrow" />
-                      </a>
-                    ) : (
-                      <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-accent">
-                        Explore Architecture <Icon name="arrow" />
-                      </a>
-                    )}
-                    <a href={project.github} target="_blank" rel="noreferrer" className="pill pill-outline">
-                      <Icon name="github" /> Source Code
-                    </a>
+                </a>
+                <div className="p-project-content">
+                  <p className="p-eyebrow">{project.eyebrow}</p>
+                  <h3>{project.title}</h3>
+                  <p className="p-project-description">{project.description}</p>
+                  <ul className="p-tags" aria-label={`${project.title} technologies`}>
+                    {project.tags.slice(0, 5).map((tag) => <li key={tag}>{tag}</li>)}
+                  </ul>
+                  <div className="p-project-links">
+                    {project.isLiveDemo && <a href={project.live} target="_blank" rel="noreferrer">View live <Icon name="arrow" /></a>}
+                    <a href={project.github} target="_blank" rel="noreferrer">Source code <Icon name="github" /></a>
                   </div>
                 </div>
               </article>
             ))}
           </div>
+          <a className="p-all-projects" href={links.github} target="_blank" rel="noreferrer">More experiments & projects on GitHub <Icon name="arrow" /></a>
         </section>
 
         <section id="vault" className="section section-vault wrap">
@@ -604,7 +402,7 @@ export default function App() {
             <GlassFolder
               label="Projects"
               meta="3 Shipped Apps"
-              tone={theme === "dark" ? "dark" : "light"}
+              tone="light"
               art="ember"
               seed={7}
               action="more"
@@ -623,7 +421,7 @@ export default function App() {
             <GlassFolder
               label="Frontend Design"
               meta="4 Interactive Labs"
-              tone={theme === "dark" ? "dark" : "light"}
+              tone="light"
               art="aurora"
               seed={15}
               action="add"
@@ -645,7 +443,7 @@ export default function App() {
             <GlassFolder
               label="Résumé & Credentials"
               meta="Verified Documents"
-              tone={theme === "dark" ? "dark" : "light"}
+              tone="light"
               art="verdant"
               seed={23}
               action="more"
@@ -675,63 +473,31 @@ export default function App() {
           </p>
         </section>
 
-        <section id="expertise" className="section expertise-section">
-          <div className="wrap">
-            <div className="section-heading section-heading-light" data-reveal>
-              <div><span className="section-no">03</span><p>What I bring</p></div>
-              <h2>One developer.<br /><em>The full product loop.</em></h2>
-              <p className="section-intro">I bridge user interfaces, robust backend APIs, database architecture, and intelligent AI models to deliver unified experiences.</p>
+        <section id="expertise" className="p-section p-expertise">
+          <div className="p-container">
+            <div className="p-section-heading" data-reveal>
+              <div><p className="p-eyebrow">03 / My toolkit</p><h2>From the interface<br />to <em>what powers it.</em></h2></div>
+              <p>I enjoy connecting the pieces: a thoughtful interface, a reliable backend, and the right tools for the problem.</p>
             </div>
-            <div className="service-grid">
+            <div className="p-capabilities">
               {services.map((service) => (
-                <article className="service-card" key={service.number} data-reveal>
-                  <div><span>{service.number}</span><i>✦</i></div>
+                <article className="p-capability" key={service.number} data-reveal>
+                  <span className="p-capability-number">{service.number}</span>
                   <h3>{service.title}</h3>
-                  <p>{service.body}</p>
-                  <small>{service.tech}</small>
+                  <div><p>{service.body}</p><small>{service.tech}</small></div>
                 </article>
               ))}
             </div>
-            <div className="stack" data-reveal>
-              <div className="stack-heading">
-                <div><span>03 / Skill system</span><p>How the pieces connect</p></div>
-                <h3>From interface<br />to intelligence.</h3>
-                <p>My stack covers the full journey from client interactions to distributed services, caching, and applied AI systems.</p>
-              </div>
-              <div className="skill-system">
-                <div className="skill-orbit" aria-label="Core development stack">
-                  <div className="orbit-scanner" />
-                  <div className="orbit-crosshair-h" />
-                  <div className="orbit-crosshair-v" />
-                  <span className="orbit-marker marker-n">000° N</span>
-                  <span className="orbit-marker marker-e">090° E</span>
-                  <span className="orbit-marker marker-s">180° S</span>
-                  <span className="orbit-marker marker-w">270° W</span>
-                  <div className="orbit-ring orbit-ring-one" />
-                  <div className="orbit-ring orbit-ring-two" />
-                  <div className="skill-core">
-                    <span>MERN</span>
-                    <strong>+</strong>
-                    <span>GEN AI</span>
-                    <small>Full product thinking</small>
-                  </div>
-                  <span className="orbit-chip orbit-react">React</span>
-                  <span className="orbit-chip orbit-node">Node.js</span>
-                  <span className="orbit-chip orbit-mongo">MongoDB</span>
-                  <span className="orbit-chip orbit-langchain">LangChain</span>
-                  <span className="orbit-chip orbit-gsap">GSAP</span>
-                  <span className="orbit-chip orbit-python">Python</span>
-                </div>
-                <div className="stack-groups">
-                  {stackGroups.map((group, index) => (
-                    <article className="stack-group" key={group.label}>
-                      <div className="stack-group-title"><span>0{index + 1}</span><h4>{group.label}</h4></div>
-                      <p>{group.note}</p>
-                      <div>{group.items.map((item) => <span key={item}>{item}</span>)}</div>
-                    </article>
-                  ))}
-                </div>
-              </div>
+            <div className="p-tools-heading" data-reveal><h3>The tools I reach for.</h3><p>A practical stack, always evolving.</p></div>
+            <div className="p-tools">
+              {stackGroups.map((group, index) => (
+                <article className="p-tool-group" key={group.label} data-reveal>
+                  <span className="p-tool-index">0{index + 1}</span>
+                  <h4>{group.label}</h4>
+                  <p>{group.note}</p>
+                  <ul>{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                </article>
+              ))}
             </div>
           </div>
         </section>
@@ -760,10 +526,7 @@ export default function App() {
             </div>
 
             <ContributionSkyline
-              palette={{
-                light: ["#cffafe", "#67e8f9", "#0891b2", "#205969"],
-                dark: ["#2a1f0a", "#784a0d", "#d97706", "#febc2e"],
-              }}
+              palette={["#dbe5d5", "#a8c29e", "#73946c", "#42634f"]}
               defaultView="3d"
               orbit={true}
               showStats={true}
@@ -773,56 +536,46 @@ export default function App() {
           </div>
         </section>
 
-        <section id="about" className="section about-section wrap">
-          <div className="section-heading" data-reveal>
-            <div><span className="section-no">05</span><p>Experience</p></div>
-            <h2>Learning fast.<br /><em>Shipping faster.</em></h2>
-            <p className="section-intro">A BCA graduate with proven production experience building resilient MERN stack products.</p>
+        <section id="about" className="p-section p-about p-container">
+          <div className="p-section-heading" data-reveal>
+            <div><p className="p-eyebrow">05 / A little about me</p><h2>Curiosity is<br />my <em>starting point.</em></h2></div>
+            <p>I'm a BCA graduate and full-stack developer. I learn by building, asking questions, and getting the details right.</p>
           </div>
-
-          <div className="experience-layout">
-            <aside className="about-card" data-reveal>
-              <div className="avatar-mark"><span>MS</span><i>✦</i></div>
-              <blockquote>“I care about the tiny details users feel—and the robust systems they never have to think about.”</blockquote>
-              <p>Based in Mohali, Punjab.<br />Open to engineering teams building ambitious digital products.</p>
-              <div className="social-row">
-                <a href={links.github} target="_blank" rel="noreferrer" aria-label="GitHub"><Icon name="github" /></a>
-                <a href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><Icon name="linkedin" /></a>
-                <a href={links.email} aria-label="Email"><Icon name="mail" /></a>
-              </div>
+          <div className="p-about-grid">
+            <aside className="p-about-note" data-reveal>
+              <span className="p-note-label">My approach</span>
+              <blockquote>Good software feels simple.<br />Getting it there is the part I love.</blockquote>
+              <p>I care about the details people notice, and the systems they never have to think about. My work spans responsive interfaces, secure APIs, and useful AI integrations.</p>
+              <div className="p-about-facts"><span>Based in</span><strong>Mohali, Punjab, India</strong><span>Interested in</span><strong>Full-stack development & applied AI</strong></div>
+              <a href="/resume.pdf" className="p-note-link" download="Manpreet_Singh_Resume.pdf">The full story, in my résumé <Icon name="download" /></a>
             </aside>
-            <div className="timeline">
-              {experience.map((item) => (
-                <article className="timeline-item" key={item.company} data-reveal>
-                  <div className="timeline-date">{item.date}</div>
-                  <div className="timeline-copy">
-                    <span>{item.location}</span>
-                    <h3>{item.role}</h3>
-                    <h4>{item.company}</h4>
-                    <p>{item.body}</p>
-                  </div>
+            <div className="p-journey">
+              <h3>Where I've been</h3>
+              {experience.map((item, index) => (
+                <article className="p-journey-item" key={item.company} data-reveal>
+                  <div className="p-journey-meta"><span>{item.date}</span>{index === 0 && <span className="p-current-badge">Current</span>}</div>
+                  <h4>{item.role}</h4>
+                  <div className="p-journey-company">{item.company}<span>{item.location}</span></div>
+                  <p>{item.body}</p>
                 </article>
               ))}
-              <article className="timeline-item education" data-reveal>
-                <div className="timeline-date">2022 — 2025</div>
-                <div className="timeline-copy">
-                  <span>Amritsar, India</span>
-                  <h3>Bachelor of Computer Applications</h3>
-                  <h4>Global Group of Institutes · CGPA 7.5</h4>
-                  <p>Comprehensive grounding in software development, data structures, algorithms, databases, and modern web application architecture.</p>
-                </div>
+              <article className="p-journey-item" data-reveal>
+                <div className="p-journey-meta"><span>2022 — 2025</span><span>Education</span></div>
+                <h4>Bachelor of Computer Applications</h4>
+                <div className="p-journey-company">Global Group of Institutes<span>Amritsar, India</span></div>
+                <p>CGPA 7.5. A foundation in software development, data structures, databases, and web application architecture.</p>
               </article>
             </div>
           </div>
         </section>
 
-        <section id="contact" className="contact-section">
-          <div className="wrap contact-inner" data-reveal>
+        <section id="contact" className="contact-section portfolio-contact">
+          <div className="p-container contact-inner" data-reveal>
             <div className="contact-grid">
               <div className="contact-copy">
-                <div className="contact-kicker"><span className="status-dot" />Have a role, project, or bold idea?</div>
-                <h2>Let's build<br /><em>what's next.</em></h2>
-                <p>Looking for a dedicated Full-Stack & GenAI Engineer? Let's connect. I reply promptly within 24 hours.</p>
+                <div className="contact-kicker"><span className="status-dot" />06 / Get in touch</div>
+                <h2>Have something<br />in mind? <em>Let's talk.</em></h2>
+                <p>I'm open to full-time roles, select projects, and interesting collaborations. Tell me what you're working on.</p>
                 <div className="contact-email-row">
                   <a href={links.email} className="contact-email">
                     randhawamanpreet37@gmail.com <Icon name="arrow" />
@@ -849,7 +602,7 @@ export default function App() {
                 <input type="hidden" name="_template" value="table" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input className="form-honey" type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-                <div className="form-topline"><span>Start a conversation</span><i>✦</i></div>
+                <div className="form-topline"><span>Send me a note</span><Icon name="mail" /></div>
                 <div className="form-row">
                   <label><span>Your name</span><input type="text" name="name" placeholder="Jane Smith" autoComplete="name" required /></label>
                   <label><span>Email address</span><input type="email" name="email" placeholder="jane@company.com" autoComplete="email" required /></label>
@@ -897,11 +650,7 @@ export default function App() {
           crop={0.18}
           dotGap={6}
           radius={85}
-          palette={
-            theme === "dark"
-              ? { background: "#07080a", ink: "#febc2e", warm: "#fb923c" }
-              : { background: "#f8faf9", ink: "#205969", warm: "#0891b2" }
-          }
+          palette={{ background: "#f7f7f2", ink: "#42634f", warm: "#8b9d78" }}
         />
       </main>
     </>
