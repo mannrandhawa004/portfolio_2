@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ContributionSkyline from "@/components/ui/contribution-skyline";
 import HalftoneWordmarkFooter from "@/components/ui/halftone-wordmark-footer";
 import GlassFolder from "@/components/ui/glass-folder-cards";
+import HeroScene from "./components/HeroScene";
+import "./redesign.css";
 import resume_builder from "../public/images/resume_builder.png";
 import scatch from "../public/images/scatch.png";
 import task_management from "../public/images/task_management.png";
@@ -174,7 +176,6 @@ export default function App() {
   const rootRef = useRef<HTMLElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -183,7 +184,6 @@ export default function App() {
     const update = () => {
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       setProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
-      setIsScrolled(window.scrollY > 20);
 
       const sections = ["work", "vault", "expertise", "activity", "about", "contact"];
       const scrollPos = window.scrollY + 180;
@@ -418,15 +418,16 @@ export default function App() {
           </div>
           <div className="p-hero-grid">
             <div className="p-hero-identity">
-              <p className="p-hello" data-hero-copy>Hey, I'm</p>
+              <p className="p-hello" data-hero-copy>MANPREET SINGH / CREATIVE ENGINEERING</p>
               <h1 className="p-name">
-                <span className="p-name-line"><span data-hero-word>Manpreet</span></span>
-                <span className="p-name-line"><span data-hero-word className="p-name-serif">Singh.</span></span>
+                <span className="p-name-line"><span data-hero-word>Ideas into</span></span>
+                <span className="p-name-line"><span data-hero-word className="p-name-serif">experiences.</span></span>
               </h1>
             </div>
+            <div className="sculpture-stage"><HeroScene /><span>FIG. 01 — FORM MEETS FUNCTION</span></div>
             <div className="p-hero-profile" data-hero-profile>
               <span className="p-role-label">Full-stack & GenAI Engineer</span>
-              <h2>I build for the web.<br /><span>And the people using it.</span></h2>
+              <h2>Thoughtful interfaces.<br /><span>Powerful things underneath.</span></h2>
               <p>I'm a developer based in Mohali, India, turning ideas into useful web applications. I work across interfaces, backend systems, and applied AI.</p>
               <div className="p-hero-actions">
                 <a href="#work" className="p-button">Explore my work <Icon name="arrow" /></a>
@@ -593,14 +594,14 @@ export default function App() {
           <div className="section-heading" data-reveal>
             <div><span className="section-no">04</span><p>Commitment</p></div>
             <h2>Continuous shipping.<br /><em>Engineering skyline.</em></h2>
-            <p className="section-intro">An interactive 3D activity skyline tracking daily code velocity, continuous releases, and open-source contributions.</p>
+            <p className="section-intro">An interactive 3D experiment built with sample contribution data. Explore the skyline, then visit GitHub for my actual activity.</p>
           </div>
 
           <div className="activity-card-wrap" data-reveal>
             <div className="activity-toolbar">
               <div className="activity-badge">
                 <span className="status-dot" />
-                Live Engineering Velocity
+                Interactive activity visualization
               </div>
               <a
                 href={links.github}
