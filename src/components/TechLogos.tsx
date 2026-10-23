@@ -24,7 +24,7 @@ export function TechIcon({ name }: { name: string }): ReactNode {
 
   if (n.includes("next")) {
     return (
-      <svg className="tech-logo" aria-hidden="true"  viewBox="0 0 180 180"><mask height="180" id=":r8:mask0_408_134" maskUnits="userSpaceOnUse" width="180" x="0" y="0" style="mask-type: alpha;"><circle cx="90" cy="90" fill="black" r="90"></circle></mask><g mask="url(#:r8:mask0_408_134)"><circle cx="90" cy="90" data-circle="true" fill="black" r="90"></circle><path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="url(#:r8:paint0_linear_408_134)"></path><rect fill="url(#:r8:paint1_linear_408_134)" height="72" width="12" x="115" y="54"></rect></g><defs><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint0_linear_408_134" x1="109" x2="144.5" y1="116.5" y2="160.5"><stop stopColor="white"></stop><stop offset="1" stopColor="white" stopOpacity="0"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint1_linear_408_134" x1="121" x2="120.799" y1="54" y2="106.875"><stop stopColor="white"></stop><stop offset="1" stopColor="white" stopOpacity="0"></stop></linearGradient></defs></svg>
+      <svg className="tech-logo" aria-hidden="true" viewBox="0 0 180 180"><mask height="180" id=":r8:mask0_408_134" maskUnits="userSpaceOnUse" width="180" x="0" y="0" style={{ maskType: "alpha" }}><circle cx="90" cy="90" fill="black" r="90"></circle></mask><g mask="url(#:r8:mask0_408_134)"><circle cx="90" cy="90" data-circle="true" fill="black" r="90"></circle><path d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="url(#:r8:paint0_linear_408_134)"></path><rect fill="url(#:r8:paint1_linear_408_134)" height="72" width="12" x="115" y="54"></rect></g><defs><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint0_linear_408_134" x1="109" x2="144.5" y1="116.5" y2="160.5"><stop stopColor="white"></stop><stop offset="1" stopColor="white" stopOpacity="0"></stop></linearGradient><linearGradient gradientUnits="userSpaceOnUse" id=":r8:paint1_linear_408_134" x1="121" x2="120.799" y1="54" y2="106.875"><stop stopColor="white"></stop><stop offset="1" stopColor="white" stopOpacity="0"></stop></linearGradient></defs></svg>
     );
   }
 
@@ -96,7 +96,7 @@ export function TechIcon({ name }: { name: string }): ReactNode {
 
   if (n.includes("langchain")) {
     return (
-      <svg className="tech-logo" aria-hidden="true"    style="flex:none;line-height:1" viewBox="0 0 24 24"><title>LangChain</title><path fill="#7fc8ff" d="M7.531 15.976a7.534 7.534 0 0 0 0-10.651L2.206 0A7.54 7.54 0 0 0 0 5.326c0 1.996.794 3.913 2.206 5.325zm11.143.493a7.535 7.535 0 0 0-10.65 0l5.325 5.325a7.536 7.536 0 0 0 10.651 0zM2.218 21.782a7.54 7.54 0 0 0 5.326 2.206v-7.531H.012c0 1.996.795 3.914 2.206 5.325M20.73 8.595a7.534 7.534 0 0 0-10.651.001l5.325 5.326z"/></svg>
+      <svg className="tech-logo" aria-hidden="true" viewBox="0 0 24 24"><title>LangChain</title><path fill="#7fc8ff" d="M7.531 15.976a7.534 7.534 0 0 0 0-10.651L2.206 0A7.54 7.54 0 0 0 0 5.326c0 1.996.794 3.913 2.206 5.325zm11.143.493a7.535 7.535 0 0 0-10.65 0l5.325 5.325a7.536 7.536 0 0 0 10.651 0zM2.218 21.782a7.54 7.54 0 0 0 5.326 2.206v-7.531H.012c0 1.996.795 3.914 2.206 5.325M20.73 8.595a7.534 7.534 0 0 0-10.651.001l5.325 5.326z"/></svg>
     );
   }
 
