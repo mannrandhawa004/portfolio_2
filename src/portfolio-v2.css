@@ -301,20 +301,28 @@ h2 em { font-family: "Instrument Serif", Georgia, serif; font-weight: 400; lette
 .skill-pill {
   display: inline-flex;
   align-items: center;
-  padding: 4px 9px;
-  border: 1px solid rgba(239, 238, 230, 0.2);
-  border-radius: 3px;
-  font-size: 9px;
+  gap: 8px;
+  padding: 5px 11px;
+  border: 1px solid rgba(239, 238, 230, 0.18);
+  border-radius: 5px;
+  font-size: 10px;
   font-family: "DM Mono", monospace;
   color: #efeee6;
   background: rgba(239, 238, 230, 0.05);
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .skill-pill:hover {
-  background: var(--orange);
-  color: #1a1b18;
+  background: rgba(239, 238, 230, 0.12);
   border-color: var(--orange);
-  transform: translateY(-1px);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.tech-logo {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: inline-block;
 }
 .tool-footnote { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 20px; color: var(--muted); font-size: 8px; }
 

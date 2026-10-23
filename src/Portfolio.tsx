@@ -2,6 +2,8 @@ import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type Poin
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HeroScene from "./components/HeroScene";
+import HalftoneWordmarkFooter from "./components/ui/halftone-wordmark-footer";
+import { TechIcon } from "./components/TechLogos";
 import "./portfolio-v2.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -28,21 +30,21 @@ const skillCategories = [
     tag: "BACKEND & ARCHITECTURE",
     title: "Systems & Real-Time APIs",
     summary: "High-throughput RESTful services, database architecture, multi-tenant schemas, and event sockets.",
-    stack: ["Node.js", "Express", "MongoDB", "MySQL", "Redis", "Socket.IO", "REST APIs"],
+    stack: ["Node.js", "Express", "MongoDB", "MySQL", "Redis", "Socket.IO"],
   },
   {
     index: "03",
     tag: "APPLIED GENAI",
     title: "AI Integration & Workflows",
     summary: "Production LLM pipelines, structured schema outputs, document generation, and intelligent product agents.",
-    stack: ["LangChain", "OpenAI / LLM APIs", "Python", "Vector Workflows", "Prompt Pipelines"],
+    stack: ["LangChain", "OpenAI / LLM APIs", "Python", "Prompt Pipelines"],
   },
   {
     index: "04",
     tag: "SECURITY & CLOUD",
     title: "Auth, Payments & Infrastructure",
     summary: "Enterprise sessions, cryptographic TOTP 2FA, verified webhook handling, containerization, and cloud deployment.",
-    stack: ["OAuth 2.0", "JWT", "TOTP 2FA", "Stripe Webhooks", "Docker", "Vercel", "Azure"],
+    stack: ["OAuth 2.0 / JWT", "Stripe", "Docker", "Vercel", "Azure", "Git"],
   },
 ];
 
@@ -195,7 +197,7 @@ export default function Portfolio() {
           <div className="intro-object">
             <div className="object-guides" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span></div>
             <HeroScene paused={still} />
-            <span className="object-caption mono">[ 01 ] 3D WIREFRAME KNOT · DRAG TO ROTATE</span>
+            <span className="object-caption mono">[ 01 ] KINETIC GYROSCOPIC CORE · DRAG TO EXPLORE</span>
           </div>
           <div className="intro-description">
             <span className="intro-arrow" aria-hidden="true">↳</span>
@@ -263,7 +265,10 @@ export default function Portfolio() {
                 <p>{skill.summary}</p>
                 <div className="tech-tags">
                   {skill.stack.map(tool => (
-                    <span key={tool} className="skill-pill">{tool}</span>
+                    <span key={tool} className="skill-pill">
+                      <TechIcon name={tool} />
+                      <span>{tool}</span>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -322,18 +327,22 @@ export default function Portfolio() {
               </div>
             </form>
           </div>
-
-          <footer className="folio-footer">
-            <a className="footer-name" href="#top" aria-label="Manpreet, back to top">
-              manpreet<span>®</span>
-            </a>
-            <div className="footer-meta mono">
-              <span>© {new Date().getFullYear()} MANPREET SINGH</span>
-              <span>FULL-STACK &amp; GENAI ENGINEER · MOHALI, INDIA</span>
-              <a href="#top" className="footer-top-btn">BACK TO TOP ↑</a>
-            </div>
-          </footer>
         </div>
+
+        <HalftoneWordmarkFooter
+          wordmark="manpreet"
+          label="Manpreet Singh"
+          meta="© 2026 · Mohali, India · Full-Stack &amp; GenAI Engineer"
+          columns={[]}
+          backToTop={true}
+          height="460px"
+          crop={0.16}
+          dotGap={6}
+          radius={85}
+          grain={0.3}
+          preset="night"
+          palette={{ background: "#242620", ink: "#efeee6", warm: "#d94b27" }}
+        />
       </section>
     </main>
 
