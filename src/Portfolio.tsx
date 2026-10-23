@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type PointerEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HeroScene from "./components/HeroScene";
+import HeroScene, { type SculptureMode } from "./components/HeroScene";
+import HalftoneWordmarkFooter, { type HalftonePreset } from "./components/ui/halftone-wordmark-footer";
 import "./portfolio-v2.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,6 +25,37 @@ const journey = [
   { date: "JUL 2025 — JAN 2026", company: "Antier School of Blocktech", role: "Full-Stack Development Trainee", text: "Developed full-stack modules, role-based authentication, relational and NoSQL database schemas, and client state with Redux Toolkit." },
   { date: "2022 — 2025", company: "Global Group of Institutes", role: "Bachelor of Computer Applications", text: "Software development, data structures, databases, and web architecture. Amritsar, India · CGPA 7.5." },
 ];
+
+const footerColumns = [
+  {
+    title: "Selected Work",
+    links: [
+      { label: "Taskflow (SaaS)", href: "#project-01" },
+      { label: "AI Resume Builder", href: "#project-02" },
+      { label: "Scatch E-Commerce", href: "#project-03" },
+      { label: "GitHub Code", href: github },
+    ],
+  },
+  {
+    title: "Expertise",
+    links: [
+      { label: "Full-Stack Web", href: "#expertise" },
+      { label: "Applied GenAI", href: "#expertise" },
+      { label: "System Design", href: "#expertise" },
+      { label: "Interactive 3D", href: "#expertise" },
+    ],
+  },
+  {
+    title: "Connect",
+    links: [
+      { label: "LinkedIn ↗", href: linkedin },
+      { label: "GitHub ↗", href: github },
+      { label: "Email Directly ↗", href: `mailto:${email}` },
+      { label: "Download Résumé ↓", href: "/resume.pdf" },
+    ],
+  },
+];
+
 function Arrow({ down = false }: { down?: boolean }) { return <svg className={down ? "arrow-icon arrow-down" : "arrow-icon"} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.5" /></svg>; }
 function Star({ className = "" }: { className?: string }) { return <svg className={`star-icon ${className}`} viewBox="0 0 80 80" fill="none" aria-hidden="true"><path d="M40 0v80M0 40h80M12 12l56 56M12 68l56-56" stroke="currentColor" strokeWidth="12" /></svg>; }
 
@@ -39,6 +71,15 @@ export default function Portfolio() {
   const [copyStatus, setCopyStatus] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [time, setTime] = useState("");
+  const [userTime, setUserTime] = useState("");
+  const [timeMode, setTimeMode] = useState<"ist" | "user">("ist");
+  const [showStatusCard, setShowStatusCard] = useState(false);
+  const [sculptureMode, setSculptureMode] = useState<SculptureMode>("chrome");
+  const [sculptureInteracted, setSculptureInteracted] = useState(false);
+  const [pulseTrigger, setPulseTrigger] = useState(0);
+  const [footerPreset, setFooterPreset] = useState<HalftonePreset>("paper");
+  const [footerDotGap, setFooterDotGap] = useState(6);
+
   const selected = projects[projectIndex];
   const still = paused || reduced;
 
@@ -46,8 +87,11 @@ export default function Portfolio() {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReduced(preference.matches);
     update(); preference.addEventListener("change", update);
-    const tick = () => setTime(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
-    tick(); const timer = window.setInterval(tick, 30000);
+    const tick = () => {
+      setTime(new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+      setUserTime(new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date()));
+    };
+    tick(); const timer = window.setInterval(tick, 10000);
     return () => { preference.removeEventListener("change", update); window.clearInterval(timer); };
   }, []);
 
@@ -120,17 +164,111 @@ export default function Portfolio() {
 
     <main>
       <section className="intro content-width" id="top">
-        <div className="intro-kicker"><span className="mono">FULL-STACK & GENAI ENGINEER</span><span className="availability"><i /> Available for opportunities</span></div>
-        <div className="intro-composition">
-          <div className="intro-title"><h1><span className="intro-title-line"><span>Good code.</span></span><span className="intro-title-line"><span>Great <em>feeling.</em></span></span></h1><span className="intro-index mono">PORTFOLIO — VOL. 26</span></div>
-          <div className="intro-object"><div className="object-guides" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span></div><HeroScene paused={still} /><span className="object-caption mono">[ 01 ] AN EXERCISE IN CONNECTION</span></div>
-          <div className="intro-description"><span className="intro-arrow" aria-hidden="true">↳</span><div><p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p><a className="inline-link" href="#work">Discover my work <Arrow down /></a></div></div>
+        <div className="intro-kicker">
+          <span className="mono">FULL-STACK &amp; GENAI ENGINEER</span>
+          <div
+            className="availability-wrapper"
+            onMouseEnter={() => setShowStatusCard(true)}
+            onMouseLeave={() => setShowStatusCard(false)}
+          >
+            <button
+              type="button"
+              className="availability"
+              onClick={() => setShowStatusCard(!showStatusCard)}
+              aria-expanded={showStatusCard}
+            >
+              <i /> Available for opportunities <span className="availability-tip">ⓘ</span>
+            </button>
+            {showStatusCard && (
+              <div className="status-popover mono" role="tooltip">
+                <div className="status-popover-top">
+                  <span className="live-dot" /> LIVE AVAILABILITY
+                </div>
+                <p>Open for Full-Stack, AI integration &amp; contract engineering roles.</p>
+                <div className="status-popover-meta">
+                  <span>Base: Mohali, Punjab</span>
+                  <span>Avg Reply: &lt; 2 hrs</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
-        <div className="intro-bottom mono"><span>MOHALI, INDIA <i /> {time || "IST"} LOCAL TIME</span><button aria-pressed={paused} onClick={() => setPaused(!paused)}>{paused ? "▶ PLAY MOTION" : "Ⅱ PAUSE MOTION"}</button><a href="#work">SCROLL TO EXPLORE <span>↓</span></a></div>
+        <div className="intro-composition">
+          <div className="intro-title">
+            <h1>
+              <span className="intro-title-line"><span>Good code.</span></span>
+              <span className="intro-title-line"><span>Great <em>feeling.</em></span></span>
+            </h1>
+            <span className="intro-index mono">PORTFOLIO — VOL. 26</span>
+          </div>
+          <div className="intro-object">
+            <div className="object-guides" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span></div>
+            <div className="sculpture-hud mono">
+              <div className="sculpture-modes" role="group" aria-label="3D material modes">
+                {(["chrome", "wireframe", "amber"] as SculptureMode[]).map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    className={sculptureMode === m ? "active" : ""}
+                    onClick={() => setSculptureMode(m)}
+                  >
+                    {m.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="sculpture-pulse-btn"
+                onClick={() => setPulseTrigger((p) => p + 1)}
+                title="Trigger shockwave impulse"
+              >
+                ✦ PULSE
+              </button>
+            </div>
+            <HeroScene
+              paused={still}
+              mode={sculptureMode}
+              pulseTrigger={pulseTrigger}
+              onInteracted={() => setSculptureInteracted(true)}
+            />
+            <div className="drag-hint mono" aria-hidden="true">
+              <span className="drag-dot" />
+              {sculptureInteracted ? "DRAG TO SPIN · 3D ACTIVE" : "DRAG 3D KNOT · CLICK TO PULSE"}
+            </div>
+            <span className="object-caption mono">[ 01 ] INTERACTIVE 3D SCULPTURE</span>
+          </div>
+          <div className="intro-description">
+            <span className="intro-arrow" aria-hidden="true">↳</span>
+            <div>
+              <p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p>
+              <div className="hero-stack-chips">
+                {["React / Next.js", "TypeScript", "Node.js", "GenAI / LLMs", "Three.js"].map((chip) => (
+                  <span key={chip} className="hero-chip">{chip}</span>
+                ))}
+              </div>
+              <a className="inline-link" href="#work">Discover my work <Arrow down /></a>
+            </div>
+          </div>
+        </div>
+        <div className="intro-bottom mono">
+          <button
+            type="button"
+            className="time-pill mono"
+            onClick={() => setTimeMode(timeMode === "ist" ? "user" : "ist")}
+            title="Click to toggle time zone"
+          >
+            <span>MOHALI, INDIA <i /> {timeMode === "ist" ? `${time || "20:30"} IST` : `${userTime || "20:30"} LOCAL`}</span>
+            <span className="time-toggle-label">TOGGLE TIME</span>
+          </button>
+          <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
+            {paused ? "▶ PLAY MOTION" : "Ⅱ PAUSE MOTION"}
+          </button>
+          <a href="#work">SCROLL TO EXPLORE <span>↓</span></a>
+        </div>
       </section>
 
       <section id="work" className="selected-work content-width">
-        <div className="section-label mono" data-enter><span>01 / SELECTED WORK</span><span>IDEAS, BUILT & OUT IN THE WORLD.</span></div>
+        <div className="section-label mono" data-enter><span>01 / SELECTED WORK</span><span>IDEAS, BUILT &amp; OUT IN THE WORLD.</span></div>
         <div className="work-heading" data-enter><h2>Less talk.<br /><em>More making.</em><sup>(03)</sup></h2><p>A selection of things I’ve built.<br />Each with a problem to solve,<br />and a few details worth noticing.</p></div>
         <div className="project-list">{projects.map((project, index) => <article key={project.id} className="work-item" id={`project-${project.id}`}>
           <div className="work-item-info" data-enter><span className="work-number mono">/ {project.id}</span><div><span className="mono project-category">{project.category}</span><h3><button onClick={() => showProject(index)}>{project.title}</button></h3><p>{project.label}</p><div className="tech-tags">{project.tags.slice(0, 4).map(tag => <span key={tag}>{tag}</span>)}</div><button className="inline-link" onClick={() => showProject(index)}>Explore project <Arrow /></button></div></div>
@@ -155,19 +293,115 @@ export default function Portfolio() {
 
       <section id="about" className="about content-width">
         <div className="section-label mono" data-enter><span>03 / A LITTLE MORE HUMAN</span><span>BEHIND THE CODE.</span></div>
-        <div className="about-layout"><div className="about-heading" data-enter><h2>Curious by nature.<br /><em>Builder by choice.</em></h2><div className="identity-card" onPointerMove={event => { if (!still && event.pointerType === "mouse") { const bounds = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty("--tilt", `${((event.clientX - bounds.left) / bounds.width - .5) * 8}deg`); } }} onPointerLeave={event => event.currentTarget.style.setProperty("--tilt", "0deg")}><div className="id-top mono"><span>THE PERSON / NOT THE PROFILE</span><Star /></div><div className="id-monogram">ms<span>↗</span></div><div className="id-bottom"><span>Manpreet Singh<small>FULL-STACK & GENAI ENGINEER</small></span><span className="id-stamp">MADE IN<br />PUNJAB</span></div></div></div>
+        <div className="about-layout"><div className="about-heading" data-enter><h2>Curious by nature.<br /><em>Builder by choice.</em></h2><div className="identity-card" onPointerMove={event => { if (!still && event.pointerType === "mouse") { const bounds = event.currentTarget.getBoundingClientRect(); event.currentTarget.style.setProperty("--tilt", `${((event.clientX - bounds.left) / bounds.width - .5) * 8}deg`); } }} onPointerLeave={event => event.currentTarget.style.setProperty("--tilt", "0deg")}><div className="id-top mono"><span>THE PERSON / NOT THE PROFILE</span><Star /></div><div className="id-monogram">ms<span>↗</span></div><div className="id-bottom"><span>Manpreet Singh<small>FULL-STACK &amp; GENAI ENGINEER</small></span><span className="id-stamp">MADE IN<br />PUNJAB</span></div></div></div>
           <div className="about-story" data-enter><p className="about-lead">I like making complicated things<br />feel <em>surprisingly simple.</em></p><p>I’m a developer based in Mohali, India. My work brings together responsive interfaces, reliable backend systems, and AI that helps people get things done.</p><p>I learn by building, asking questions, and getting the details right. The most satisfying part? When everything clicks and the technology gets out of the way.</p><div className="journey">{journey.map((item, index) => <article key={item.company}><div className="journey-meta mono"><span>{item.date}</span>{index === 0 && <span className="now-badge">NOW</span>}</div><h3>{item.role}</h3><h4>{item.company}</h4><p>{item.text}</p></article>)}</div></div>
         </div>
       </section>
 
-      <section id="contact" className="contact"><div className="content-width">
-        <div className="section-label mono" data-enter><span>04 / YOUR NEXT GOOD IDEA STARTS HERE</span><span className="availability"><i /> OPEN TO WHAT’S NEXT</span></div>
-        <a className="contact-headline" href={`mailto:${email}`} data-enter><h2>Let’s make<br /><em>something matter.</em></h2><span className="contact-orb"><Arrow /></span></a>
-        <div className="contact-layout"><div className="contact-copy"><p>A role, a project, a wild idea.<br />I’d love to hear what you have in mind.</p><a className="email-address" href={`mailto:${email}`}>{email}</a><button className="copy-email mono" onClick={copyEmail}>COPY EMAIL <span>⧉</span></button><span className="copy-feedback" role="status">{copyStatus}</span><div className="socials"><a href={github} target="_blank" rel="noreferrer">GitHub <Arrow /></a><a href={linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a><a href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">Resume ↓</a></div></div>
-          <form className="note-form" onSubmit={sendMessage}><input type="hidden" name="_subject" value="New portfolio enquiry" /><input type="hidden" name="_template" value="table" /><input type="hidden" name="_captcha" value="false" /><input className="honey-field" name="_honey" tabIndex={-1} aria-hidden="true" autoComplete="off" /><div className="input-row"><label>Your name<input name="name" placeholder="Alex Smith" autoComplete="name" required /></label><label>Email address<input type="email" name="email" placeholder="alex@company.com" autoComplete="email" required /></label></div><label>A little about your idea<textarea name="message" rows={3} placeholder="What are we making?" required /></label><div className="form-end"><p role="status">{formStatus === "sent" ? "Message sent. Thanks for reaching out!" : formStatus === "error" ? "Couldn’t send. Please use the email link instead." : formStatus === "sending" ? "Sending your note…" : "Good things start with a simple hello."}</p><button type="submit" className="send-button" disabled={formStatus === "sending"}>{formStatus === "sending" ? "Sending…" : "Send a note"}<Arrow /></button></div></form>
+      <section id="contact" className="contact">
+        <div className="content-width">
+          <div className="section-label mono" data-enter>
+            <span>04 / YOUR NEXT GOOD IDEA STARTS HERE</span>
+            <span className="availability"><i /> OPEN TO WHAT’S NEXT</span>
+          </div>
+          <a className="contact-headline" href={`mailto:${email}`} data-enter>
+            <h2>Let’s make<br /><em>something matter.</em></h2>
+            <span className="contact-orb"><Arrow /></span>
+          </a>
+          <div className="contact-layout">
+            <div className="contact-copy">
+              <p>A role, a project, a wild idea.<br />I’d love to hear what you have in mind.</p>
+              <a className="email-address" href={`mailto:${email}`}>{email}</a>
+              <button className="copy-email mono" onClick={copyEmail}>COPY EMAIL <span>⧉</span></button>
+              <span className="copy-feedback" role="status">{copyStatus}</span>
+              <div className="socials">
+                <a href={github} target="_blank" rel="noreferrer">GitHub <Arrow /></a>
+                <a href={linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a>
+                <a href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">Resume ↓</a>
+              </div>
+            </div>
+            <form className="note-form" onSubmit={sendMessage}>
+              <input type="hidden" name="_subject" value="New portfolio enquiry" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input className="honey-field" name="_honey" tabIndex={-1} aria-hidden="true" autoComplete="off" />
+              <div className="input-row">
+                <label>Your name<input name="name" placeholder="Alex Smith" autoComplete="name" required /></label>
+                <label>Email address<input type="email" name="email" placeholder="alex@company.com" autoComplete="email" required /></label>
+              </div>
+              <label>A little about your idea<textarea name="message" rows={3} placeholder="What are we making?" required /></label>
+              <div className="form-end">
+                <p role="status">
+                  {formStatus === "sent" ? "Message sent. Thanks for reaching out!" : formStatus === "error" ? "Couldn’t send. Please use the email link instead." : formStatus === "sending" ? "Sending your note…" : "Good things start with a simple hello."}
+                </p>
+                <button type="submit" className="send-button" disabled={formStatus === "sending"}>
+                  {formStatus === "sending" ? "Sending…" : "Send a note"}<Arrow />
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div className="footer-interactive-bar mono">
+            <div className="footer-bar-left">
+              <span className="footer-bar-label">HALFTONE FOOTER CANVAS</span>
+              <span className="footer-dot-badge">SPRING PHYSICS &amp; SHOCKWAVE</span>
+            </div>
+            <div className="footer-bar-right">
+              <div className="footer-preset-selector">
+                <span className="footer-preset-title">PALETTE:</span>
+                {(["paper", "night", "ember"] as HalftonePreset[]).map((preset) => (
+                  <button
+                    key={preset}
+                    type="button"
+                    className={`footer-preset-btn ${footerPreset === preset ? "active" : ""}`}
+                    onClick={() => setFooterPreset(preset)}
+                  >
+                    {preset.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <div className="footer-dot-selector">
+                <span className="footer-preset-title">DENSITY:</span>
+                <button
+                  type="button"
+                  className={`footer-preset-btn ${footerDotGap === 5 ? "active" : ""}`}
+                  onClick={() => setFooterDotGap(5)}
+                >
+                  FINE
+                </button>
+                <button
+                  type="button"
+                  className={`footer-preset-btn ${footerDotGap === 7 ? "active" : ""}`}
+                  onClick={() => setFooterDotGap(7)}
+                >
+                  BOLD
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-        <footer className="folio-footer"><a className="footer-name" href="#top" aria-label="Manpreet, back to top">manpreet<span>®</span></a><div className="footer-meta mono"><span>© {new Date().getFullYear()} MANPREET SINGH</span><span>CRAFTED WITH INTENTION. ALWAYS EVOLVING.</span><a href="#top">BACK TO TOP ↑</a></div></footer>
-      </div></section>
+
+        <HalftoneWordmarkFooter
+          wordmark="manpreet"
+          label="Manpreet Singh"
+          meta="Full-Stack & GenAI Engineer · Based in Mohali, Punjab · Available Worldwide"
+          columns={footerColumns}
+          backToTop={true}
+          height="520px"
+          crop={0.16}
+          dotGap={footerDotGap}
+          radius={90}
+          grain={0.35}
+          preset={footerPreset}
+          palette={
+            footerPreset === "paper"
+              ? { background: "#e6e7e0", ink: "#242620", warm: "#d94b27" }
+              : footerPreset === "night"
+              ? { background: "#1c1e19", ink: "#f2f0e6", warm: "#f79b76" }
+              : { background: "#211510", ink: "#fedbc5", warm: "#ff5a1f" }
+          }
+        />
+      </section>
     </main>
 
     <dialog className="nav-dialog" ref={menu} onClose={() => setDialogOpen(false)}><div className="nav-dialog-head mono"><span>MANPREET SINGH</span><button onClick={() => menu.current?.close()} aria-label="Close menu">CLOSE ×</button></div><nav aria-label="Mobile navigation">{["work", "expertise", "about", "contact"].map((item, index) => <a key={item} href={`#${item}`} onClick={() => menu.current?.close()}><sup>0{index + 1}</sup>{item}<Arrow /></a>)}</nav><a href={`mailto:${email}`}>{email}</a></dialog>
