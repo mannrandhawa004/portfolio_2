@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page Not Found · Manpreet Singh</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=Syne:wght@400..800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --paper: #f4f3ee;
+        --ink: #242620;
+        --orange: #d94b27;
+        --muted: #636c58;
+        --line: #2426201a;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        background-color: var(--paper);
+        color: var(--ink);
+        font-family: "Syne", -apple-system, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0 40px;
+      }
+      .mono { font-family: "DM Mono", monospace; }
+      header {
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+      }
+      .logo {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--ink);
+        text-decoration: none;
+        letter-spacing: -0.02em;
+      }
+      .logo span { color: var(--orange); }
+      .back-link {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        color: var(--ink);
+        text-decoration: none;
+        border: 1px solid var(--line);
+        padding: 8px 14px;
+        border-radius: 9999px;
+        transition: all 0.2s;
+      }
+      .back-link:hover {
+        background: var(--ink);
+        color: #fff;
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 800px;
+        margin: 60px auto;
+        width: 100%;
+      }
+      .kicker {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 14px;
+        margin-bottom: 30px;
+      }
+      .code-display {
+        font-family: "DM Mono", monospace;
+        font-size: clamp(80px, 18vw, 180px);
+        font-weight: 700;
+        letter-spacing: -0.06em;
+        line-height: 0.9;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .code-display em {
+        font-family: "Instrument Serif", Georgia, serif;
+        font-style: italic;
+        color: var(--orange);
+      }
+      h1 {
+        font-size: clamp(32px, 5vw, 60px);
+        font-weight: 500;
+        letter-spacing: -0.04em;
+        margin-top: 15px;
+      }
+      h1 em {
+        font-family: "Instrument Serif", Georgia, serif;
+        color: var(--orange);
+      }
+      p {
+        font-size: 16px;
+        color: var(--muted);
+        line-height: 1.7;
+        margin-top: 15px;
+        max-width: 540px;
+      }
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 35px;
+        flex-wrap: wrap;
+      }
+      .btn-primary {
+        background: var(--ink);
+        color: #fff;
+        text-decoration: none;
+        padding: 14px 24px;
+        font-size: 12px;
+        border-radius: 4px;
+        transition: background 0.2s;
+        font-family: "DM Mono", monospace;
+      }
+      .btn-primary:hover {
+        background: var(--orange);
+      }
+      .btn-link {
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 13px;
+        border-bottom: 1px solid var(--ink);
+        padding-bottom: 3px;
+      }
+      .btn-link:hover {
+        color: var(--orange);
+        border-color: var(--orange);
+      }
+      footer {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid var(--line);
+        font-size: 10px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="logo">MANPREET SINGH <span>↗</span></a>
+      <a href="/" class="back-link">RETURN HOME ←</a>
+    </header>
+
+    <main>
+      <div class="kicker mono">
+        <span>ERROR 404 // ROUTE NOT RESOLVED</span>
+        <span>MOHALI, PUNJAB</span>
+      </div>
+
+      <div class="code-display">
+        4<em>0</em>4
+      </div>
+
+      <h1>Lost in the <em>signal.</em></h1>
+      <p>The page you are looking for has drifted out of orbit, been relocated, or never existed in this build.</p>
+
+      <div class="actions">
+        <a href="/" class="btn-primary">Return to Portfolio ↳</a>
+        <a href="/#work" class="btn-link">Explore Selected Work ↗</a>
+        <a href="mailto:randhawamanpreet37@gmail.com" class="btn-link">Send an Email ↗</a>
+      </div>
+    </main>
+
+    <footer class="mono">
+      <span>© 2026 MANPREET SINGH</span>
+      <span>FULL-STACK &amp; GENAI DEVELOPER</span>
+    </footer>
+  </body>
+</html>

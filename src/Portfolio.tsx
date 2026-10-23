@@ -110,7 +110,7 @@ export default function Portfolio() {
     if (still || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const context = gsap.context(() => {
       gsap.from(".intro-title-line > span", { yPercent: 110, rotate: 2, duration: 1.2, stagger: .11, ease: "power4.out", clearProps: "all" });
-      gsap.from(".intro-kicker, .intro-description, .intro-bottom", { y: 20, opacity: 0, duration: .9, stagger: .1, delay: .25, clearProps: "all" });
+      gsap.from(".intro-kicker, .intro-description, .hero-dossier, .intro-bottom", { y: 20, opacity: 0, duration: .9, stagger: .08, delay: .25, clearProps: "all" });
       gsap.to(".hero-shader-bg", { y: 60, ease: "none", scrollTrigger: { trigger: ".intro-shell", start: "top top", end: "bottom top", scrub: 1.2 } });
       gsap.utils.toArray<HTMLElement>("[data-enter]").forEach(element => gsap.from(element, { y: 36, opacity: 0, duration: .85, ease: "power3.out", clearProps: "all", scrollTrigger: { trigger: element, start: "top 91%", once: true } }));
       gsap.utils.toArray<HTMLElement>(".project-stage").forEach(stage => {
@@ -191,25 +191,90 @@ export default function Portfolio() {
             </div>
           </div>
           <div className="intro-composition">
-            <div className="intro-title">
-              <h1>
-                <span className="intro-title-line"><span>Good code.</span></span>
-                <span className="intro-title-line"><span>Great <em>feeling.</em></span></span>
-              </h1>
-              <span className="intro-index mono">PORTFOLIO — VOL. 26 · FLOW WAVES</span>
-            </div>
-            <div className="intro-description">
-              <span className="intro-arrow" aria-hidden="true">↳</span>
-              <div>
-                <p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p>
-                <div className="hero-stack-chips">
-                  {["React / Next.js", "TypeScript", "Node.js", "GenAI / LLMs", "Three.js"].map((chip) => (
-                    <span key={chip} className="hero-chip">{chip}</span>
-                  ))}
+            <div className="intro-main">
+              <div className="intro-title">
+                <h1>
+                  <span className="intro-title-line"><span>Good code.</span></span>
+                  <span className="intro-title-line"><span>Great <em>feeling.</em></span></span>
+                </h1>
+                <span className="intro-index mono">PORTFOLIO — VOL. 26 · FLOW WAVES</span>
+              </div>
+              <div className="intro-description">
+                <span className="intro-arrow" aria-hidden="true">↳</span>
+                <div>
+                  <p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p>
+                  <div className="hero-stack-chips">
+                    {["React / Next.js", "TypeScript", "Node.js", "GenAI / LLMs", "Three.js"].map((chip) => (
+                      <span key={chip} className="hero-chip">{chip}</span>
+                    ))}
+                  </div>
+                  <a className="inline-link" href="#work">Discover my work <Arrow down /></a>
                 </div>
-                <a className="inline-link" href="#work">Discover my work <Arrow down /></a>
               </div>
             </div>
+
+            <aside className="hero-dossier" aria-label="Engineering dossier and live metrics">
+              <div className="dossier-card">
+                <div className="dossier-header mono">
+                  <div className="dossier-status">
+                    <span className="live-dot pulse-dot" />
+                    <span>SYS // LIVE TELEMETRY</span>
+                  </div>
+                  <span className="dossier-chip">ACTIVE &amp; DEPLOYING</span>
+                </div>
+
+                <div className="dossier-profile">
+                  <div className="dossier-avatar">
+                    <span className="avatar-monogram">MS</span>
+                    <span className="avatar-badge">26</span>
+                  </div>
+                  <div className="dossier-id">
+                    <h3>Manpreet Singh</h3>
+                    <p className="mono">FULL-STACK &amp; GENAI DEVELOPER</p>
+                    <span className="dossier-company">@ Fresco Web Services · Mohali</span>
+                  </div>
+                </div>
+
+                <div className="dossier-metrics">
+                  <div className="metric-box">
+                    <span className="metric-val mono">02+</span>
+                    <span className="metric-label">YRS EXPERIENCE</span>
+                  </div>
+                  <div className="metric-box">
+                    <span className="metric-val mono">15+</span>
+                    <span className="metric-label">CORE REPOSITORIES</span>
+                  </div>
+                  <div className="metric-box">
+                    <span className="metric-val mono">100%</span>
+                    <span className="metric-label">FULL-STACK READY</span>
+                  </div>
+                  <div className="metric-box">
+                    <span className="metric-val mono">&lt;2H</span>
+                    <span className="metric-label">INQUIRY RESPONSE</span>
+                  </div>
+                </div>
+
+                <div className="dossier-focus">
+                  <span className="focus-label mono">CORE DOMAINS</span>
+                  <div className="focus-items">
+                    <span className="focus-pill">Multi-Tenant SaaS</span>
+                    <span className="focus-pill">Applied LLM Pipelines</span>
+                    <span className="focus-pill">High-Throughput APIs</span>
+                    <span className="focus-pill">WebGL Motion UI</span>
+                  </div>
+                </div>
+
+                <div className="dossier-footer mono">
+                  <div className="dossier-clock">
+                    <span className="clock-icon">◷</span>
+                    <span>MOHALI (IST) · AVAILABLE</span>
+                  </div>
+                  <a href="/resume.pdf" download="Manpreet_Singh_Resume.pdf" className="dossier-action">
+                    RÉSUMÉ ↓
+                  </a>
+                </div>
+              </div>
+            </aside>
           </div>
           <div className="intro-bottom mono">
             <button
