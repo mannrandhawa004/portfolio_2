@@ -1,59 +1,55 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type PointerEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HeroScene, { type SculptureMode } from "./components/HeroScene";
-import HalftoneWordmarkFooter, { type HalftonePreset } from "./components/ui/halftone-wordmark-footer";
+import HeroScene from "./components/HeroScene";
 import "./portfolio-v2.css";
 
 gsap.registerPlugin(ScrollTrigger);
 const email = "randhawamanpreet37@gmail.com";
 const github = "https://github.com/mannrandhawa004";
 const linkedin = "https://www.linkedin.com/in/manpreet-singh-27099b280/";
+
 const projects = [
   { id: "01", title: "Taskflow", label: "A little less chaos. A lot more flow.", category: "SAAS / FULL-STACK DEVELOPMENT", image: "/images/task_management.png", tone: "sage", word: "FLOW", description: "A multi-tenant workspace for teams to manage projects, departments, and attendance. Thoughtfully connected, from the first sign-in to the final task.", features: ["Tenant isolation and role-based access", "Two-factor authentication with TOTP", "Real-time updates and integrated billing"], tags: ["Next.js", "Node.js", "MySQL", "Socket.IO", "Redis", "Stripe"], source: github + "/task_management_system", live: "" },
   { id: "02", title: "AI Resume Builder", label: "A better start to your next chapter.", category: "APPLIED AI / PRODUCT DESIGN", image: "/images/resume_builder.png", tone: "lavender", word: "NEXT", description: "An AI-powered workspace that turns a blank page into a resume ready to share. Build, refine, and preview your story in one focused experience.", features: ["AI-assisted resume writing", "Live preview with ATS-friendly templates", "Instant PDF export"], tags: ["React", "GenAI", "Node.js", "Tailwind CSS", "Redux Toolkit"], source: github + "/ai-resume-builder", live: "https://ai-resume-builder-beta-pink.vercel.app" },
   { id: "03", title: "Scatch", label: "From the first find to the final checkout.", category: "E-COMMERCE / FULL-STACK DEVELOPMENT", image: "/images/scatch.png", tone: "sand", word: "FIND", description: "A complete shopping experience with product discovery, persistent carts, and secure checkout. The detail is in making every step feel effortless.", features: ["Product discovery and persistent shopping carts", "Google OAuth and JWT authentication", "Stripe payments with verified webhooks"], tags: ["MERN Stack", "Google OAuth", "JWT", "Stripe", "Webhooks"], source: github + "/scatch", live: "https://scatch-bice.vercel.app" },
 ];
-const skills = [
-  { title: "Interfaces & interactions", detail: "Responsive interfaces with a clear hierarchy, considered transitions, and attention to the small things that make a product enjoyable to use.", stack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Redux Toolkit"] },
-  { title: "Systems that hold up", detail: "Reliable APIs, well-structured databases, and real-time systems that make the experience work beneath the surface.", stack: ["Node.js", "Express", "MongoDB", "MySQL", "Redis", "Socket.IO"] },
-  { title: "AI with a purpose", detail: "Useful intelligence grounded in real workflows. From structured prompt pipelines to document generation and AI-assisted product experiences.", stack: ["LangChain", "LLM APIs", "Python", "GenAI integration"] },
-  { title: "Connected & secure", detail: "Authentication, payments, and deployment brought together with careful handling of sessions, permissions, and external events.", stack: ["OAuth 2.0", "JWT", "TOTP 2FA", "Stripe", "Razorpay", "Vercel", "Azure"] },
+
+const skillCategories = [
+  {
+    index: "01",
+    tag: "FRONTEND & UI",
+    title: "Interfaces & Interactions",
+    summary: "Responsive, accessible web applications with clear hierarchy, fluid motion, and zero-compromise UX.",
+    stack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP", "Three.js", "Redux Toolkit"],
+  },
+  {
+    index: "02",
+    tag: "BACKEND & ARCHITECTURE",
+    title: "Systems & Real-Time APIs",
+    summary: "High-throughput RESTful services, database architecture, multi-tenant schemas, and event sockets.",
+    stack: ["Node.js", "Express", "MongoDB", "MySQL", "Redis", "Socket.IO", "REST APIs"],
+  },
+  {
+    index: "03",
+    tag: "APPLIED GENAI",
+    title: "AI Integration & Workflows",
+    summary: "Production LLM pipelines, structured schema outputs, document generation, and intelligent product agents.",
+    stack: ["LangChain", "OpenAI / LLM APIs", "Python", "Vector Workflows", "Prompt Pipelines"],
+  },
+  {
+    index: "04",
+    tag: "SECURITY & CLOUD",
+    title: "Auth, Payments & Infrastructure",
+    summary: "Enterprise sessions, cryptographic TOTP 2FA, verified webhook handling, containerization, and cloud deployment.",
+    stack: ["OAuth 2.0", "JWT", "TOTP 2FA", "Stripe Webhooks", "Docker", "Vercel", "Azure"],
+  },
 ];
+
 const journey = [
   { date: "MAR 2026 — PRESENT", company: "Fresco Web Services", role: "Full-Stack Developer", text: "Building responsive MERN applications, production APIs, and secure authentication with a cross-functional team in Mohali." },
   { date: "JUL 2025 — JAN 2026", company: "Antier School of Blocktech", role: "Full-Stack Development Trainee", text: "Developed full-stack modules, role-based authentication, relational and NoSQL database schemas, and client state with Redux Toolkit." },
   { date: "2022 — 2025", company: "Global Group of Institutes", role: "Bachelor of Computer Applications", text: "Software development, data structures, databases, and web architecture. Amritsar, India · CGPA 7.5." },
-];
-
-const footerColumns = [
-  {
-    title: "Selected Work",
-    links: [
-      { label: "Taskflow (SaaS)", href: "#project-01" },
-      { label: "AI Resume Builder", href: "#project-02" },
-      { label: "Scatch E-Commerce", href: "#project-03" },
-      { label: "GitHub Code", href: github },
-    ],
-  },
-  {
-    title: "Expertise",
-    links: [
-      { label: "Full-Stack Web", href: "#expertise" },
-      { label: "Applied GenAI", href: "#expertise" },
-      { label: "System Design", href: "#expertise" },
-      { label: "Interactive 3D", href: "#expertise" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { label: "LinkedIn ↗", href: linkedin },
-      { label: "GitHub ↗", href: github },
-      { label: "Email Directly ↗", href: `mailto:${email}` },
-      { label: "Download Résumé ↓", href: "/resume.pdf" },
-    ],
-  },
 ];
 
 function Arrow({ down = false }: { down?: boolean }) { return <svg className={down ? "arrow-icon arrow-down" : "arrow-icon"} viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" strokeWidth="1.5" /></svg>; }
@@ -74,11 +70,6 @@ export default function Portfolio() {
   const [userTime, setUserTime] = useState("");
   const [timeMode, setTimeMode] = useState<"ist" | "user">("ist");
   const [showStatusCard, setShowStatusCard] = useState(false);
-  const [sculptureMode, setSculptureMode] = useState<SculptureMode>("chrome");
-  const [sculptureInteracted, setSculptureInteracted] = useState(false);
-  const [pulseTrigger, setPulseTrigger] = useState(0);
-  const [footerPreset, setFooterPreset] = useState<HalftonePreset>("paper");
-  const [footerDotGap, setFooterDotGap] = useState(6);
 
   const selected = projects[projectIndex];
   const still = paused || reduced;
@@ -156,7 +147,7 @@ export default function Portfolio() {
     <a className="skip-content" href="#work">Skip to selected work</a>
     <div className="page-progress" aria-hidden="true" />
     <header className="folio-nav">
-      <a className="identity" href="#top" aria-label="Manpreet Singh, home"><span className="identity-mark">m<span>↗</span></span><span>Manpreet Singh<small>DEVELOPER & CREATIVE THINKER</small></span></a>
+      <a className="identity" href="#top" aria-label="Manpreet Singh, home"><span className="identity-mark">m<span>↗</span></span><span>Manpreet Singh<small>DEVELOPER &amp; CREATIVE THINKER</small></span></a>
       <nav className="desktop-links" aria-label="Main navigation">{["work", "expertise", "about"].map((link, i) => <a key={link} href={`#${link}`} aria-current={active === link ? "location" : undefined}><sup>0{i + 1}</sup>{link[0].toUpperCase() + link.slice(1)}<i /></a>)}</nav>
       <a className="nav-hello" href="#contact">LET’S TALK <Arrow /></a>
       <button className="mobile-trigger" onClick={() => { menu.current?.showModal(); setDialogOpen(true); }} aria-label="Open menu"><span /><span /></button>
@@ -203,39 +194,8 @@ export default function Portfolio() {
           </div>
           <div className="intro-object">
             <div className="object-guides" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span></div>
-            <div className="sculpture-hud mono">
-              <div className="sculpture-modes" role="group" aria-label="3D material modes">
-                {(["chrome", "wireframe", "amber"] as SculptureMode[]).map((m) => (
-                  <button
-                    key={m}
-                    type="button"
-                    className={sculptureMode === m ? "active" : ""}
-                    onClick={() => setSculptureMode(m)}
-                  >
-                    {m.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-              <button
-                type="button"
-                className="sculpture-pulse-btn"
-                onClick={() => setPulseTrigger((p) => p + 1)}
-                title="Trigger shockwave impulse"
-              >
-                ✦ PULSE
-              </button>
-            </div>
-            <HeroScene
-              paused={still}
-              mode={sculptureMode}
-              pulseTrigger={pulseTrigger}
-              onInteracted={() => setSculptureInteracted(true)}
-            />
-            <div className="drag-hint mono" aria-hidden="true">
-              <span className="drag-dot" />
-              {sculptureInteracted ? "DRAG TO SPIN · 3D ACTIVE" : "DRAG 3D KNOT · CLICK TO PULSE"}
-            </div>
-            <span className="object-caption mono">[ 01 ] INTERACTIVE 3D SCULPTURE</span>
+            <HeroScene paused={still} />
+            <span className="object-caption mono">[ 01 ] 3D WIREFRAME KNOT · DRAG TO ROTATE</span>
           </div>
           <div className="intro-description">
             <span className="intro-arrow" aria-hidden="true">↳</span>
@@ -285,8 +245,30 @@ export default function Portfolio() {
 
       <section id="expertise" className="expertise-dark"><div className="content-width">
         <div className="section-label mono" data-enter><span>02 / A CONNECTED SKILL SET</span><span>FROM THE FIRST PIXEL TO THE LAST ENDPOINT.</span></div>
-        <div className="expertise-layout"><div className="expertise-intro" data-enter><span className="small-star"><Star /></span><h2>Beautiful outside.<br /><em>Thoughtful inside.</em></h2><p>I work across the stack, connecting the parts that people see with the systems they rely on.</p><a className="inline-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">Get the full resume <span>↓</span></a></div>
-          <div className="capability-list">{skills.map((skill, index) => <details className="skill-detail" key={skill.title} open={index === 0 ? true : undefined} onToggle={() => ScrollTrigger.refresh()}><summary><span className="mono">0{index + 1}</span><h3>{skill.title}</h3><span className="detail-plus" /></summary><div className="skill-body"><p>{skill.detail}</p><div className="tech-tags">{skill.stack.map(tool => <span key={tool}>{tool}</span>)}</div></div></details>)}</div>
+        <div className="expertise-layout">
+          <div className="expertise-intro" data-enter>
+            <span className="small-star"><Star /></span>
+            <h2>Beautiful outside.<br /><em>Thoughtful inside.</em></h2>
+            <p>I work across the stack, connecting the parts that people see with the systems they rely on.</p>
+            <a className="inline-link" href="/resume.pdf" download="Manpreet_Singh_Resume.pdf">Get the full resume <span>↓</span></a>
+          </div>
+          <div className="skills-grid" data-enter>
+            {skillCategories.map((skill) => (
+              <div className="skill-card" key={skill.title}>
+                <div className="skill-card-head">
+                  <span className="mono skill-card-num">{skill.index}</span>
+                  <span className="skill-card-tag mono">{skill.tag}</span>
+                </div>
+                <h3>{skill.title}</h3>
+                <p>{skill.summary}</p>
+                <div className="tech-tags">
+                  {skill.stack.map(tool => (
+                    <span key={tool} className="skill-pill">{tool}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="tool-footnote mono"><span>DAILY COMPANIONS</span><span>GIT / GITHUB / POSTMAN / VERCEL / RENDER / AZURE</span></div>
       </div></section>
@@ -341,66 +323,17 @@ export default function Portfolio() {
             </form>
           </div>
 
-          <div className="footer-interactive-bar mono">
-            <div className="footer-bar-left">
-              <span className="footer-bar-label">HALFTONE FOOTER CANVAS</span>
-              <span className="footer-dot-badge">SPRING PHYSICS &amp; SHOCKWAVE</span>
+          <footer className="folio-footer">
+            <a className="footer-name" href="#top" aria-label="Manpreet, back to top">
+              manpreet<span>®</span>
+            </a>
+            <div className="footer-meta mono">
+              <span>© {new Date().getFullYear()} MANPREET SINGH</span>
+              <span>FULL-STACK &amp; GENAI ENGINEER · MOHALI, INDIA</span>
+              <a href="#top" className="footer-top-btn">BACK TO TOP ↑</a>
             </div>
-            <div className="footer-bar-right">
-              <div className="footer-preset-selector">
-                <span className="footer-preset-title">PALETTE:</span>
-                {(["paper", "night", "ember"] as HalftonePreset[]).map((preset) => (
-                  <button
-                    key={preset}
-                    type="button"
-                    className={`footer-preset-btn ${footerPreset === preset ? "active" : ""}`}
-                    onClick={() => setFooterPreset(preset)}
-                  >
-                    {preset.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-              <div className="footer-dot-selector">
-                <span className="footer-preset-title">DENSITY:</span>
-                <button
-                  type="button"
-                  className={`footer-preset-btn ${footerDotGap === 5 ? "active" : ""}`}
-                  onClick={() => setFooterDotGap(5)}
-                >
-                  FINE
-                </button>
-                <button
-                  type="button"
-                  className={`footer-preset-btn ${footerDotGap === 7 ? "active" : ""}`}
-                  onClick={() => setFooterDotGap(7)}
-                >
-                  BOLD
-                </button>
-              </div>
-            </div>
-          </div>
+          </footer>
         </div>
-
-        <HalftoneWordmarkFooter
-          wordmark="manpreet"
-          label="Manpreet Singh"
-          meta="Full-Stack & GenAI Engineer · Based in Mohali, Punjab · Available Worldwide"
-          columns={footerColumns}
-          backToTop={true}
-          height="520px"
-          crop={0.16}
-          dotGap={footerDotGap}
-          radius={90}
-          grain={0.35}
-          preset={footerPreset}
-          palette={
-            footerPreset === "paper"
-              ? { background: "#e6e7e0", ink: "#242620", warm: "#d94b27" }
-              : footerPreset === "night"
-              ? { background: "#1c1e19", ink: "#f2f0e6", warm: "#f79b76" }
-              : { background: "#211510", ink: "#fedbc5", warm: "#ff5a1f" }
-          }
-        />
       </section>
     </main>
 
