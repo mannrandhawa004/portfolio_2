@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type PointerEvent } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import HeroScene from "./components/HeroScene";
+import WavesShader from "./components/WavesShader";
 import HalftoneWordmarkFooter from "./components/ui/halftone-wordmark-footer";
 import { TechIcon } from "./components/TechLogos";
 import "./portfolio-v2.css";
@@ -96,7 +96,7 @@ export default function Portfolio() {
   }, [dialogOpen]);
 
   useEffect(() => {
-    const sections = page.current?.querySelectorAll<HTMLElement>("section[id]");
+    const sections = page.current?.querySelectorAll<HTMLElement>("section[id], div[id]");
     const update = () => {
       let id = "top";
       sections?.forEach(section => { if (section.getBoundingClientRect().top <= window.innerHeight * .35) id = section.id; });
@@ -111,7 +111,7 @@ export default function Portfolio() {
     const context = gsap.context(() => {
       gsap.from(".intro-title-line > span", { yPercent: 110, rotate: 2, duration: 1.2, stagger: .11, ease: "power4.out", clearProps: "all" });
       gsap.from(".intro-kicker, .intro-description, .intro-bottom", { y: 20, opacity: 0, duration: .9, stagger: .1, delay: .25, clearProps: "all" });
-      gsap.to(".intro-object", { y: 90, rotation: 6, ease: "none", scrollTrigger: { trigger: ".intro", start: "top top", end: "bottom top", scrub: 1.4 } });
+      gsap.to(".hero-shader-bg", { y: 60, ease: "none", scrollTrigger: { trigger: ".intro-shell", start: "top top", end: "bottom top", scrub: 1.2 } });
       gsap.utils.toArray<HTMLElement>("[data-enter]").forEach(element => gsap.from(element, { y: 36, opacity: 0, duration: .85, ease: "power3.out", clearProps: "all", scrollTrigger: { trigger: element, start: "top 91%", once: true } }));
       gsap.utils.toArray<HTMLElement>(".project-stage").forEach(stage => {
         gsap.fromTo(stage.querySelector(".screen-shell"), { y: 40, rotateX: 9, rotateY: -7 }, { y: -18, rotateX: 0, rotateY: 2, ease: "none", scrollTrigger: { trigger: stage, start: "top bottom", end: "bottom top", scrub: 1.4 } });
@@ -156,76 +156,76 @@ export default function Portfolio() {
     </header>
 
     <main>
-      <section className="intro content-width" id="top">
-        <div className="intro-kicker">
-          <span className="mono">FULL-STACK &amp; GENAI ENGINEER</span>
-          <div
-            className="availability-wrapper"
-            onMouseEnter={() => setShowStatusCard(true)}
-            onMouseLeave={() => setShowStatusCard(false)}
-          >
-            <button
-              type="button"
-              className="availability"
-              onClick={() => setShowStatusCard(!showStatusCard)}
-              aria-expanded={showStatusCard}
-            >
-              <i /> Available for opportunities <span className="availability-tip">ⓘ</span>
-            </button>
-            {showStatusCard && (
-              <div className="status-popover mono" role="tooltip">
-                <div className="status-popover-top">
-                  <span className="live-dot" /> LIVE AVAILABILITY
-                </div>
-                <p>Open for Full-Stack, AI integration &amp; contract engineering roles.</p>
-                <div className="status-popover-meta">
-                  <span>Base: Mohali, Punjab</span>
-                  <span>Avg Reply: &lt; 2 hrs</span>
-                </div>
-              </div>
-            )}
-          </div>
+      <section className="intro-shell" id="top">
+        <div className="hero-shader-bg" aria-hidden="true">
+          <WavesShader paused={still} />
         </div>
-        <div className="intro-composition">
-          <div className="intro-title">
-            <h1>
-              <span className="intro-title-line"><span>Good code.</span></span>
-              <span className="intro-title-line"><span>Great <em>feeling.</em></span></span>
-            </h1>
-            <span className="intro-index mono">PORTFOLIO — VOL. 26</span>
-          </div>
-          <div className="intro-object">
-            <div className="object-guides" aria-hidden="true"><span>+</span><span>+</span><span>+</span><span>+</span></div>
-            <HeroScene paused={still} />
-            <span className="object-caption mono">[ 01 ] KINETIC GYROSCOPIC CORE · DRAG TO EXPLORE</span>
-          </div>
-          <div className="intro-description">
-            <span className="intro-arrow" aria-hidden="true">↳</span>
-            <div>
-              <p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p>
-              <div className="hero-stack-chips">
-                {["React / Next.js", "TypeScript", "Node.js", "GenAI / LLMs", "Three.js"].map((chip) => (
-                  <span key={chip} className="hero-chip">{chip}</span>
-                ))}
-              </div>
-              <a className="inline-link" href="#work">Discover my work <Arrow down /></a>
+        <div className="intro content-width">
+          <div className="intro-kicker">
+            <span className="mono">FULL-STACK &amp; GENAI ENGINEER</span>
+            <div
+              className="availability-wrapper"
+              onMouseEnter={() => setShowStatusCard(true)}
+              onMouseLeave={() => setShowStatusCard(false)}
+            >
+              <button
+                type="button"
+                className="availability"
+                onClick={() => setShowStatusCard(!showStatusCard)}
+                aria-expanded={showStatusCard}
+              >
+                <i /> Available for opportunities <span className="availability-tip">ⓘ</span>
+              </button>
+              {showStatusCard && (
+                <div className="status-popover mono" role="tooltip">
+                  <div className="status-popover-top">
+                    <span className="live-dot" /> LIVE AVAILABILITY
+                  </div>
+                  <p>Open for Full-Stack, AI integration &amp; contract engineering roles.</p>
+                  <div className="status-popover-meta">
+                    <span>Base: Mohali, Punjab</span>
+                    <span>Avg Reply: &lt; 2 hrs</span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-        <div className="intro-bottom mono">
-          <button
-            type="button"
-            className="time-pill mono"
-            onClick={() => setTimeMode(timeMode === "ist" ? "user" : "ist")}
-            title="Click to toggle time zone"
-          >
-            <span>MOHALI, INDIA <i /> {timeMode === "ist" ? `${time || "20:30"} IST` : `${userTime || "20:30"} LOCAL`}</span>
-            <span className="time-toggle-label">TOGGLE TIME</span>
-          </button>
-          <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
-            {paused ? "▶ PLAY MOTION" : "Ⅱ PAUSE MOTION"}
-          </button>
-          <a href="#work">SCROLL TO EXPLORE <span>↓</span></a>
+          <div className="intro-composition">
+            <div className="intro-title">
+              <h1>
+                <span className="intro-title-line"><span>Good code.</span></span>
+                <span className="intro-title-line"><span>Great <em>feeling.</em></span></span>
+              </h1>
+              <span className="intro-index mono">PORTFOLIO — VOL. 26 · FLOW WAVES</span>
+            </div>
+            <div className="intro-description">
+              <span className="intro-arrow" aria-hidden="true">↳</span>
+              <div>
+                <p>I’m Manpreet. I bring ideas to life through<br className="wide-break" /> thoughtful interfaces, reliable systems,<br className="wide-break" /> and a healthy obsession with the details.</p>
+                <div className="hero-stack-chips">
+                  {["React / Next.js", "TypeScript", "Node.js", "GenAI / LLMs", "Three.js"].map((chip) => (
+                    <span key={chip} className="hero-chip">{chip}</span>
+                  ))}
+                </div>
+                <a className="inline-link" href="#work">Discover my work <Arrow down /></a>
+              </div>
+            </div>
+          </div>
+          <div className="intro-bottom mono">
+            <button
+              type="button"
+              className="time-pill mono"
+              onClick={() => setTimeMode(timeMode === "ist" ? "user" : "ist")}
+              title="Click to toggle time zone"
+            >
+              <span>MOHALI, INDIA <i /> {timeMode === "ist" ? `${time || "20:30"} IST` : `${userTime || "20:30"} LOCAL`}</span>
+              <span className="time-toggle-label">TOGGLE TIME</span>
+            </button>
+            <button aria-pressed={paused} onClick={() => setPaused(!paused)}>
+              {paused ? "▶ PLAY MOTION" : "Ⅱ PAUSE MOTION"}
+            </button>
+            <a href="#work">SCROLL TO EXPLORE <span>↓</span></a>
+          </div>
         </div>
       </section>
 
@@ -335,7 +335,7 @@ export default function Portfolio() {
           meta="© 2026 · Mohali, India · Full-Stack &amp; GenAI Engineer"
           columns={[]}
           backToTop={true}
-          height="460px"
+          height="440px"
           crop={0.16}
           dotGap={6}
           radius={85}
