@@ -213,69 +213,7 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <aside className="hero-dossier" aria-label="Engineering dossier and live metrics">
-              <div className="dossier-card">
-                <div className="dossier-header mono">
-                  <div className="dossier-status">
-                    <span className="live-dot pulse-dot" />
-                    <span>SYS // LIVE TELEMETRY</span>
-                  </div>
-                  <span className="dossier-chip">ACTIVE &amp; DEPLOYING</span>
-                </div>
-
-                <div className="dossier-profile">
-                  <div className="dossier-avatar">
-                    <span className="avatar-monogram">MS</span>
-                    <span className="avatar-badge">26</span>
-                  </div>
-                  <div className="dossier-id">
-                    <h3>Manpreet Singh</h3>
-                    <p className="mono">FULL-STACK &amp; GENAI DEVELOPER</p>
-                    <span className="dossier-company">@ Fresco Web Services · Mohali</span>
-                  </div>
-                </div>
-
-                <div className="dossier-metrics">
-                  <div className="metric-box">
-                    <span className="metric-val mono">02+</span>
-                    <span className="metric-label">YRS EXPERIENCE</span>
-                  </div>
-                  <div className="metric-box">
-                    <span className="metric-val mono">15+</span>
-                    <span className="metric-label">CORE REPOSITORIES</span>
-                  </div>
-                  <div className="metric-box">
-                    <span className="metric-val mono">100%</span>
-                    <span className="metric-label">FULL-STACK READY</span>
-                  </div>
-                  <div className="metric-box">
-                    <span className="metric-val mono">&lt;2H</span>
-                    <span className="metric-label">INQUIRY RESPONSE</span>
-                  </div>
-                </div>
-
-                <div className="dossier-focus">
-                  <span className="focus-label mono">CORE DOMAINS</span>
-                  <div className="focus-items">
-                    <span className="focus-pill">Multi-Tenant SaaS</span>
-                    <span className="focus-pill">Applied LLM Pipelines</span>
-                    <span className="focus-pill">High-Throughput APIs</span>
-                    <span className="focus-pill">WebGL Motion UI</span>
-                  </div>
-                </div>
-
-                <div className="dossier-footer mono">
-                  <div className="dossier-clock">
-                    <span className="clock-icon">◷</span>
-                    <span>MOHALI (IST) · AVAILABLE</span>
-                  </div>
-                  <a href="/resume.pdf" download="Manpreet_Singh_Resume.pdf" className="dossier-action">
-                    RÉSUMÉ ↓
-                  </a>
-                </div>
-              </div>
-            </aside>
-          </div>
+           </div>
           <div className="intro-bottom mono">
             <button
               type="button"
@@ -396,8 +334,6 @@ export default function Portfolio() {
 
         <HalftoneWordmarkFooter
           wordmark="manpreet"
-          label="Manpreet Singh"
-          meta="© 2026 · Mohali, India · Full-Stack &amp; GenAI Engineer"
           columns={[]}
           backToTop={true}
           height="440px"
@@ -406,7 +342,7 @@ export default function Portfolio() {
           radius={85}
           grain={0.3}
           preset="night"
-          palette={{ background: "#242620", ink: "#efeee6", warm: "#d94b27" }}
+          palette={{ background: "#e6e7e0", ink: "#242620", warm: "#d94b27" }}
         />
       </section>
     </main>

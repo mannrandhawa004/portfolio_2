@@ -180,9 +180,9 @@ const HWF_CSS = `
 `
 
 export default function HalftoneWordmarkFooter({
-  wordmark = "halden",
-  label = "Halden Studio",
-  meta = "©2026 · Oslo / Lisbon",
+  wordmark = "",
+  label = "",
+  meta = "",
   columns = DEFAULT_COLUMNS,
   backToTop = true,
   preset = "night",
