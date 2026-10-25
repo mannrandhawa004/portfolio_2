@@ -203,7 +203,7 @@ export default function HalftoneWordmarkFooter({
   const canvasRef = React.useRef(null as HTMLCanvasElement | null)
   const opts = React.useRef({ colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark })
   opts.current = { colors, dotGap, radius, crop, grain, interactive, fontFamily, fontWeight, wordmark }
-  const key = [wordmark, dotGap, crop, grain, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
+  const key = [wordmark, dotGap, crop, grain, interactive, fontFamily, fontWeight, colors.background, colors.ink, colors.warm].join("|")
 
   React.useEffect(() => {
     const root = rootRef.current
@@ -317,7 +317,7 @@ export default function HalftoneWordmarkFooter({
         let vy = dots[j + 3]
         const hx = dots[j + 4]
         const hy = dots[j + 5]
-        if (!reduced) {
+        if (!reduced && o.interactive) {
           if (ringAge < 900) {
             const dx = hx - ring.x
             const dy = hy - ring.y
@@ -371,18 +371,18 @@ export default function HalftoneWordmarkFooter({
         ctx.globalCompositeOperation = "source-over"
       }
       // Sleep once everything is home and nothing is pushing.
-      awake = moving || ringAge < 900 || px > -1e4
+      awake = o.interactive && !reduced && (moving || ringAge < 900 || px > -1e4)
     }
 
     const loop = (now: number) => {
       raf = 0
-      if (!visible) return
+      if (!visible || document.hidden) return
       draw(now)
       if (awake) raf = requestAnimationFrame(loop)
     }
     const wake = () => {
       awake = true
-      if (!raf && visible) raf = requestAnimationFrame(loop)
+      if (!raf && visible && !document.hidden) raf = requestAnimationFrame(loop)
     }
 
     const toLocal = (e: PointerEv) => {
@@ -390,7 +390,7 @@ export default function HalftoneWordmarkFooter({
       return [e.clientX - b.left, e.clientY - b.top]
     }
     const onMove = (e: PointerEv) => {
-      if (!opts.current.interactive) return
+      if (!opts.current.interactive || reduced || e.pointerType !== "mouse") return
       const p = toLocal(e)
       px = p[0]
       py = p[1]
@@ -426,6 +426,11 @@ export default function HalftoneWordmarkFooter({
       if (visible) wake()
     })
     io.observe(root)
+    const onVisibility = () => {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = 0 }
+      else wake()
+    }
+    document.addEventListener("visibilitychange", onVisibility)
     // A web font that lands late re-sets the word in its real face.
     let alive = true
     if (document.fonts && document.fonts.ready) {
@@ -444,12 +449,9 @@ export default function HalftoneWordmarkFooter({
       root.removeEventListener("pointermove", onMove)
       root.removeEventListener("pointerleave", onLeave)
       root.removeEventListener("pointerdown", onDown)
+      document.removeEventListener("visibilitychange", onVisibility)
     }
   }, [key])
-
-  const toTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
 
   return (
     <footer
@@ -487,9 +489,9 @@ export default function HalftoneWordmarkFooter({
       </div>
       <div className="hwf-rule">
         {backToTop ? (
-          <button type="button" className="hwf-up" onClick={toTop}>
+          <a className="hwf-up" href="#top">
             Back to top ↑
-          </button>
+          </a>
         ) : null}
       </div>
     </footer>

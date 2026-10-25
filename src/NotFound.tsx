@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./portfolio-v2.css";
+import "./portfolio-premium.css";
 
 export default function NotFound() {
   const [time, setTime] = useState("");

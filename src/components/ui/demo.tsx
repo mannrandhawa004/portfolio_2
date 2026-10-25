@@ -1,61 +1,37 @@
-"use client"
+import { GlassFold } from "@/components/ui/glass-fold"
 
-import GlassFolder from "@/components/ui/glass-folder-cards"
+// the adjustable settings 21st shows next to the preview
+const settings = {
+  color1: "#1e3cc8",
+  color2: "#06081e",
+  color3: "#96d7ff",
+  speed: 0.5,
+  scale: 1,
+  noise: 0.12,
+}
 
-/**
- * Three folders on a dotted desk: milk glass over a long-exposure print with a
- * key that adds files, a plain archive with a menu, and smoked glass over red
- * ink. Hover one to lean its glass toward you, click it to open it.
- */
-export default function GlassFolderCardsDemo() {
+export default function GlassFoldDemo(props: Partial<typeof settings>) {
+  const config = { ...settings, ...props }
+
   return (
-    <div
-      className="relative flex w-full flex-col items-center justify-center overflow-hidden bg-background px-6 py-16"
-      style={{ minHeight: "100svh" }}
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 text-foreground opacity-[0.13]"
-        style={{
-          backgroundImage: "radial-gradient(currentColor 1.1px, transparent 1.4px)",
-          backgroundSize: "22px 22px",
-        }}
-      />
-      <div className="relative grid max-w-[1180px] grid-cols-1 items-end justify-items-center gap-x-14 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
-        <GlassFolder label="My Files" art="aurora" seed={3} appearDelay={0} />
-        <GlassFolder
-          label="Archives"
-          art="none"
-          action="more"
-          labelPlacement="top-left"
-          appearDelay={140}
-          files={[
-            { name: "Lookbook 2024", meta: "38 images", art: "dusk" },
-            { name: "Invoices", meta: "12 PDFs" },
-            { name: "Shoot — Lisbon", meta: "RAW · 2.1 GB", art: "ember" },
-            { name: "Contract.pdf", meta: "PDF · 320 KB" },
-          ]}
-          menu={[{ label: "Rename" }, { label: "Share…" }, { label: "Move to Trash", danger: true }]}
-        />
-        <GlassFolder
-          label="My Files"
-          meta="Wed 19 Aug"
-          tone="dark"
-          art="ember"
-          seed={11}
-          action="none"
-          labelPlacement="top-right"
-          appearDelay={280}
-          files={[
-            { name: "Stills", meta: "64 images", art: "verdant" },
-            { name: "Edit notes", meta: "TXT · 4 KB" },
-            { name: "Grade v3", meta: "DRX · 18 MB", art: "aurora" },
-          ]}
-        />
+    <div className="relative h-screen w-full overflow-hidden bg-black">
+      <GlassFold {...config} className="absolute inset-0" />
+      <div className="absolute inset-x-0 bottom-0 flex flex-wrap items-end justify-between gap-6 p-10 text-white">
+        <div>
+          <h1 className="text-4xl font-medium tracking-tight">Glass fold</h1>
+          <p className="mt-2 max-w-sm text-sm text-white/60">
+            One of twenty WebGL shaders from GradFlow. Three colors, no dependencies.
+          </p>
+        </div>
+        <a
+          href="https://gradflow.meerbahadin.dev"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-md transition-colors hover:bg-white/20"
+        >
+          gradflow.meerbahadin.dev ↗
+        </a>
       </div>
-      <p className="relative mt-14 font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase">
-        Hover to lean · Click to open · + to add
-      </p>
     </div>
   )
 }

@@ -1,0 +1,1441 @@
+/* Scoped refinements. Footer styles and its component are intentionally independent. */
+.folio { --motion-ease: cubic-bezier(.18, .75, .2, 1); }
+.folio .folio-nav { position: fixed !important; width: 100%; height: 84px; padding-inline: max(32px, calc((100vw - 1320px) / 2)); }
+.folio.has-scrolled .folio-nav { height: 72px; }
+.folio main { padding-top: 84px; }
+.folio .theme-toggle-btn { min-height: 38px; }
+
+/* ==========================================================================
+   STREAMLINED CENTERED HERO SECTION
+   ========================================================================== */
+.folio .intro-shell {
+  min-height: calc(100svh - 84px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: clip;
+  padding: 0;
+  isolation: isolate;
+  background: var(--background);
+}
+
+.folio .hero-shader-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 78% 62% at 50% 45%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 78% 62% at 50% 45%, #000 35%, transparent 100%);
+  transition: opacity 0.3s ease;
+}
+
+.folio.theme-light .hero-shader-bg,
+[data-theme="light"] .hero-shader-bg {
+  opacity: 0.88;
+}
+
+.folio.theme-dark .hero-shader-bg,
+[data-theme="dark"] .hero-shader-bg {
+  opacity: 0.35;
+}
+
+.folio .hero-shader-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, var(--background) 95%);
+}
+
+.folio .intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: clamp(36px, 6vh, 68px) 0 clamp(20px, 3vh, 32px);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.folio .hero-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 75%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: clamp(8px, 0.8vw, 9.5px);
+  letter-spacing: .08em;
+  color: var(--text-secondary);
+  margin-bottom: clamp(20px, 3vh, 30px);
+  box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.08);
+  transition: border-color .25s, color .25s, transform .25s;
+}
+
+.folio .hero-status-pill:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.folio .hero-status-pill .live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #729864;
+  box-shadow: 0 0 0 3px rgba(114, 152, 100, 0.25);
+  animation: pulse-dot 2.4s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(114, 152, 100, 0.25); }
+  50% { box-shadow: 0 0 0 6px rgba(114, 152, 100, 0.08); }
+}
+
+.folio .hero-status-loc {
+  opacity: .65;
+}
+
+.folio .intro-title {
+  width: 100%;
+  margin-bottom: clamp(18px, 2.5vh, 26px);
+}
+
+.folio .intro-title h1 {
+  font-size: clamp(48px, 6.8vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -.055em;
+  font-weight: 500;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.folio .intro-title h1 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: inherit;
+  color: var(--accent);
+}
+
+.folio .intro-title-line {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  padding-bottom: .08em;
+}
+
+.folio .intro-title-line > span {
+  display: inline-block;
+}
+
+.folio .hero-bio {
+  color: var(--text-secondary);
+  font-size: clamp(15px, 1.35vw, 17px);
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto clamp(18px, 2.5vh, 24px);
+  text-align: center;
+}
+
+.folio .hero-bio strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.folio .hero-stack-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: clamp(8px, 0.8vw, 9.5px);
+  letter-spacing: .08em;
+  color: var(--text-secondary);
+  margin-bottom: clamp(24px, 3.5vh, 34px);
+  opacity: .85;
+}
+
+.folio .hero-stack-row .dot {
+  color: var(--accent);
+  opacity: .7;
+}
+
+.folio .hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-bottom: clamp(32px, 5vh, 48px);
+}
+
+.folio .hero-actions .send-button {
+  min-height: 48px;
+  padding: 13px 22px;
+  font-size: 12px;
+  gap: 16px;
+}
+
+.folio .hero-resume-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 13px 18px;
+  min-height: 48px;
+  white-space: nowrap;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-primary);
+  transition: border-color .2s, color .2s, background .2s;
+}
+
+.folio .hero-resume-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.folio .hero-contact {
+  font-size: 12px;
+  gap: 8px;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  transition: color .2s;
+}
+
+.folio .hero-contact:hover {
+  color: var(--accent);
+}
+
+.folio .intro-bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .folio .intro-shell {
+    min-height: auto;
+  }
+  .folio .intro {
+    padding-top: 24px;
+    padding-bottom: 20px;
+  }
+  .folio .hero-stack-row {
+    gap: 4px 8px;
+  }
+  .folio .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  .folio .hero-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+  .folio .intro-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
+
+
+/* ==========================================================================
+   ENHANCED EDITORIAL PROJECT SECTION (ONE PROJECT PER ROW SHOWCASE)
+   ========================================================================== */
+.folio .selected-work {
+  padding-block: 100px 70px;
+}
+
+.folio .work-heading {
+  margin: 36px 0 42px;
+}
+
+.folio .work-heading h2 {
+  font-size: clamp(44px, 5.5vw, 76px);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+}
+
+.folio .work-heading h2 em {
+  font-family: inherit;
+  font-style: normal;
+  color: var(--accent);
+}
+
+.folio .work-heading > p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.work-index {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0;
+  border-block: 1px solid var(--border);
+  margin-bottom: 72px;
+}
+
+.work-index > .mono {
+  font-size: 8.5px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.work-index > div {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.work-index a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 36px;
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.work-index a .mono {
+  font-size: 8.5px;
+  color: var(--accent);
+}
+
+.work-index a:hover,
+.work-index a.is-active {
+  color: var(--accent);
+}
+
+/* Individual Project Showcases: Full-Width 1 Project Per Row */
+.folio .project-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(80px, 9vw, 130px);
+}
+
+.folio .work-item {
+  display: grid;
+  grid-template-columns: 1.08fr 1.25fr;
+  align-items: center;
+  gap: clamp(36px, 5vw, 72px);
+  position: relative;
+  padding-top: 0;
+  border: 0;
+}
+
+/* Alternating layout on desktop for rhythm and editorial flow */
+.folio .work-item:nth-child(even) {
+  grid-template-columns: 1.25fr 1.08fr;
+}
+
+.folio .work-item:nth-child(even) .project-stage {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.folio .work-item:nth-child(even) .work-item-info {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.folio .work-item-info {
+  position: static;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.folio .work-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.folio .project-category-badge {
+  font-size: 8.5px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.folio .work-number {
+  font-size: 8.5px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.folio .work-item-body h3 {
+  font-size: clamp(32px, 3.2vw, 46px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  margin-top: 6px;
+}
+
+.folio .work-item-body h3 button {
+  font: inherit;
+  color: var(--text-primary);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.folio .work-item-body h3 button:hover {
+  color: var(--accent);
+}
+
+.folio .project-label {
+  color: var(--text-primary);
+  font-size: clamp(13.5px, 1.15vw, 15.5px);
+  line-height: 1.5;
+  margin-top: 8px;
+  font-weight: 500;
+  opacity: 0.92;
+}
+
+.folio .project-full-description {
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  line-height: 1.75;
+  margin-top: 12px;
+}
+
+.folio .project-feature-highlights {
+  margin-top: 16px;
+  padding: 13px 16px;
+  background: color-mix(in srgb, var(--surface) 65%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.folio .highlights-title {
+  display: block;
+  font-size: 7.5px;
+  color: var(--text-secondary);
+  letter-spacing: 0.09em;
+  margin-bottom: 9px;
+  font-weight: 500;
+}
+
+.folio .project-feature-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.folio .project-feature-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.folio .project-feature-bullets .bullet-icon {
+  color: var(--accent);
+  font-size: 12px;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.folio .work-item .tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.folio .work-item .tech-tags > span {
+  font-size: 9px;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.folio .work-item .tech-tags > span:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.folio .project-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+  margin-top: 22px;
+}
+
+.folio .project-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #ffffff !important;
+  padding: 9px 16px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 500;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.folio .project-live-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.folio .project-source-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border);
+  padding: 9px 14px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  transition: all 0.2s ease;
+}
+
+.folio .project-source-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent) !important;
+}
+
+.folio .project-case-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 9px 12px;
+  color: var(--text-secondary);
+  font-size: 11.5px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s ease;
+}
+
+.folio .project-case-btn:hover {
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   RESTORED & REFINED PROJECT STAGE CANVAS
+   - PERFECTLY CENTERED FLOATING BROWSER WINDOW
+   - BOLD, CLEARLY VISIBLE KINETIC WORDMARK ("FLOW", "NEXT", "FIND", "CODE")
+   - BALANCED METADATA & REFINED DUAL-MODE CONTRAST
+   ========================================================================== */
+
+/* Main Stage Canvas */
+.folio .project-stage,
+.folio .project-stage-canvas {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.38;
+  min-height: 0;
+  padding: clamp(18px, 2.4vw, 26px);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  isolation: isolate;
+  overflow: hidden;
+  perspective: 1200px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+/* ==========================================================================
+   Dual-Theme Canvas Backgrounds & Tone Pedestals
+   ========================================================================== */
+
+/* Dark Mode Pedestals */
+.folio.theme-dark .project-stage,
+[data-theme="dark"] .project-stage {
+  background: #121614;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.65);
+}
+
+.folio.theme-dark .project-stage:hover,
+[data-theme="dark"] .project-stage:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 32px 85px -20px rgba(0, 0, 0, 0.82);
+}
+
+.folio.theme-dark .tone-sage,
+.folio.theme-dark .sage {
+  background: radial-gradient(130% 130% at 50% 45%, #18241b 0%, #0d130f 100%);
+  border-color: rgba(114, 152, 100, 0.24);
+}
+
+.folio.theme-dark .tone-lavender,
+.folio.theme-dark .lavender {
+  background: radial-gradient(130% 130% at 50% 45%, #1f192b 0%, #100d17 100%);
+  border-color: rgba(165, 148, 214, 0.24);
+}
+
+.folio.theme-dark .tone-sand,
+.folio.theme-dark .sand {
+  background: radial-gradient(130% 130% at 50% 45%, #261c12 0%, #130d08 100%);
+  border-color: rgba(217, 160, 95, 0.24);
+}
+
+.folio.theme-dark .tone-cyan,
+.folio.theme-dark .cyan {
+  background: radial-gradient(130% 130% at 50% 45%, #112228 0%, #091316 100%);
+  border-color: rgba(75, 175, 195, 0.24);
+}
+
+/* Light Mode Pedestals */
+.folio.theme-light .project-stage,
+[data-theme="light"] .project-stage {
+  background: #f7f6f2;
+  border-color: rgba(36, 38, 32, 0.1);
+  box-shadow:
+    0 18px 45px -12px rgba(0, 0, 0, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.folio.theme-light .project-stage:hover,
+[data-theme="light"] .project-stage:hover {
+  border-color: rgba(36, 38, 32, 0.22);
+  box-shadow:
+    0 28px 65px -16px rgba(0, 0, 0, 0.14),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.folio.theme-light .tone-sage,
+.folio.theme-light .sage {
+  background: radial-gradient(130% 130% at 50% 45%, #e3ece0 0%, #d4e1d0 100%);
+  border-color: rgba(85, 118, 80, 0.2);
+}
+
+.folio.theme-light .tone-lavender,
+.folio.theme-light .lavender {
+  background: radial-gradient(130% 130% at 50% 45%, #ede9f7 0%, #dfd8f0 100%);
+  border-color: rgba(110, 96, 150, 0.2);
+}
+
+.folio.theme-light .tone-sand,
+.folio.theme-light .sand {
+  background: radial-gradient(130% 130% at 50% 45%, #f6efe2 0%, #ecdcc9 100%);
+  border-color: rgba(148, 112, 75, 0.2);
+}
+
+.folio.theme-light .tone-cyan,
+.folio.theme-light .cyan {
+  background: radial-gradient(130% 130% at 50% 45%, #e1f3f6 0%, #cde7ec 100%);
+  border-color: rgba(65, 132, 146, 0.2);
+}
+
+/* Subtle Stage Ambient Glow */
+.folio .project-canvas-glow {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.55;
+  filter: blur(45px);
+  transition: opacity 0.4s ease;
+}
+
+.folio .project-stage:hover .project-canvas-glow {
+  opacity: 0.85;
+}
+
+.folio.theme-dark .tone-sage .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(85, 145, 95, 0.25), transparent 70%); }
+.folio.theme-dark .tone-lavender .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(135, 115, 195, 0.25), transparent 70%); }
+.folio.theme-dark .tone-sand .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(195, 140, 80, 0.25), transparent 70%); }
+.folio.theme-dark .tone-cyan .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(65, 155, 175, 0.25), transparent 70%); }
+
+.folio.theme-light .tone-sage .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(95, 140, 100, 0.16), transparent 70%); }
+.folio.theme-light .tone-lavender .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(140, 120, 190, 0.16), transparent 70%); }
+.folio.theme-light .tone-sand .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(200, 150, 95, 0.16), transparent 70%); }
+.folio.theme-light .tone-cyan .project-canvas-glow { background: radial-gradient(circle at 50% 50%, rgba(70, 150, 165, 0.16), transparent 70%); }
+
+/* ==========================================================================
+   Top & Bottom Metadata Bars
+   ========================================================================== */
+.folio .stage-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  font-size: 8.5px;
+  letter-spacing: 0.09em;
+  font-weight: 500;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.folio.theme-dark .stage-meta {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.folio.theme-light .stage-meta {
+  color: rgba(36, 42, 34, 0.65);
+}
+
+.folio .stage-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  font-size: 8.5px;
+  letter-spacing: 0.09em;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.folio .stage-title {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.folio.theme-dark .stage-bottom {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.folio.theme-light .stage-bottom {
+  color: rgba(36, 42, 34, 0.78);
+}
+
+.folio .stage-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.folio .pulse-beacon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #27c93f;
+  box-shadow: 0 0 0 3px rgba(39, 201, 63, 0.28);
+  flex-shrink: 0;
+  animation: pulse-beacon-anim 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-beacon-anim {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(39, 201, 63, 0.28); }
+  50% { box-shadow: 0 0 0 6px rgba(39, 201, 63, 0.08); }
+}
+
+/* ==========================================================================
+   Kinetic Wordmark Behind Browser
+   CLEARLY VISIBLE, SHARP STROKE + TINTED FILL IN BOTH MODES
+   ========================================================================== */
+.folio .stage-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-mono, "DM Mono", monospace);
+  font-size: clamp(82px, 13.5vw, 185px);
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.folio .project-stage:hover .stage-word {
+  transform: translate(-50%, -50%) scale(1.025);
+  letter-spacing: -0.04em;
+}
+
+/* Dark Mode Wordmark Contrast */
+.folio.theme-dark .stage-word,
+[data-theme="dark"] .stage-word {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.38);
+  color: rgba(255, 255, 255, 0.14);
+}
+
+.folio.theme-dark .tone-sage .stage-word,
+.folio.theme-dark .sage .stage-word {
+  -webkit-text-stroke: 1.5px rgba(160, 215, 150, 0.55);
+  color: rgba(135, 200, 125, 0.18);
+  text-shadow: 0 0 55px rgba(114, 152, 100, 0.35);
+}
+
+.folio.theme-dark .tone-lavender .stage-word,
+.folio.theme-dark .lavender .stage-word {
+  -webkit-text-stroke: 1.5px rgba(200, 185, 250, 0.55);
+  color: rgba(180, 165, 240, 0.18);
+  text-shadow: 0 0 55px rgba(165, 148, 214, 0.35);
+}
+
+.folio.theme-dark .tone-sand .stage-word,
+.folio.theme-dark .sand .stage-word {
+  -webkit-text-stroke: 1.5px rgba(250, 200, 140, 0.55);
+  color: rgba(230, 180, 120, 0.18);
+  text-shadow: 0 0 55px rgba(217, 160, 95, 0.35);
+}
+
+.folio.theme-dark .tone-cyan .stage-word,
+.folio.theme-dark .cyan .stage-word {
+  -webkit-text-stroke: 1.5px rgba(130, 225, 245, 0.55);
+  color: rgba(95, 205, 230, 0.18);
+  text-shadow: 0 0 55px rgba(75, 175, 195, 0.35);
+}
+
+/* Light Mode Wordmark Contrast */
+.folio.theme-light .stage-word,
+[data-theme="light"] .stage-word {
+  -webkit-text-stroke: 1.5px rgba(36, 42, 34, 0.4);
+  color: rgba(36, 42, 34, 0.15);
+}
+
+.folio.theme-light .tone-sage .stage-word,
+.folio.theme-light .sage .stage-word {
+  -webkit-text-stroke: 1.5px rgba(45, 78, 42, 0.48);
+  color: rgba(45, 78, 42, 0.16);
+}
+
+.folio.theme-light .tone-lavender .stage-word,
+.folio.theme-light .lavender .stage-word {
+  -webkit-text-stroke: 1.5px rgba(70, 55, 100, 0.48);
+  color: rgba(70, 55, 100, 0.16);
+}
+
+.folio.theme-light .tone-sand .stage-word,
+.folio.theme-light .sand .stage-word {
+  -webkit-text-stroke: 1.5px rgba(100, 70, 40, 0.48);
+  color: rgba(100, 70, 40, 0.16);
+}
+
+.folio.theme-light .tone-cyan .stage-word,
+.folio.theme-light .cyan .stage-word {
+  -webkit-text-stroke: 1.5px rgba(35, 85, 100, 0.48);
+  color: rgba(35, 85, 100, 0.16);
+}
+
+/* ==========================================================================
+   Center-Anchored Floating Perspective & Browser Window Shell
+   ========================================================================== */
+.folio .project-perspective {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 560px;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+}
+
+/* Browser Window Shell */
+.folio .screen-shell {
+  pointer-events: auto;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 22px 55px -12px rgba(20, 30, 20, 0.22),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+  transform: none;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s ease;
+}
+
+.folio.theme-dark .screen-shell {
+  background: #171d19;
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 28px 70px -16px rgba(0, 0, 0, 0.82),
+    0 1px 3px rgba(255, 255, 255, 0.05);
+}
+
+.folio .project-stage:hover .screen-shell {
+  transform: translateY(-5px);
+  box-shadow:
+    0 34px 80px -16px rgba(20, 30, 20, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.folio.theme-dark .project-stage:hover .screen-shell {
+  box-shadow:
+    0 40px 95px -18px rgba(0, 0, 0, 0.95),
+    0 2px 6px rgba(255, 255, 255, 0.08);
+}
+
+/* macOS Header / Titlebar */
+.folio .screen-top {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  gap: 10px;
+  background: #f0f1ec;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.folio.theme-dark .screen-top {
+  background: #1f2622;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.folio .browser-dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.folio .browser-dots .b-dot {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 50%;
+}
+
+.folio .browser-dots .b-dot.red { background: #ff5f56; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08); }
+.folio .browser-dots .b-dot.yellow { background: #ffbd2e; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08); }
+.folio .browser-dots .b-dot.green { background: #27c93f; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08); }
+
+.folio .screen-address {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2.5px 10px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+  font-size: 8px;
+  color: #484e42;
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folio.theme-dark .screen-address {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #a5afa0;
+}
+
+.folio .screen-address .ssl-lock {
+  font-size: 7.5px;
+  opacity: 0.85;
+}
+
+.folio .screen-ext {
+  font-size: 10px;
+  color: #6e7568;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* Viewport & Responsive Screenshot */
+.folio .screen-viewport {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1.6;
+  overflow: hidden;
+  background: #eae8e1;
+}
+
+.folio.theme-dark .screen-viewport {
+  background: #131714;
+}
+
+.folio .screen-viewport img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.folio .project-stage:hover .screen-viewport img {
+  transform: scale(1.028);
+}
+
+/* Hover Veil with Call to Action */
+.folio .screen-hover-veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 21, 17, 0.32);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.folio .project-stage:hover .screen-hover-veil {
+  opacity: 1;
+}
+
+.folio .veil-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #121510;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.22);
+  transform: translateY(5px);
+  transition: transform 0.3s ease;
+}
+
+.folio.theme-dark .veil-pill {
+  background: #19211c;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.folio .project-stage:hover .veil-pill {
+  transform: translateY(0);
+}
+
+@media (max-width: 800px) {
+  .folio .project-stage {
+    aspect-ratio: 1.28;
+    padding: 14px 16px;
+  }
+  .folio .project-perspective {
+    width: 90%;
+  }
+  .folio .stage-word {
+    font-size: clamp(65px, 15vw, 110px);
+  }
+}
+
+.folio .github-row {
+  margin-top: 70px;
+  border-color: var(--border);
+}
+
+.folio .github-row > span:first-child {
+  color: var(--text-secondary);
+}
+
+/* Bring the existing sections into the same rhythm, without footer overrides. */
+.folio .expertise-section { padding-block: 85px 32px; }
+.folio .expertise-layout { grid-template-columns: .85fr 1.5fr; gap: 80px; margin-top: 55px; }
+.folio .expertise-intro h2 { font-size: clamp(42px, 4.8vw, 65px); }
+.folio .expertise-intro > p { color: var(--text-secondary); font-size: 14px; }
+.folio .skill-tabs button { min-height: 64px; }
+.folio .skill-tabs button > span:last-child { display: none; }
+.folio .skill-field li { color: var(--text-primary); }
+.folio .skill-panel-top, .folio .skill-panel-bottom { color: var(--text-secondary); }
+.folio .philosophy-type .star-icon { animation: none; }
+.folio .about-story > p, .folio .journey p { color: var(--text-secondary); }
+.folio .about-story > .about-lead { color: var(--text-primary); }
+.folio .contact-copy > p, .folio .form-end > p, .folio .copy-email { color: var(--text-secondary); }
+.folio .note-form label, .folio .note-form input, .folio .note-form textarea { color: var(--text-primary); }
+.folio .note-form input, .folio .note-form textarea { border-color: var(--border); }
+.folio .note-form input::placeholder, .folio .note-form textarea::placeholder { color: var(--text-secondary); }
+/* ==========================================================================
+   CASE STUDY MODAL (FIXED LIGHT MODE TEXT VISIBILITY & EDITORIAL LAYOUT)
+   ========================================================================== */
+.folio .case-dialog {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 35px 120px -20px rgba(0, 0, 0, 0.45) !important;
+  border-radius: 16px !important;
+  max-width: 860px !important;
+}
+
+.folio.theme-light .case-dialog,
+[data-theme="light"] .case-dialog {
+  background: #ffffff !important;
+  color: #161914 !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 30px 100px -15px rgba(0, 0, 0, 0.25) !important;
+}
+
+.folio .case-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding-bottom: 18px !important;
+  margin-bottom: 22px !important;
+  border-bottom: 1px solid var(--border) !important;
+  color: var(--text-secondary) !important;
+  font-size: 9px !important;
+}
+
+.folio.theme-light .case-top {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #606659 !important;
+}
+
+.folio .case-top button {
+  color: var(--text-primary) !important;
+  background: var(--surface-hover) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.folio.theme-light .case-top button {
+  color: #1a1d17 !important;
+  background: #f0eee6 !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.folio.theme-light .case-top button:hover {
+  background: #1a1d17 !important;
+  color: #ffffff !important;
+}
+
+.folio .case-category-tag {
+  color: var(--accent) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+}
+
+.folio .case-content h2 {
+  font-size: clamp(30px, 4.5vw, 50px) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.04em !important;
+  margin: 10px 0 6px !important;
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+.folio.theme-light .case-content h2 {
+  color: #121510 !important;
+}
+
+.folio .case-subtitle {
+  color: var(--text-secondary) !important;
+  font-size: 12.5px !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 22px !important;
+  display: block !important;
+}
+
+.folio.theme-light .case-subtitle {
+  color: #4a5043 !important;
+}
+
+.folio .case-picture img {
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border) !important;
+  margin-bottom: 26px !important;
+  box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.2) !important;
+}
+
+.folio.theme-light .case-picture img {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.folio .case-section {
+  margin-top: 24px !important;
+}
+
+.folio .case-section-heading {
+  font-size: 8.5px !important;
+  color: var(--text-secondary) !important;
+  letter-spacing: 0.09em !important;
+  margin-bottom: 12px !important;
+  display: block !important;
+}
+
+.folio.theme-light .case-section-heading {
+  color: #606659 !important;
+}
+
+.folio .case-description {
+  color: var(--text-primary) !important;
+  font-size: 14.5px !important;
+  line-height: 1.8 !important;
+  opacity: 0.95 !important;
+}
+
+.folio.theme-light .case-description {
+  color: #22261e !important;
+}
+
+.folio .case-features-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  gap: 10px !important;
+}
+
+.folio .case-features-list li {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  background: color-mix(in srgb, var(--surface) 60%, transparent) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: var(--text-primary) !important;
+}
+
+.folio.theme-light .case-features-list li {
+  background: #f7f6f0 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #1a1e16 !important;
+}
+
+.folio .case-features-list .check-mark {
+  color: var(--accent) !important;
+  font-weight: bold !important;
+  font-size: 13px !important;
+  flex-shrink: 0 !important;
+}
+
+.folio .case-content .tech-tags {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.folio .case-content .tech-tags > span {
+  background: var(--surface-hover) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 4px !important;
+  padding: 6px 12px !important;
+  font-size: 11px !important;
+}
+
+.folio.theme-light .case-content .tech-tags > span {
+  background: #eeece3 !important;
+  color: #1a1e16 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  font-weight: 500 !important;
+}
+
+.folio .case-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  margin-top: 32px !important;
+  padding-top: 24px !important;
+  border-top: 1px solid var(--border) !important;
+}
+
+.folio.theme-light .case-actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.folio.theme-light .case-actions .send-button {
+  background: #1a1d17 !important;
+  color: #ffffff !important;
+}
+
+.folio.theme-light .case-actions .inline-link {
+  color: #1a1d17 !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 4px !important;
+  padding: 10px 16px !important;
+}
+
+.folio.theme-light .case-actions .next-project {
+  color: #1a1d17 !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  background: #f4f3ee !important;
+  border-radius: 4px !important;
+  padding: 10px 16px !important;
+  margin-left: auto !important;
+}
+
+.folio .case-dialog[open] .case-content > * { animation-duration: .3s; }
+.folio .nav-dialog-head button { color: var(--text-primary); }
+
+@media (max-width: 1100px) {
+  .folio .intro-composition { gap: 40px; grid-template-columns: 1.15fr 1fr; padding-block: 50px; min-height: 600px; }
+  .folio .intro-title h1 { font-size: 4.6vw; }
+  .folio .intro-description p { font-size: 13px; }
+  .folio .hero-actions { gap: 12px; }
+  .folio .hero-contact { width: 100%; min-height: 35px; }
+  .folio .hero-eyebrow-tag { font-size: 8px; }
+  .workbench-overline { font-size: 7px; }
+  .workbench-controls { gap: 8px; }
+  .workbench-controls > .mono { font-size: 6px; }
+  .workbench-controls button { width: 33px; }
+  .folio .work-item, .folio .work-item:nth-child(even) { gap: 38px; }
+  .work-index > div { gap: 18px; }
+  .work-index a { font-size: 10px; gap: 7px; }
+  .folio .expertise-layout { gap: 40px; }
+  .folio .skill-tabs button { font-size: 10px; padding-inline: 10px; }
+}
+@media (max-width: 800px) {
+  .folio .folio-nav { height: 76px; padding-inline: 24px; }
+  .folio main { padding-top: 76px; }
+  .folio .intro-kicker { align-items: center; gap: 15px; }
+  .folio .hero-kicker-left .mono { font-size: 7px; max-width: 330px; }
+  .folio .intro-composition { grid-template-columns: 1fr; min-height: 0; gap: 58px; padding-block: 42px 38px; }
+  .folio .intro-title h1 { font-size: clamp(42px, 7.8vw, 62px); }
+  .folio .intro-main { max-width: 620px; }
+  .folio .intro-description { max-width: 530px; }
+  .folio .intro-description p { font-size: 14px; }
+  .folio .hero-contact { width: auto; }
+  .folio .hero-actions { gap: 22px; }
+  .hero-workbench { width: calc(100% - 46px); max-width: 510px; margin-inline: auto; padding-top: 10px; }
+  .workbench-overline { font-size: 8px; margin-bottom: 35px; }
+  .workbench-controls > .mono { font-size: 8px; }
+  .workbench-controls button { width: 40px; }
+  .workbench-controls { margin-top: 50px; }
+  .folio .intro-bottom { font-size: 8px; }
+  .folio .expertise-section, .folio .selected-work { padding-top: 70px; }
+  .folio .expertise-layout { grid-template-columns: 1fr; gap: 35px; margin-top: 38px; }
+  .folio .expertise-intro > p { max-width: 400px; }
+  .folio .skill-tabs button { font-size: 12px; }
+  .work-index { align-items: start; flex-direction: column; gap: 13px; margin-bottom: 40px; }
+  .work-index > div { width: 100%; gap: 12px 22px; justify-content: space-between; }
+  .folio .project-list { gap: 55px; }
+  .folio .work-item, .folio .work-item:nth-child(even) { grid-template-columns: 1fr; gap: 28px; }
+  .folio .work-item:nth-child(even) .project-stage, .folio .work-item:nth-child(even) .work-item-info { grid-column: auto; grid-row: auto; }
+  .folio .work-item-info { flex-direction: column; gap: 20px; }
+  .folio .work-item-info > div { padding: 0; }
+  .folio .work-item-info .project-label { max-width: none; }
+  .folio .project-stage { aspect-ratio: 1.4; }
+  .folio .project-stage .screen-shell { width: 86%; left: 7%; bottom: 22%; }
+  .folio .stage-word { font-size: 180px; }
+  .project-insight { font-size: 10px; bottom: 13%; }
+}
+@media (max-width: 520px) {
+  .folio .folio-nav { padding-inline: 20px; gap: 10px; height: 72px; }
+  .folio.has-scrolled .folio-nav { height: 66px; }
+  .folio main { padding-top: 72px; }
+  .folio .nav-actions-group { margin-left: auto; }
+  .folio .mobile-trigger { margin-left: 0; }
+  .folio .theme-toggle-btn { width: 36px; height: 36px; padding: 0; justify-content: center; }
+  .folio .theme-toggle-btn .theme-toggle-text { display: none; }
+  .folio .intro { padding-top: 14px; }
+  .folio .intro-kicker { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 12px; }
+  .folio .hero-kicker-left { gap: 9px; }
+  .folio .hero-kicker-left .mono { font-size: 6px; line-height: 1.7; max-width: 180px; }
+  .folio .hero-status-beacon { flex-shrink: 0; }
+  .folio .availability { font-size: 7px; min-height: 30px; padding-inline: 9px; white-space: nowrap; }
+  .folio .intro-composition { gap: 52px; padding-top: 30px; padding-bottom: 32px; }
+  .folio .hero-eyebrow-tag { font-size: 7px; letter-spacing: .03em; gap: 6px; margin-bottom: 17px; }
+  .folio .intro-title h1 { font-size: clamp(28px, 8.4vw, 44px); line-height: 1.08; letter-spacing: -.06em; }
+  .folio .intro-index { font-size: 6px; line-height: 1.8; margin-top: 18px; }
+  .folio .intro-description { margin-top: 19px; }
+  .folio .intro-description p { font-size: 13px; line-height: 1.8; }
+  .folio .hero-stack-chips { gap: 6px; margin-top: 17px; }
+  .folio .hero-chip { font-size: 8px; padding: 4px 6px; }
+  .folio .hero-actions { gap: 10px 15px; margin-top: 23px; }
+  .folio .hero-actions .send-button { font-size: 11px; padding: 13px 15px; gap: 16px; min-height: 46px; }
+  .folio .hero-resume-btn { font-size: 11px; padding: 13px 12px; min-height: 46px; gap: 9px; }
+  .folio .hero-contact { font-size: 11px; gap: 8px; }
+  .folio .hero-quick-metrics { gap: 16px; margin-top: 23px; padding-top: 16px; flex-wrap: nowrap; }
+  .folio .hero-metric-item strong { font-size: 15px; }
+  .folio .hero-metric-item span { font-size: 6px; letter-spacing: .015em; }
+  .folio .hero-metric-divider { height: 25px; }
+  .hero-workbench { width: calc(100% - 26px); }
+  .workbench-guide { inset: -12px -12px; }
+  .workbench-overline { font-size: 6px; margin-bottom: 28px; }
+  .workbench-chrome { height: 29px; font-size: 6px; padding-inline: 10px; }
+  .workbench-caption { padding: 15px 16px; }
+  .folio .workbench-caption h2 { font-size: 22px; }
+  .workbench-note { left: -12px; bottom: -25px; padding: 10px 13px; font-size: 6px; }
+  .note-symbol { font-size: 16px; }
+  .workbench-controls { margin-top: 43px; padding-block: 12px; gap: 8px; }
+  .workbench-controls > .mono { font-size: 6px; }
+  .workbench-controls button { width: 35px; }
+  .workbench-controls button .mono { font-size: 8px; }
+  .folio .intro-bottom { font-size: 7px; }
+  .folio .intro-bottom > a { font-size: 8px; }
+  .folio .expertise-section, .folio .selected-work { padding-top: 58px; }
+  .folio .expertise-intro h2 { font-size: 45px; }
+  .folio .skill-tabs button { font-size: 10px; padding-inline: 5px; }
+  .folio .skill-panel-top { font-size: 7px; }
+  .folio .work-heading { margin: 30px 0; }
+  .folio .work-heading h2 { font-size: 45px; }
+  .folio .work-heading > p { font-size: 13px; }
+  .work-index { padding-block: 15px; gap: 10px; margin-bottom: 35px; }
+  .work-index > .mono { font-size: 7px; }
+  .work-index > div { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 15px; }
+  .work-index a { font-size: 10px; gap: 8px; min-height: 40px; }
+  .work-index a > span:last-child { margin-left: auto; }
+  .folio .work-item-info { gap: 20px; }
+  .folio .work-item-info h3 { font-size: 32px; }
+  .folio .project-category { font-size: 7px; }
+  .folio .work-item-info .project-label { font-size: 13px; }
+  .folio .work-item-info p { font-size: 12px; }
+  .folio .work-item-info .tech-tags { margin-top: 17px; }
+  .folio .project-links { margin-top: 18px; gap: 20px; }
+  .folio .project-stage { aspect-ratio: 1.08; padding: 17px; border-radius: 7px; }
+  .folio .stage-meta { font-size: 6px; }
+  .folio .stage-word { top: 13%; font-size: 140px; }
+  .folio .project-stage .screen-shell { width: 90%; left: 5%; bottom: 27%; }
+  .folio .screen-top { height: 20px; }
+  .folio .stage-bottom { left: 17px; right: 17px; bottom: 18px; font-size: 6px; }
+  .folio .project-open { width: 28px; height: 28px; top: 45px; right: 16px; }
+  .project-insight { left: 8%; bottom: 14%; padding: 9px 12px; font-size: 8px; max-width: 84%; }
+}
+@media (hover: none) { .preview-open { opacity: 1; transform: none; padding: 7px 10px; font-size: 8px; } }
+.still .workbench-image img { animation: none; }
+.still .workbench-object, .still .project-insight { transform: none !important; }
+@media (prefers-reduced-motion: reduce) { .workbench-image img { animation: none; }.workbench-object, .project-insight { transform: none !important; } }
