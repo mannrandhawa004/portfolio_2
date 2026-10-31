@@ -5,6 +5,8 @@
 .folio main { padding-top: 84px; }
 .folio .theme-toggle-btn { min-height: 38px; }
 
+
+
 /* ==========================================================================
    STREAMLINED CENTERED HERO SECTION
    ========================================================================== */
@@ -229,8 +231,7 @@
     min-height: auto;
   }
   .folio .intro {
-    padding-top: 24px;
-    padding-bottom: 20px;
+    padding: 24px;
   }
   .folio .hero-stack-row {
     gap: 4px 8px;
@@ -241,7 +242,7 @@
     gap: 10px;
   }
   .folio .hero-actions a {
-    width: 100%;
+    /* width: 100%; */
     justify-content: center;
   }
   .folio .intro-bottom {
@@ -1311,131 +1312,506 @@
 .folio .case-dialog[open] .case-content > * { animation-duration: .3s; }
 .folio .nav-dialog-head button { color: var(--text-primary); }
 
+/* ==========================================================================
+   MOBILE & RESPONSIVE REFINEMENTS
+   - CENTERED PROJECT IMAGES ACROSS ALL SCREENS
+   - COMPACT PROPORTIONATE HERO BUTTONS
+   - GENEROUS PADDING FOR SECTION/SKILL TABS
+   - SLEEK THEME TOGGLE SWITCH FOR NAVBAR & MOBILE MENU
+   - DUAL-MODE CONTRAST FOR MOBILE DIALOG
+   ========================================================================== */
+
+/* Tablet & Smaller Desktops (< 1100px) */
 @media (max-width: 1100px) {
-  .folio .intro-composition { gap: 40px; grid-template-columns: 1.15fr 1fr; padding-block: 50px; min-height: 600px; }
-  .folio .intro-title h1 { font-size: 4.6vw; }
-  .folio .intro-description p { font-size: 13px; }
-  .folio .hero-actions { gap: 12px; }
-  .folio .hero-contact { width: 100%; min-height: 35px; }
-  .folio .hero-eyebrow-tag { font-size: 8px; }
-  .workbench-overline { font-size: 7px; }
-  .workbench-controls { gap: 8px; }
-  .workbench-controls > .mono { font-size: 6px; }
-  .workbench-controls button { width: 33px; }
-  .folio .work-item, .folio .work-item:nth-child(even) { gap: 38px; }
-  .work-index > div { gap: 18px; }
-  .work-index a { font-size: 10px; gap: 7px; }
-  .folio .expertise-layout { gap: 40px; }
-  .folio .skill-tabs button { font-size: 10px; padding-inline: 10px; }
+  .folio .work-item,
+  .folio .work-item:nth-child(even) {
+    gap: 36px;
+  }
+  .folio .expertise-layout {
+    gap: 40px;
+  }
+  .folio .skill-tabs button {
+    font-size: 11px;
+    padding-inline: 12px;
+  }
 }
+
+/* Tablets & Mobile Devices (< 800px) */
 @media (max-width: 800px) {
-  .folio .folio-nav { height: 76px; padding-inline: 24px; }
-  .folio main { padding-top: 76px; }
-  .folio .intro-kicker { align-items: center; gap: 15px; }
-  .folio .hero-kicker-left .mono { font-size: 7px; max-width: 330px; }
-  .folio .intro-composition { grid-template-columns: 1fr; min-height: 0; gap: 58px; padding-block: 42px 38px; }
-  .folio .intro-title h1 { font-size: clamp(42px, 7.8vw, 62px); }
-  .folio .intro-main { max-width: 620px; }
-  .folio .intro-description { max-width: 530px; }
-  .folio .intro-description p { font-size: 14px; }
-  .folio .hero-contact { width: auto; }
-  .folio .hero-actions { gap: 22px; }
-  .hero-workbench { width: calc(100% - 46px); max-width: 510px; margin-inline: auto; padding-top: 10px; }
-  .workbench-overline { font-size: 8px; margin-bottom: 35px; }
-  .workbench-controls > .mono { font-size: 8px; }
-  .workbench-controls button { width: 40px; }
-  .workbench-controls { margin-top: 50px; }
-  .folio .intro-bottom { font-size: 8px; }
-  .folio .expertise-section, .folio .selected-work { padding-top: 70px; }
-  .folio .expertise-layout { grid-template-columns: 1fr; gap: 35px; margin-top: 38px; }
-  .folio .expertise-intro > p { max-width: 400px; }
-  .folio .skill-tabs button { font-size: 12px; }
-  .work-index { align-items: start; flex-direction: column; gap: 13px; margin-bottom: 40px; }
-  .work-index > div { width: 100%; gap: 12px 22px; justify-content: space-between; }
-  .folio .project-list { gap: 55px; }
-  .folio .work-item, .folio .work-item:nth-child(even) { grid-template-columns: 1fr; gap: 28px; }
-  .folio .work-item:nth-child(even) .project-stage, .folio .work-item:nth-child(even) .work-item-info { grid-column: auto; grid-row: auto; }
-  .folio .work-item-info { flex-direction: column; gap: 20px; }
-  .folio .work-item-info > div { padding: 0; }
-  .folio .work-item-info .project-label { max-width: none; }
-  .folio .project-stage { aspect-ratio: 1.4; }
-  .folio .project-stage .screen-shell { width: 86%; left: 7%; bottom: 22%; }
-  .folio .stage-word { font-size: 180px; }
-  .project-insight { font-size: 10px; bottom: 13%; }
+  .folio .folio-nav {
+    height: 72px;
+    padding-inline: 20px;
+  }
+  .folio.has-scrolled .folio-nav {
+    height: 64px;
+  }
+  .folio main {
+    padding-top: 72px;
+  }
+
+  /* Nav actions: hide "Let's talk" text button to keep header clean and prevent overlap */
+  .folio .nav-hello {
+    display: none !important;
+  }
+  .folio .nav-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+  .folio .folio-nav .theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .folio .folio-nav .theme-toggle-btn .theme-toggle-text {
+    display: none;
+  }
+
+  /* Compact Proportionate Hero Actions */
+  .folio .intro-shell {
+    min-height: auto;
+  }
+  .folio .intro {
+    padding-top: 20px;
+    padding-bottom: 24px;
+  }
+  .folio .hero-stack-row {
+    gap: 4px 8px;
+    font-size: 8.5px;
+    margin-bottom: 20px;
+  }
+  .folio .hero-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto clamp(20px, 3vh, 30px);
+    gap: 10px;
+  }
+  .folio .hero-actions .send-button {
+    width: auto;
+    min-height: 38px;
+    padding: 9px 18px;
+    font-size: 11px;
+    gap: 8px;
+
+  }
+  .folio .hero-resume-btn {
+    width: auto;
+    min-height: 38px;
+    padding: 9px 16px;
+    font-size: 11px;
+    gap: 7px;
+
+  }
+  .folio .hero-contact {
+    width: auto;
+    min-height: 38px;
+    padding: 9px 14px;
+    font-size: 11px;
+    gap: 6px;
+  }
+  .folio .intro-bottom {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    font-size: 8px;
+    padding-top: 14px;
+  }
+
+  /* Skills Section Tabs: Generous, Comfortable Padding & Horizontal Scroll */
+  .folio .expertise-section {
+    padding-top: 60px;
+  }
+  .folio .expertise-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .folio .skill-tabs {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px 8px 0 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .folio .skill-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .folio .skill-tabs button {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 10px 18px !important;
+    font-size: 11.5px !important;
+    white-space: nowrap;
+    /* border-radius: 9999px; */
+    gap: 8px;
+  }
+  .folio .skill-panel-animated {
+    padding: 24px 18px;
+  }
+
+  /* Project Showcase: Perfectly Centered Canvas & Clean Layout */
+  .folio .selected-work {
+    padding-top: 60px;
+  }
+  .folio .project-list {
+    gap: 48px;
+  }
+  .folio .work-item,
+  .folio .work-item:nth-child(even) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .folio .work-item:nth-child(even) .project-stage,
+  .folio .work-item:nth-child(even) .work-item-info {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .folio .project-stage {
+    aspect-ratio: 1.34;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .folio .project-perspective {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 88%;
+    max-width: 500px;
+    margin: 0 auto !important;
+  }
+  .folio .project-stage .screen-shell {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    transform: none;
+  }
+  .folio .stage-word {
+    font-size: clamp(65px, 16vw, 120px);
+  }
+  .folio .stage-meta,
+  .folio .stage-bottom {
+    font-size: 8px;
+  }
 }
+
+/* Small Mobile Screens (< 520px) */
 @media (max-width: 520px) {
-  .folio .folio-nav { padding-inline: 20px; gap: 10px; height: 72px; }
-  .folio.has-scrolled .folio-nav { height: 66px; }
-  .folio main { padding-top: 72px; }
-  .folio .nav-actions-group { margin-left: auto; }
-  .folio .mobile-trigger { margin-left: 0; }
-  .folio .theme-toggle-btn { width: 36px; height: 36px; padding: 0; justify-content: center; }
-  .folio .theme-toggle-btn .theme-toggle-text { display: none; }
-  .folio .intro { padding-top: 14px; }
-  .folio .intro-kicker { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 12px; }
-  .folio .hero-kicker-left { gap: 9px; }
-  .folio .hero-kicker-left .mono { font-size: 6px; line-height: 1.7; max-width: 180px; }
-  .folio .hero-status-beacon { flex-shrink: 0; }
-  .folio .availability { font-size: 7px; min-height: 30px; padding-inline: 9px; white-space: nowrap; }
-  .folio .intro-composition { gap: 52px; padding-top: 30px; padding-bottom: 32px; }
-  .folio .hero-eyebrow-tag { font-size: 7px; letter-spacing: .03em; gap: 6px; margin-bottom: 17px; }
-  .folio .intro-title h1 { font-size: clamp(28px, 8.4vw, 44px); line-height: 1.08; letter-spacing: -.06em; }
-  .folio .intro-index { font-size: 6px; line-height: 1.8; margin-top: 18px; }
-  .folio .intro-description { margin-top: 19px; }
-  .folio .intro-description p { font-size: 13px; line-height: 1.8; }
-  .folio .hero-stack-chips { gap: 6px; margin-top: 17px; }
-  .folio .hero-chip { font-size: 8px; padding: 4px 6px; }
-  .folio .hero-actions { gap: 10px 15px; margin-top: 23px; }
-  .folio .hero-actions .send-button { font-size: 11px; padding: 13px 15px; gap: 16px; min-height: 46px; }
-  .folio .hero-resume-btn { font-size: 11px; padding: 13px 12px; min-height: 46px; gap: 9px; }
-  .folio .hero-contact { font-size: 11px; gap: 8px; }
-  .folio .hero-quick-metrics { gap: 16px; margin-top: 23px; padding-top: 16px; flex-wrap: nowrap; }
-  .folio .hero-metric-item strong { font-size: 15px; }
-  .folio .hero-metric-item span { font-size: 6px; letter-spacing: .015em; }
-  .folio .hero-metric-divider { height: 25px; }
-  .hero-workbench { width: calc(100% - 26px); }
-  .workbench-guide { inset: -12px -12px; }
-  .workbench-overline { font-size: 6px; margin-bottom: 28px; }
-  .workbench-chrome { height: 29px; font-size: 6px; padding-inline: 10px; }
-  .workbench-caption { padding: 15px 16px; }
-  .folio .workbench-caption h2 { font-size: 22px; }
-  .workbench-note { left: -12px; bottom: -25px; padding: 10px 13px; font-size: 6px; }
-  .note-symbol { font-size: 16px; }
-  .workbench-controls { margin-top: 43px; padding-block: 12px; gap: 8px; }
-  .workbench-controls > .mono { font-size: 6px; }
-  .workbench-controls button { width: 35px; }
-  .workbench-controls button .mono { font-size: 8px; }
-  .folio .intro-bottom { font-size: 7px; }
-  .folio .intro-bottom > a { font-size: 8px; }
-  .folio .expertise-section, .folio .selected-work { padding-top: 58px; }
-  .folio .expertise-intro h2 { font-size: 45px; }
-  .folio .skill-tabs button { font-size: 10px; padding-inline: 5px; }
-  .folio .skill-panel-top { font-size: 7px; }
-  .folio .work-heading { margin: 30px 0; }
-  .folio .work-heading h2 { font-size: 45px; }
-  .folio .work-heading > p { font-size: 13px; }
-  .work-index { padding-block: 15px; gap: 10px; margin-bottom: 35px; }
-  .work-index > .mono { font-size: 7px; }
-  .work-index > div { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 15px; }
-  .work-index a { font-size: 10px; gap: 8px; min-height: 40px; }
-  .work-index a > span:last-child { margin-left: auto; }
-  .folio .work-item-info { gap: 20px; }
-  .folio .work-item-info h3 { font-size: 32px; }
-  .folio .project-category { font-size: 7px; }
-  .folio .work-item-info .project-label { font-size: 13px; }
-  .folio .work-item-info p { font-size: 12px; }
-  .folio .work-item-info .tech-tags { margin-top: 17px; }
-  .folio .project-links { margin-top: 18px; gap: 20px; }
-  .folio .project-stage { aspect-ratio: 1.08; padding: 17px; border-radius: 7px; }
-  .folio .stage-meta { font-size: 6px; }
-  .folio .stage-word { top: 13%; font-size: 140px; }
-  .folio .project-stage .screen-shell { width: 90%; left: 5%; bottom: 27%; }
-  .folio .screen-top { height: 20px; }
-  .folio .stage-bottom { left: 17px; right: 17px; bottom: 18px; font-size: 6px; }
-  .folio .project-open { width: 28px; height: 28px; top: 45px; right: 16px; }
-  .project-insight { left: 8%; bottom: 14%; padding: 9px 12px; font-size: 8px; max-width: 84%; }
+  .folio .folio-nav {
+    padding-inline: 16px;
+    height: 66px;
+  }
+  .folio.has-scrolled .folio-nav {
+    height: 60px;
+  }
+  .folio main {
+    padding-top: 66px;
+  }
+  .folio .identity {
+    font-size: 13px;
+  }
+  .folio .identity-mark {
+    font-size: 32px;
+  }
+  .folio .intro-title h1 {
+    font-size: clamp(34px, 9.5vw, 48px);
+  }
+  .folio .hero-bio {
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+
+  /* Hero buttons even cleaner on small screens */
+  .folio .hero-actions {
+    gap: 8px;
+    max-width: 340px;
+  }
+  .folio .hero-actions .send-button {
+    min-height: 36px;
+    padding: 8px 15px;
+    font-size: 10.5px;
+  }
+  .folio .hero-resume-btn {
+    min-height: 36px;
+    padding: 8px 14px;
+    font-size: 10.5px;
+  }
+  .folio .hero-contact {
+    min-height: 36px;
+    padding: 8px 12px;
+    font-size: 10.5px;
+  }
+
+  /* Section Tabs on small mobile */
+  .folio .skill-tabs {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .folio .skill-tabs button {
+    padding: 8px 14px !important;
+    font-size: 11px !important;
+    min-height: 38px;
+  }
+  .folio .skill-panel-animated {
+    padding: 20px 14px;
+  }
+
+  /* Centered Canvas on small mobile */
+  .folio .project-stage {
+    aspect-ratio: 1.25;
+    padding: 14px 14px;
+  }
+  .folio .project-perspective {
+    width: 90%;
+    max-width: 380px;
+  }
+  .folio .stage-word {
+    font-size: clamp(55px, 15vw, 90px);
+  }
+  .folio .stage-meta {
+    font-size: 7px;
+  }
+  .folio .stage-bottom {
+    font-size: 7.5px;
+  }
+  .folio .screen-top {
+    height: 26px;
+    padding: 0 8px;
+  }
+  .folio .screen-address {
+    font-size: 7.5px;
+    padding: 2px 6px;
+  }
+  .folio .screen-ext {
+    font-size: 8.5px;
+  }
 }
-@media (hover: none) { .preview-open { opacity: 1; transform: none; padding: 7px 10px; font-size: 8px; } }
-.still .workbench-image img { animation: none; }
-.still .workbench-object, .still .project-insight { transform: none !important; }
-@media (prefers-reduced-motion: reduce) { .workbench-image img { animation: none; }.workbench-object, .project-insight { transform: none !important; } }
+
+/* ==========================================================================
+   MOBILE MENU NAVIGATION DIALOG (DUAL-MODE THEME COLORS & TOGGLE SWITCH)
+   ========================================================================== */
+.folio .nav-dialog,
+dialog.nav-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100svh;
+  max-height: none;
+  padding: clamp(20px, 4vw, 36px);
+  margin: 0;
+  border: 0;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.folio.theme-light .nav-dialog,
+[data-theme="light"] .nav-dialog,
+[data-theme="light"] dialog.nav-dialog,
+dialog.nav-dialog.theme-light,
+dialog.nav-dialog.light-theme {
+  background: #f7f6f2 !important;
+  color: #121510 !important;
+}
+
+.folio.theme-dark .nav-dialog,
+[data-theme="dark"] .nav-dialog,
+[data-theme="dark"] dialog.nav-dialog,
+dialog.nav-dialog.theme-dark,
+dialog.nav-dialog.dark-theme {
+  background: #0f1311 !important;
+  color: #edf2eb !important;
+}
+
+/* Dialog Head */
+.folio .nav-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.folio.theme-light .nav-dialog-head {
+  color: #121510;
+  border-color: rgba(36, 42, 34, 0.1);
+}
+
+.folio.theme-dark .nav-dialog-head {
+  color: #edf2eb;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.folio .nav-dialog-head button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.folio .nav-dialog-head button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Mobile Theme Row & Switch Button */
+.folio .mobile-theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.folio .mobile-theme-row > span {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.folio .mobile-theme-btn {
+  width: auto !important;
+  height: auto !important;
+  min-height: 40px !important;
+  padding: 8px 18px !important;
+  border-radius: 9999px !important;
+  font-size: 11px !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.folio.theme-light .mobile-theme-btn,
+dialog.nav-dialog.theme-light .mobile-theme-btn {
+  background: #f0f2ed !important;
+  color: #121510 !important;
+  border-color: rgba(36, 42, 34, 0.18) !important;
+}
+
+.folio.theme-dark .mobile-theme-btn,
+dialog.nav-dialog.theme-dark .mobile-theme-btn {
+  background: #1e2621 !important;
+  color: #f0f4ee !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.folio .mobile-theme-btn:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
+/* Nav links inside mobile dialog */
+.folio .nav-dialog nav {
+  display: flex;
+  flex-direction: column;
+  margin: clamp(28px, 6vh, 52px) 0;
+  gap: 0;
+}
+
+.folio .nav-dialog nav a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-transform: capitalize;
+  font-size: clamp(32px, 8.5vw, 54px);
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  padding: clamp(12px, 2.2vh, 18px) 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.folio.theme-light .nav-dialog nav a,
+dialog.nav-dialog.theme-light nav a {
+  color: #1a1e17 !important;
+  border-color: rgba(36, 42, 34, 0.08) !important;
+}
+
+.folio.theme-dark .nav-dialog nav a,
+dialog.nav-dialog.theme-dark nav a {
+  color: #eef2ea !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.folio .nav-dialog nav a:hover,
+.folio .nav-dialog nav a[aria-current="location"] {
+  color: var(--accent) !important;
+}
+
+.folio .nav-dialog nav sup {
+  font-size: 10px;
+  color: var(--accent);
+  font-family: var(--font-mono, monospace);
+  font-weight: 600;
+}
+
+.folio .nav-dialog nav svg {
+  margin-left: auto;
+  width: 22px;
+  height: 22px;
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.folio .nav-dialog nav a:hover svg {
+  opacity: 1;
+  transform: translate(3px, -3px);
+}
+
+.folio .nav-dialog > a {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  word-break: break-all;
+  font-family: var(--font-mono, monospace);
+  transition: color 0.2s ease;
+}
+
+.folio.theme-light .nav-dialog > a {
+  color: #4a5246;
+}
+
+.folio.theme-dark .nav-dialog > a {
+  color: #9aa895;
+}
+
+.folio .nav-dialog > a:hover {
+  color: var(--accent);
+}

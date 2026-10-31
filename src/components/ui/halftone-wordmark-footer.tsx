@@ -177,6 +177,9 @@ const HWF_CSS = `
 @media (prefers-reduced-motion: reduce) {
   .hwf-col a, .hwf-up { transition: none; }
 }
+.hwf-top{
+  padding-top : 0px;
+}
 `
 
 export default function HalftoneWordmarkFooter({

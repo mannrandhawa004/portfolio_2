@@ -1,0 +1,63 @@
+/* Shared palette for every route. Keep theme values in one place. */
+:root,
+.light-theme,
+[data-theme="light"],
+.theme-light {
+  --background: #f4f3ee;
+  --surface: #f4f3ee;
+  --surface-card: #ffffff;
+  --surface-hover: #eae8df;
+  --text-primary: #242620;
+  --text-secondary: #272726;
+  --border: rgba(36, 38, 32, 0.12);
+  --border-subtle: rgba(36, 38, 32, 0.06);
+  --accent: #d94b27;
+  --accent-hover: #c03d1c;
+  --accent-muted: rgba(217, 75, 39, 0.08);
+  --warm: #d94b27;
+  --paper: #f4f3ee;
+  --ink: #242620;
+  --muted: #6e7266;
+  --line: rgba(36, 38, 32, 0.12);
+  --orange: #d94b27;
+  --card-bg: #ffffff;
+  --card-shadow: 0 20px 48px -12px rgba(36, 38, 32, 0.12);
+  --hero-glow: radial-gradient(ellipse at 70% 35%, rgba(217, 75, 39, 0.08) 0%, rgba(98, 131, 69, 0.05) 45%, transparent 70%);
+  --nav-bg: rgba(244, 243, 238, 0.88);
+  --nav-scrolled: rgba(244, 243, 238, 0.96);
+  --specular: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+  color-scheme: light;
+  background: var(--background);
+  color: var(--text-primary);
+}
+
+.dark-theme,
+[data-theme="dark"],
+.theme-dark {
+  --background: #0d100f;
+  --surface: #151a17;
+  --surface-card: #18201a;
+  --surface-hover: #222b24;
+  --text-primary: #eef0e9;
+  --text-secondary: #9ea89f;
+  --border: rgba(255, 255, 255, 0.12);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --accent: #ff6b4a;
+  --accent-hover: #ff856b;
+  --accent-muted: rgba(255, 107, 74, 0.12);
+  --warm: #e5a384;
+  --paper: #0d100f;
+  --ink: #eef0e9;
+  --muted: #9ea89f;
+  --line: rgba(255, 255, 255, 0.12);
+  --orange: #ff6b4a;
+  --card-bg: #151b17;
+  --card-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.45);
+  --hero-glow: radial-gradient(ellipse at 70% 35%, rgba(255, 107, 74, 0.09) 0%, rgba(189, 211, 172, 0.06) 45%, transparent 70%);
+  --nav-bg: rgba(13, 16, 15, 0.88);
+  --nav-scrolled: rgba(13, 16, 15, 0.96);
+  --specular: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 100%);
+  color-scheme: dark;
+  background: var(--background);
+  color: var(--text-primary);
+}

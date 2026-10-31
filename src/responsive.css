@@ -1,0 +1,88 @@
+/* Final layout constraints shared by both themes and every breakpoint. */
+.folio .content-width {
+  width: min(1320px, calc(100% - clamp(32px, 7vw, 112px)));
+}
+.folio :is(.expertise-layout, .about-layout, .contact-layout, .work-item, .skills-explorer, .work-item-info, .skill-panel-wrapper) {
+  min-width: 0;
+}
+.folio :is(img, video) { max-width: 100%; }
+.folio :is(.hero-actions, .tech-tags, .socials, .project-links) { flex-wrap: wrap; }
+.folio :is(.contact-email, .email-link, .project-label, .case-description) { overflow-wrap: anywhere; }
+
+/* Keep layout centering independent of tilt and reduced-motion transforms. */
+.folio .project-perspective {
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+  transform: none;
+}
+@media (max-width: 800px) {
+  .folio .project-stage .screen-shell {
+    position: relative;
+    inset: auto;
+    transform: none;
+  }
+}
+
+/* The banner stays in its section while the page pauses for horizontal motion. */
+.philosophy {
+  z-index: 3;
+  height: clamp(100px, 12vw, 160px);
+  min-height: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: clip;
+  background: var(--accent);
+  color: var(--background);
+  border: 0;
+}
+.philosophy-type {
+  width: max-content;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  white-space: nowrap;
+  text-align: left;
+  padding-inline: clamp(20px, 4vw, 64px);
+  gap: clamp(20px, 3vw, 48px);
+  font-size: clamp(32px, 5.5vw, 84px);
+}
+.philosophy-type .star-icon,
+.philosophy-type .star-icon:last-child {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(20px, 3vw, 44px);
+  height: clamp(20px, 3vw, 44px);
+  color: currentColor;
+}
+
+@media (max-width: 1100px) {
+  .folio .expertise-layout { gap: 32px; }
+  .folio .about-layout { gap: 40px; }
+}
+@media (max-width: 800px) {
+  .folio :is(.expertise-layout, .about-layout, .contact-layout) { grid-template-columns: minmax(0, 1fr); }
+  .folio .work-item,
+  .folio .work-item:nth-child(even) { grid-template-columns: minmax(0, 1fr); }
+  .folio .skill-field { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .folio .skill-field li { min-width: 0; }
+  .folio .skill-field li > span { overflow-wrap: anywhere; }
+  .folio .intro-bottom { flex-wrap: wrap; }
+  .folio .case-dialog { width: calc(100% - 24px); max-height: calc(100dvh - 24px); }
+}
+@media (max-width: 480px) {
+  .folio .folio-nav { padding-inline: 16px; gap: 12px; }
+  .folio .identity { gap: 8px; }
+  .folio .identity small { max-width: 145px; font-size: 6px; }
+  .folio .skill-panel-top,
+  .folio .skill-panel-bottom { flex-wrap: wrap; gap: 8px; }
+  .folio .input-row { grid-template-columns: minmax(0, 1fr); flex-direction: column; }
+  .folio .input-row > * { width: 100%; min-width: 0; }
+  .folio .form-end { flex-wrap: wrap; gap: 16px; }
+  .folio .section-label { flex-wrap: wrap; gap: 10px; }
+  .folio .contact-headline { font-size: clamp(36px, 10vw, 60px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .philosophy-type { will-change: auto; }
+}

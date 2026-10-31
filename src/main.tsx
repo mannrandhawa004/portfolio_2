@@ -2,6 +2,11 @@ import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Portfolio from "./Portfolio";
 import NotFound from "./NotFound";
+import "./portfolio-v2.css";
+import "./portfolio-refinements.css";
+import "./portfolio-premium.css";
+import "./theme.css";
+import "./responsive.css";
 
 function AppRouter() {
   const [is404, setIs404] = useState(() => {

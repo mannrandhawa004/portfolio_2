@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manpreet Singh — Full-Stack & GenAI Engineer</title>
     <meta name="description" content="Portfolio of Manpreet Singh, a Full-Stack & GenAI Engineer building scalable web applications, real-time architectures, and applied LLM workflows." />
-    <meta name="theme-color" content="#0d100f" />
+    <meta name="theme-color" content="#f4f3ee" />
+    <script>
+      // Apply the saved theme before styles and React paint the loader.
+      (() => {
+        let theme = "light";
+        try {
+          if (localStorage.getItem("portfolio_theme") === "dark") theme = "dark";
+        } catch { /* Light is the default when storage is unavailable. */ }
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === "dark" ? "#0d100f" : "#f4f3ee";
+      })();
+    </script>
     <meta property="og:title" content="Manpreet Singh — Full-Stack & GenAI Engineer" />
     <meta property="og:description" content="Full-stack products where solid engineering meets applied intelligence." />
     <meta property="og:type" content="website" />

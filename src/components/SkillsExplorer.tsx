@@ -1,4 +1,4 @@
-import { useState, useRef, type KeyboardEvent } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { TechIcon } from "./TechLogos";
 
 type SkillCategory = {
@@ -12,18 +12,11 @@ type SkillCategory = {
 export default function SkillsExplorer({ categories }: { categories: SkillCategory[] }) {
   const [selected, setSelected] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
-  const [animating, setAnimating] = useState(false);
-  const prevSelected = useRef(0);
 
   const changeTab = (nextIndex: number) => {
-    if (nextIndex === selected || animating) return;
+    if (nextIndex === selected) return;
     setDirection(nextIndex > selected ? "next" : "prev");
-    setAnimating(true);
     setSelected(nextIndex);
-    prevSelected.current = nextIndex;
-    setTimeout(() => {
-      setAnimating(false);
-    }, 400);
   };
 
   const moveTab = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
@@ -52,7 +45,7 @@ export default function SkillsExplorer({ categories }: { categories: SkillCatego
             role="tab"
             id={`skill-tab-${index}`}
             aria-selected={selected === index}
-            aria-controls={`skill-panel-${index}`}
+            aria-controls="skill-panel"
             tabIndex={selected === index ? 0 : -1}
             onClick={() => changeTab(index)}
             onKeyDown={(event) => moveTab(event, index)}
@@ -68,7 +61,7 @@ export default function SkillsExplorer({ categories }: { categories: SkillCatego
         <div
           key={selected}
           className={`skill-panel skill-panel-animated skill-slide-${direction}`}
-          id={`skill-panel-${selected}`}
+          id="skill-panel"
           role="tabpanel"
           aria-labelledby={`skill-tab-${selected}`}
           tabIndex={0}

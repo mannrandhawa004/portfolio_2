@@ -155,9 +155,32 @@ export function usePortfolioMotion(
                 scrollTrigger: { trigger: stage, start: "top bottom", end: "bottom top", scrub: .6 } });
           }
         });
-        // The interlude moves with the document, without pinning an empty gap.
-        gsap.to(".philosophy-type", { x: () => -Math.max(0, (root.current?.querySelector<HTMLElement>(".philosophy-type")?.scrollWidth ?? 0) - window.innerWidth + 40), ease: "none",
-          scrollTrigger: { trigger: ".philosophy", start: "top bottom", end: "bottom top", scrub: .5, invalidateOnRefresh: true } });
+      });
+
+      // [HUMAN IDEAS. DIGITAL POSSIBILITIES.] Banner Scroll & Pin Effect for all screens
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const philosophyEl = root.current?.querySelector<HTMLElement>(".philosophy");
+        const philosophyType = root.current?.querySelector<HTMLElement>(".philosophy-type");
+        const content = root.current?.querySelector<HTMLElement>("main");
+        if (philosophyEl && philosophyType && content) {
+          gsap.fromTo(philosophyType, { x: 0 }, {
+            x: () => -Math.max(0, philosophyType.scrollWidth - philosophyEl.clientWidth),
+            ease: "none",
+            scrollTrigger: {
+              trigger: philosophyEl,
+              start: "center center",
+              end: () => `+=${Math.max(350, Math.min(window.innerHeight * 0.85, 650))}`,
+              // Freeze the surrounding content too: pinning just the strip lets
+              // About scroll underneath it and leaves its original slot exposed.
+              pin: content,
+              pinSpacing: true,
+              refreshPriority: 1,
+              scrub: true,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
       });
 
       return () => media.revert();

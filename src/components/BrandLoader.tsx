@@ -15,8 +15,7 @@ const greetings = [
 
 export default function BrandLoader({ onReady }: { onReady: (ready: boolean) => void }) {
   const layer = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
-  const langRef = useRef<HTMLSpanElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
 
   useEffect(() => {
@@ -25,56 +24,29 @@ export default function BrandLoader({ onReady }: { onReady: (ready: boolean) => 
       return;
     }
 
-    let alive = true;
-    const bar = layer.current?.querySelector(".loader-fill");
-    const totalItems = greetings.length;
-    let step = 0;
+    // One scoped timeline owns all animations, including unmount/StrictMode cleanup.
+    const context = gsap.context(() => {
+      const timeline = gsap.timeline({ onComplete: () => onReady(true) });
+      timeline.to(".loader-fill", { scaleX: 0.95, duration: 2.61, ease: "power1.inOut" }, 0);
 
-    // Timeline for progress bar
-    const progressTween = gsap.to(bar ?? null, {
-      scaleX: 0.95,
-      duration: 2.7,
-      ease: "power1.inOut",
-    });
+      greetings.forEach((_, index) => {
+        if (index === 0) return;
+        const at = index * 0.29;
+        timeline.call(() => setCurrentIdx(index), [], at);
+        timeline.fromTo(textRef.current,
+          { opacity: 0, y: 8, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: false },
+          at
+        );
+      });
 
-    const interval = setInterval(() => {
-      if (!alive) return;
-      step++;
-      if (step < totalItems) {
-        // Quick subtle fade transition for words
-        if (textRef.current) {
-          gsap.fromTo(
-            textRef.current,
-            { opacity: 0, y: 8, scale: 0.96 },
-            { opacity: 1, y: 0, scale: 1, duration: 0.22, ease: "power2.out" }
-          );
-        }
-        setCurrentIdx(step);
-      } else {
-        clearInterval(interval);
-        // Completed - hold Welcome briefly then slide curtain away
-        progressTween.kill();
-        gsap
-          .timeline({
-            onComplete: () => {
-              if (alive) onReady(true);
-            },
-          })
-          .to(bar ?? null, { scaleX: 1, duration: 0.18 })
-          .to(textRef.current, { scale: 1.06, opacity: 0.85, duration: 0.3, ease: "power2.out" }, "-=0.08")
-          .to(layer.current, {
-            yPercent: -100,
-            duration: 0.65,
-            ease: "expo.inOut",
-          });
-      }
-    }, 290);
+      timeline
+        .to(".loader-fill", { scaleX: 1, duration: 0.18 })
+        .to(textRef.current, { scale: 1.06, opacity: 0.85, duration: 0.3, ease: "power2.out" }, "-=0.08")
+        .to(layer.current, { yPercent: -100, duration: 0.65, ease: "expo.inOut" });
+    }, layer);
 
-    return () => {
-      alive = false;
-      clearInterval(interval);
-      progressTween.kill();
-    };
+    return () => context.revert();
   }, [onReady]);
 
   const current = greetings[currentIdx];
@@ -83,12 +55,12 @@ export default function BrandLoader({ onReady }: { onReady: (ready: boolean) => 
     <div ref={layer} className="brand-loader" aria-hidden="true">
       <div className="loader-inner">
         <div className="loader-greeting-box">
-          <span className="loader-lang mono" ref={langRef}>
+          <span className="loader-lang mono">
             {current.lang.toUpperCase()}
           </span>
-          <h1 className="loader-greeting-text" ref={textRef}>
+          <span className="loader-greeting-text" ref={textRef}>
             {current.text}
-          </h1>
+          </span>
         </div>
 
         <div className="loader-track">

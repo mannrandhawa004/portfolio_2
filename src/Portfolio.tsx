@@ -3,9 +3,8 @@ import BrandLoader from "./components/BrandLoader";
 import { GlassFold } from "@/components/ui/glass-fold";
 import SkillsExplorer from "./components/SkillsExplorer";
 import { usePortfolioMotion } from "./hooks/usePortfolioMotion";
+import { useTheme } from "./hooks/useTheme";
 import HalftoneWordmarkFooter from "./components/ui/halftone-wordmark-footer";
-import "./portfolio-v2.css";
-import "./portfolio-refinements.css";
 
 const email = "randhawamanpreet37@gmail.com";
 const github = "https://github.com/mannrandhawa004";
@@ -154,10 +153,11 @@ function Arrow({ down = false }: { down?: boolean }) {
   );
 }
 
-function Star({ className = "" }: { className?: string }) {
+function LayerMark({ className = "" }: { className?: string }) {
   return (
-    <svg className={`star-icon ${className}`} viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <path d="M40 0v80M0 40h80M12 12l56 56M12 68l56-56" stroke="currentColor" strokeWidth="12" />
+    <svg className={`star-icon ${className}`} width="32" height="32" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <path d="m20 5 15 8-15 8L5 13 20 5Z" fill="currentColor" />
+      <path d="m5 21 15 8 15-8M5 29l15 8 15-8" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -168,36 +168,16 @@ export default function Portfolio() {
   const modal = useRef<HTMLDialogElement>(null);
   const [projectIndex, setProjectIndex] = useState(0);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [active, setActive] = useState("top");
   const [copyStatus, setCopyStatus] = useState("");
   const [formStatus, setFormStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  const [time, setTime] = useState("");
-  const [userTime, setUserTime] = useState("");
-  const [timeMode, setTimeMode] = useState<"ist" | "user">("ist");
   const [ready, setReady] = useState(false);
 
-  // Theme Switcher State (persisted in localStorage)
-  const [theme, setTheme] = useState<"light" | "dark">(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("portfolio_theme");
-      if (saved === "light" || saved === "dark") return saved;
-    }
-    return "light";
-  });
-
-  useEffect(() => {
-    localStorage.setItem("portfolio_theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  const { theme, toggleTheme } = useTheme();
 
   const selected = projects[projectIndex];
-  const still = paused || reduced;
+  const still = reduced;
   usePortfolioMotion(page, still, ready, dialogOpen, setActive);
 
   useEffect(() => {
@@ -205,24 +185,8 @@ export default function Portfolio() {
     const update = () => setReduced(preference.matches);
     update();
     preference.addEventListener("change", update);
-    const tick = () => {
-      setTime(
-        new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Kolkata",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }).format(new Date())
-      );
-      setUserTime(
-        new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date())
-      );
-    };
-    tick();
-    const timer = window.setInterval(tick, 30000);
     return () => {
       preference.removeEventListener("change", update);
-      window.clearInterval(timer);
     };
   }, []);
 
@@ -372,11 +336,7 @@ export default function Portfolio() {
           </div>
 
           <div className="intro content-width">
-            <div className="hero-status-pill mono">
-              <span className="live-dot" />
-              <span>AVAILABLE FOR FULL-STACK &amp; GENAI ROLES</span>
-              <span className="hero-status-loc">· MOHALI, INDIA</span>
-            </div>
+
 
             <div className="intro-title">
               <h1>
@@ -397,17 +357,7 @@ export default function Portfolio() {
               effortless user experiences.
             </p>
 
-            <div className="hero-stack-row mono">
-              <span>React / Next.js</span>
-              <span className="dot">·</span>
-              <span>TypeScript</span>
-              <span className="dot">·</span>
-              <span>Node.js</span>
-              <span className="dot">·</span>
-              <span>GenAI / LLMs</span>
-              <span className="dot">·</span>
-              <span>Redis &amp; WebSockets</span>
-            </div>
+
 
             <div className="hero-actions">
               <a className="send-button" href="#work">
@@ -418,27 +368,6 @@ export default function Portfolio() {
               </a>
               <a className="hero-contact" href="#contact">
                 Let’s talk <Arrow />
-              </a>
-            </div>
-
-            <div className="intro-bottom mono">
-              <button
-                type="button"
-                className="time-pill mono"
-                onClick={() => setTimeMode(timeMode === "ist" ? "user" : "ist")}
-                title="Click to toggle time zone"
-              >
-                <span>
-                  {timeMode === "ist" ? "MOHALI, INDIA" : "YOUR LOCAL TIME"} <i />{" "}
-                  {timeMode === "ist" ? `${time || "--:--"} IST` : `${userTime || "--:--"} LOCAL`}
-                </span>
-                <span className="time-toggle-label">TOGGLE TIME</span>
-              </button>
-              <button aria-pressed={still} onClick={() => setPaused(!paused)} disabled={reduced}>
-                {reduced ? "REDUCED MOTION ON" : paused ? "▶ PLAY MOTION" : "Ⅱ PAUSE MOTION"}
-              </button>
-              <a href="#work">
-                SCROLL TO EXPLORE <span>↓</span>
               </a>
             </div>
           </div>
@@ -456,7 +385,7 @@ export default function Portfolio() {
             <div className="expertise-layout">
               <div className="expertise-intro" data-enter>
                 <span className="small-star">
-                  <Star />
+                  <LayerMark />
                 </span>
                 <h2>
                   What I<br />
@@ -631,15 +560,6 @@ export default function Portfolio() {
                       </div>
                     </div>
                   </div>
-
-                  {/* Bottom Metadata & Live Indicator */}
-                  <div className="stage-bottom mono">
-                    <span className="stage-title">{project.title}</span>
-                    <div className="stage-status">
-                      <span className="pulse-beacon" />
-                      <span>{project.live ? "LIVE PRODUCTION" : "VERIFIED REPO"}</span>
-                    </div>
-                  </div>
                 </div>
               </article>
             ))}
@@ -658,17 +578,17 @@ export default function Portfolio() {
         <section id="philosophy" className="philosophy" aria-label="Core Philosophy">
           <div className="philosophy-type" aria-hidden="true">
             <span>HUMAN IDEAS.</span>
-            <Star />
+            <LayerMark />
             <span>DIGITAL POSSIBILITIES.</span>
-            <Star />
+            <LayerMark />
             <span>ENGINEERED TO SCALE.</span>
-            <Star />
+            <LayerMark />
             <span>BUILT WITH INTENTION.</span>
-            <Star />
+            <LayerMark />
             <span>HUMAN IDEAS.</span>
-            <Star />
+            <LayerMark />
             <span>DIGITAL POSSIBILITIES.</span>
-            <Star />
+            <LayerMark />
           </div>
         </section>
 
@@ -701,7 +621,7 @@ export default function Portfolio() {
               >
                 <div className="id-top mono">
                   <span>THE PERSON / NOT THE PROFILE</span>
-                  <Star />
+                  <LayerMark />
                 </div>
                 <div className="id-monogram">
                   ms<span>↗</span>
@@ -837,8 +757,8 @@ export default function Portfolio() {
 
           <HalftoneWordmarkFooter
             wordmark="manpreet"
-            label="Manpreet Singh"
-            meta="© 2026 · Mohali, India · Built with intention."
+            label=""
+            meta=""
             columns={[]}
             backToTop={true}
             height="clamp(220px, 29vw, 440px)"
@@ -849,7 +769,7 @@ export default function Portfolio() {
             interactive={!still}
             fontFamily='"DM Sans", Arial, sans-serif'
             monoFamily='"DM Mono", monospace'
-            preset={theme === "light" ? "sage" : "night"}
+          preset={theme === "light" ? "paper" : "night"}
             palette={
               theme === "light"
                 ? { background: "#f4f3ee", ink: "#353830", warm: "#d94b27" }
@@ -863,7 +783,7 @@ export default function Portfolio() {
           MOBILE NAVIGATION DIALOG (WITH THEME TOGGLE)
           ============================================================== */}
       <dialog
-        className="nav-dialog"
+        className={`nav-dialog theme-${theme} ${theme === "light" ? "light-theme" : "dark-theme"}`}
         ref={menu}
         data-lenis-prevent
         aria-label="Navigation menu"
@@ -878,8 +798,28 @@ export default function Portfolio() {
 
         <div className="mobile-theme-row">
           <span className="mono">THEME MODE</span>
-          <button type="button" className="theme-toggle-btn mobile-theme-btn" onClick={toggleTheme}>
-            {theme === "light" ? "🌙 SWITCH TO DARK" : "☀️ SWITCH TO LIGHT"}
+          <button
+            type="button"
+            className="theme-toggle-btn mobile-theme-btn"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? (
+              <>
+                <svg className="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+                <span>SWITCH TO DARK</span>
+              </>
+            ) : (
+              <>
+                <svg className="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="5" />
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+                <span>SWITCH TO LIGHT</span>
+              </>
+            )}
           </button>
         </div>
 
